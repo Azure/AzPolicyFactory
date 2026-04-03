@@ -141,7 +141,7 @@ runs:
 
     # Azure Login
     - name: Azure Login
-      uses: azure/login@v2
+      uses: azure/login@v3
       with:
         creds: ${{ env.AZURE_CREDENTIALS }}
         enable-AzPSSession: true

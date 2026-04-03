@@ -199,7 +199,7 @@ runs:
     # Run Bicep Linter and Build
     - name: Azure Login
       if: inputs.run-psrule-tests == 'true' || inputs.run-bicep-linter == 'true' || inputs.run-template-validation == 'true' || inputs.run-whatif-in-template-validation == 'true'
-      uses: Azure/login@v2
+      uses: azure/login@v3
       with:
         creds: ${{ env.AZURE_CREDENTIALS }}
         enable-AzPSSession: true

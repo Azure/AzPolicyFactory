@@ -1,0 +1,71 @@
+name: "Build Policy Definition Bicep Template"
+description: "Builds a Bicep template for Azure Policy Definitions by processing policy definition JSON files"
+author: "Tao Yang"
+
+inputs:
+  definition-file-path:
+    description: "Policy Definition Path"
+    required: true
+
+  definition-file-exclude-path:
+    description: "Policy Definition Excluded Paths"
+    required: false
+    default: ""
+
+  template-file-directory:
+    description: "Bicep Template Directory Path"
+    required: true
+
+  bicep-file-path:
+    description: "Bicep File Path"
+    required: true
+
+  bicep-variable-name:
+    description: "Bicep Variable Name"
+    required: false
+    default: "policyDefinitions"
+
+  build-artifact-name:
+    description: "Build Artifact Name"
+    required: true
+
+outputs:
+  artifact-name:
+    description: "The name of the published build artifact"
+    value: ${{ inputs.build-artifact-name }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build Bicep Template
+      id: buildBicep
+      shell: pwsh
+      env:
+        INPUT_WORKSPACE_DIRECTORY: ${{ github.workspace }}
+        INPUT_BICEP_FILE_PATH: ${{ inputs.bicep-file-path }}
+        INPUT_BICEP_VARIABLE_NAME: ${{ inputs.bicep-variable-name }}
+        INPUT_DEFINITION_FILE_PATH: ${{ inputs.definition-file-path }}
+        INPUT_DEFINITION_FILE_EXCLUDE_PATH: ${{ inputs.definition-file-exclude-path }}
+        INPUT_TEMPLATE_FILE_DIRECTORY: ${{ inputs.template-file-directory }}
+        INPUT_BUILD_ARTIFACT_NAME: ${{ inputs.build-artifact-name }}
+      run: |
+        #Build Bicep Template
+        Write-Output '::group::Build Bicep Template'
+        $scriptPath = "$env:INPUT_WORKSPACE_DIRECTORY/scripts/pipelines/pipeline-set-policy-resource-bicep-template-file.ps1"
+        & $scriptPath `
+          -bicepFilePath $env:INPUT_BICEP_FILE_PATH `
+          -bicepVariableName $env:INPUT_BICEP_VARIABLE_NAME `
+          -resourceFileFolder $env:INPUT_DEFINITION_FILE_PATH `
+          -excludePath $env:INPUT_DEFINITION_FILE_EXCLUDE_PATH `
+          -outputDir $env:INPUT_TEMPLATE_FILE_DIRECTORY `
+          -artifactName $env:INPUT_BUILD_ARTIFACT_NAME `
+          -updateBicepFileName 'main.bicep'
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        Write-Output '::endgroup::'
+
+    - name: Upload Bicep Template Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: "${{ inputs.build-artifact-name }}"
+        path: "${{ inputs.template-file-directory }}/${{ inputs.build-artifact-name }}"
+        if-no-files-found: error

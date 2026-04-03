@@ -1,0 +1,7 @@
+rules:
+  unpinned-uses:
+    disable: true
+  dangerous-triggers:
+    disable: true
+  secrets-outside-env:
+    disable: true

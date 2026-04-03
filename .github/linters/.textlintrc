@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "terminology": {
+      "skip": [
+        "CodeBlock"
+      ],
+      "exclude": [
+        "GitHub",
+        "GitHub[ -]?Action",
+        "GitHub Action",
+        "GitHub[ -]?Actions",
+        "GitHub Actions",
+        "GitHub[ -]?Copilot",
+        "GitHub Copilot",
+        "vscode",
+        "VSCode",
+        "git",
+        "Git",
+        "id",
+        "Id",
+        "Azure",
+        "azure",
+        "repo\\b"
+      ]
+    }
+  }
+}

@@ -1,22 +1,22 @@
 {
   "$schema": "../policyExemption.schema.json",
   "policyExemption": {
-    "name": "pex-lz-corp-sub-eh-001",
-    "displayName": "Exempt LZ-Corp-Dev Subscription from Event Hub disable local auth restriction",
-    "description": "This is a test exemption for the sub-d-lz-corp-01 subscription.",
+    "name": "pex-lz-online-sub-eh-001",
+    "displayName": "Exempt LZ-Online Subscription from Event Hub disable local auth restriction",
+    "description": "This is a test exemption for the sub-d-lz-online-01 subscription.",
     "metadata": {
       "requestedBy": "Eric Cartman",
       "approvedBy": "Bart Simpson",
       "approvedOn": "2025-10-16",
       "ticketRef": "INC123124"
     },
-    "policyAssignmentId": "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/microsoft.authorization/policyassignments/pa-d-eh",
+    "policyAssignmentId": "/providers/Microsoft.Management/managementGroups/CONTOSO/providers/microsoft.authorization/policyassignments/pa-p-eh",
     "exemptionCategory": "Waiver",
     "assignmentScopeValidation": "Default",
     "policyDefinitionReferenceIds": [
       "EH-001"
     ],
-    "expiresOn": "2026-12-31T23:59:59Z",
+    "expiresOn": "2026-05-31T23:59:59Z",
     "resourceSelectors": [
       {
         "name": "AustraliaEast_Region",
@@ -31,5 +31,5 @@
       }
     ]
   },
-  "subscriptionId": "dc2d72b7-a48d-45e8-91cc-81193ecc659b"
+  "subscriptionId": "e371edfc-8526-4d2d-9493-ca2d3f18f465"
 }

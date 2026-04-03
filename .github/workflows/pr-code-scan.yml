@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v8.5.0
+        uses: super-linter/super-linter@v8.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main

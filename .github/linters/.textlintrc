@@ -2,9 +2,7 @@
   "rules": {
     "terminology": {
       "skip": [
-        "CodeBlock",
-        "repo",
-        "REPO"
+        "CodeBlock"
       ],
       "exclude": [
         "GitHub",
@@ -22,9 +20,7 @@
         "Id",
         "Azure",
         "azure",
-        "Repository",
-        "repo",
-        "REPO"
+        "repo\\b"
       ]
     }
   }

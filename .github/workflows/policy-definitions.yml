@@ -2,11 +2,16 @@ name: policy-definitions
 
 on:
   workflow_dispatch: # allows a manual run from the UI
-
+    inputs:
+      debug:
+        description: "Enable debug logging"
+        type: boolean
+        default: false
 permissions:
   contents: read
 
 env:
+  ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
   variablesPath: "settings.yml"
   templateName: "PolicyDef"
   templateFileDirectory: "bicep/templates/policyDefinitions"

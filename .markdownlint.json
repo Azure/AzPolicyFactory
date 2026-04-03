@@ -45,7 +45,7 @@
   "list-marker-space": true,
   "blanks-around-fences": true,
   "blanks-around-lists": true,
-  "no-bare-urls": true,
+  "no-bare-urls": false,
   "hr-style": {
     "style": "---"
   },

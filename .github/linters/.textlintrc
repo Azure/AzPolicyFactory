@@ -19,7 +19,8 @@
         "id",
         "Id",
         "Azure",
-        "azure"
+        "azure",
+        "Repository"
       ]
     }
   }

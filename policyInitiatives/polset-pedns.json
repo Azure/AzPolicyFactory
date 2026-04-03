@@ -560,7 +560,7 @@
       },
       {
         "policyDefinitionReferenceId": "PEDNS-015",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-pe-dns-records-single-dns-zone-all-locations",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-pe-dns-records-single-zone-all-regions-match-groupid",
         "parameters": {
           "Effect": {
             "value": "[parameters('PEDNS-015_Effect')]"

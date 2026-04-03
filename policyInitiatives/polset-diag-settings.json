@@ -481,7 +481,7 @@
       "DS-038_Effect": {
         "type": "string",
         "metadata": {
-          "displayName": "DS-038 Effect: Configure Diagnostic Setting for ANetwork Security Groups",
+          "displayName": "DS-038 Effect: Configure Diagnostic Setting for Network Security Groups",
           "description": "Enable or disable the execution of the policy"
         },
         "allowedValues": [

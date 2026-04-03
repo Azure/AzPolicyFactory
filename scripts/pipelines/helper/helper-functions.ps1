@@ -113,7 +113,7 @@ Function getTestConfig {
     [ValidateScript({ Test-Path $_ -PathType Leaf })][string]$TestConfigFilePath
   )
 
-  $testConfig = Get-Content $TestConfigFilePath | ConvertFrom-Json
+  $testConfig = Get-Content $TestConfigFilePath | ConvertFrom-Json -Depth 99 -AsHashtable
   $testConfig
 }
 
@@ -158,6 +158,9 @@ function updateAzResourceTags {
     [Parameter(Mandatory = $true, HelpMessage = 'Specify the resource Id.')]
     [ValidateNotNullOrEmpty()][string]$resourceId,
 
+    [Parameter(Mandatory = $true, HelpMessage = 'Azure OAuth token.')]
+    [ValidateNotNullOrEmpty()][string]$token,
+
     [Parameter(Mandatory = $true, HelpMessage = 'Specify the new resource tags.')]
     [hashtable]$tags,
 
@@ -165,7 +168,6 @@ function updateAzResourceTags {
     [bool]$revertBack = $false
   )
   $uri = 'https://management.azure.com/subscriptions/{0}/providers/Microsoft.Resources/tags/default?api-version=2021-04-01' -f $testSubscriptionId
-  $token = ConvertFrom-SecureString (Get-AzAccessToken).token -AsPlainText
   $headers = @{
     'Authorization' = "Bearer $token"
     'Content-Type'  = 'application/json'
@@ -215,11 +217,14 @@ function getResourceViaARMAPI {
   [CmdletBinding()]
   Param(
     [Parameter(Mandatory = $true)][string]$resourceId,
-    [Parameter(Mandatory = $true)][string]$apiVersion
+    [Parameter(Mandatory = $true)][string]$apiVersion,
+    [Parameter(Mandatory = $false)][string]$token
   )
   $uri = "https://management.azure.com{0}?api-version={1}" -f $resourceId, $apiVersion
   Write-Verbose "[$(getCurrentUTCString)]: Trying getting resource via the Resource provider API endpoint '$uri'" -Verbose
-  $token = ConvertFrom-SecureString (Get-AzAccessToken).token -AsPlainText
+  if (-not $PSBoundParameters.ContainsKey('token')) {
+    $token = ConvertFrom-SecureString (Get-AzAccessToken).token -AsPlainText
+  }
   $headers = @{
     'Authorization' = "Bearer $token"
   }
@@ -244,11 +249,14 @@ function newResourceGroupViaARMAPI {
     [Parameter(Mandatory = $true)][string]$resourceGroupName,
     [Parameter(Mandatory = $true)][string]$location,
     [Parameter(Mandatory = $false)][hashtable]$tags,
+    [Parameter(Mandatory = $false)][string]$token,
     [Parameter(Mandatory = $false)][string]$apiVersion = '2021-04-01'
   )
   $uri = "https://management.azure.com/subscriptions/{0}/resourceGroups/{1}?api-version={2}" -f $subscriptionId, $resourceGroupName, $apiVersion
   Write-Verbose "[$(getCurrentUTCString)]: Trying creating resource group via the Resource provider API endpoint '$uri'" -Verbose
-  $token = ConvertFrom-SecureString (Get-AzAccessToken).token -AsPlainText
+  if (-not $PSBoundParameters.ContainsKey('token')) {
+    $token = ConvertFrom-SecureString (Get-AzAccessToken).token -AsPlainText
+  }
   $headers = @{
     'Authorization' = "Bearer $token"
     'Content-Type'  = 'application/json'
@@ -569,4 +577,47 @@ function decryptStuff {
     if ($aes) { $aes.Dispose() }
     if ($decryptor) { $decryptor.Dispose() }
   }
+}
+
+function sanitisePSScript {
+  [CmdletBinding()]
+  [OutputType([string])]
+  Param (
+    [parameter(Mandatory = $true)]
+    [string]$scriptPath
+  )
+  $scriptContent = Get-Content -Path $scriptPath -Raw
+  $tokens = [System.Management.Automation.PSParser]::Tokenize($scriptContent, [ref]$null)
+  $commentTokens = $tokens | Where-Object { $_.Type -eq 'Comment' }
+
+  # Remove comments in reverse order to preserve character positions
+  foreach ($token in ($commentTokens | Sort-Object { $_.Start } -Descending)) {
+    $scriptContent = $scriptContent.Remove($token.Start, $token.Length)
+  }
+
+  # Remove resulting blank lines
+  $scriptContent = ($scriptContent -split "`r?`n" | Where-Object { $_.Trim().Length -gt 0 }) -join [Environment]::NewLine
+  $scriptContent
+}
+
+function findCommandInScript {
+  [CmdletBinding()]
+  [OutputType([bool])]
+  Param (
+    [parameter(Mandatory = $true)]
+    [string]$scriptContent,
+
+    [parameter(Mandatory = $true)]
+    [string[]]$commands
+  )
+  $found = $false
+  $tokens = [System.Management.Automation.PSParser]::Tokenize($scriptContent, [ref]$null)
+  $usedCommands = ($tokens | Where-Object { $_.Type -eq 'Command' }).Content.tolower() | Select-Object -Unique
+  foreach ($command in $commands) {
+    if ($command.tolower() -in $usedCommands) {
+      $found = $true
+      break
+    }
+  }
+  return $found
 }

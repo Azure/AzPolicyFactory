@@ -118,7 +118,20 @@ Function InstallBicepWindows {
 #endregion
 
 #region main
-$os = $env:AGENT_OS
+$helperFunctionScriptPath = join-path $PSScriptRoot 'helper' 'helper-functions.ps1'
+#load helper
+. $helperFunctionScriptPath
+
+$runtimePlatform = getPipelineType
+if ($runtimePlatform -ieq 'Azure DevOps') {
+  $os = $env:AGENT_OS
+} elseif ($runtimePlatform -ieq 'GitHub Actions') {
+  $os = $env:RUNNER_OS
+} else {
+  Write-Error "Unsupported pipeline runtime platform: $runtimePlatform"
+  exit 1
+}
+
 $isSelfHostedAgent = [boolean]$([int]$env:AGENT_ISSELFHOSTED)
 if ($isSelfHostedAgent) {
   Write-Output "Self-hosted agent detected. Skip Bicep installation and make sure desired version is installed manually on the agent Computer."
@@ -126,7 +139,7 @@ if ($isSelfHostedAgent) {
 }
 if ($os -eq 'Linux') {
   InstallBicepLinux -DesiredVersion $DesiredVersion
-} elseif ($os -eq 'Windows_NT') {
+} elseif ($os -eq 'Windows_NT' -or $os -eq 'Windows') {
   InstallBicepWindows -DesiredVersion $DesiredVersion
 } else {
   Write-Error "Unsupported OS: $os"

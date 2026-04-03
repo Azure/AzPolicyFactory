@@ -2,7 +2,9 @@
   "rules": {
     "terminology": {
       "skip": [
-        "CodeBlock"
+        "CodeBlock",
+        "repo",
+        "REPO"
       ],
       "exclude": [
         "GitHub",

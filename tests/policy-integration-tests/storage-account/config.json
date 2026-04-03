@@ -1,0 +1,14 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-storage",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-pedns",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"
+  ],
+  "testName": "StorageAccount",
+  "storageAccountAssignmentName": "pa-d-storage",
+  "diagSettingsAssignmentName": "pa-d-diag-settings",
+  "peDNSAssignmentName": "pa-d-pedns",
+  "testSubscription": "sub-d-lz-corp-01",
+  "location": "australiaeast",
+  "removeTestResourceGroup": false
+}

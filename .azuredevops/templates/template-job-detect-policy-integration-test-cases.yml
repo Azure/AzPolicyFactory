@@ -1,0 +1,69 @@
+parameters:
+- name: testConfigFilePath
+  displayName: "Test Global Config File Path"
+  type: string
+
+- name: targetGitBranch
+  displayName: "Target Git Branch"
+  type: string
+  default: "main"
+
+- name: testCaseDir
+  displayName: "Test Case Directory"
+  type: string
+  default: "tests/policy-integration-tests"
+
+- name: displayName
+  displayName: "Job Display Name"
+  type: string
+  default: "Detect Policy Integration Test Cases"
+
+- name: poolName
+  displayName: "Self Hosted Agent Pool Name"
+  type: string
+  default: ""
+
+- name: vmImage
+  displayName: "MS Hosted Agent VM Image Name"
+  type: string
+  default: ""
+
+- name: dependsOn
+  displayName: "Depends on"
+  type: object
+  default: []
+
+- name: condition
+  displayName: "Custom Job Conditions"
+  type: string
+  default: "succeeded()"
+
+jobs:
+  - job: mapTestCases
+    displayName: ${{ parameters.displayName }}
+    condition: ${{ parameters.condition }}
+    dependsOn: ${{parameters.dependsOn}}
+    variables:
+      - name: mapTestCasesScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-map-policy-integration-test-cases.ps1"
+    workspace:
+      clean: all
+    pool:
+      ${{ if ne(parameters.vmImage, '') }}:
+        vmImage: ${{ parameters.vmImage }}
+      ${{ if ne(parameters.poolName, '') }}:
+        name: ${{ parameters.poolName }}
+    steps:
+      - checkout: self
+        fetchDepth: 0
+      - task: PowerShell@2
+        name: mapTestCasesTask
+        displayName: "Map Git File Changes to Test Cases"
+        inputs:
+          targetType: "filePath"
+          pwsh: true
+          filePath: $(mapTestCasesScriptPath)
+          arguments:
+            -testConfigFilePath "${{parameters.testConfigFilePath}}" `
+            -targetGitBranch "${{parameters.targetGitBranch}}" `
+            -testCaseDir "${{parameters.testCaseDir}}"

@@ -11,7 +11,7 @@
     },
     "parameters": {
       "EH-001_Effect": {
-        "value": "Disabled"
+        "value": "Deny"
       },
       "EH-002_Effect": {
         "value": "Audit"

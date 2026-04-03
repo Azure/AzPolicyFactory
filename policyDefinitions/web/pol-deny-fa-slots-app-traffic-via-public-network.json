@@ -1,7 +1,7 @@
 {
   "name": "pol-deny-fa-slots-app-traffic-via-public-network",
   "properties": {
-    "displayName": "Function app slots should route application traffic over the virtual network",
+    "displayName": "Function app slots should enable outbound non-RFC 1918 traffic to Azure Virtual Network",
     "description": "Application routing defines what traffic is routed from your app and into the virtual network.",
     "metadata": {
       "category": "Network Security",
@@ -41,8 +41,36 @@
             "notContains": "workflowapp"
           },
           {
-            "field": "Microsoft.Web/sites/slots/vnetRouteAllEnabled",
-            "notEquals": "true"
+            "field": "kind",
+            "notContains": "azurecontainerapps"
+          },
+          {
+            "anyOf": [
+              {
+                "allOf": [
+                  {
+                    "value": "[requestContext().apiVersion]",
+                    "less": "2024-11-01"
+                  },
+                  {
+                    "field": "Microsoft.Web/sites/slots/vnetRouteAllEnabled",
+                    "notEquals": "true"
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "value": "[requestContext().apiVersion]",
+                    "greaterOrEquals": "2024-11-01"
+                  },
+                  {
+                    "field": "Microsoft.Web/sites/slots/outboundVnetRouting.applicationTraffic",
+                    "notEquals": "true"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },

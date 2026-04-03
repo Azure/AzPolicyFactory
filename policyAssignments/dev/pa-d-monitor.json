@@ -14,8 +14,7 @@
       },
       "MON-001_allowedEmailDomains": {
         "value": [
-          "contoso.com",
-          "lumagatena.com"
+          "contoso.com"
         ]
       },
       "MON-002_Effect": {

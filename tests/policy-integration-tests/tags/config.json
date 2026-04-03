@@ -1,0 +1,14 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-tags"
+  ],
+  "testName": "tags",
+  "assignmentName": "pa-d-tags",
+  "testSubscription": "sub-d-lz-corp-01",
+  "testResourceGroup": "rg-ae-d-policy-test-tags-001",
+  "location": "australiaeast",
+  "whatIfViolateBicepTemplateForRGName": "main.bad.rg.bicep",
+  "whatIfViolateBicepTemplateForResourcesName": "main.bad.resource.bicep",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

@@ -1,0 +1,83 @@
+parameters:
+- name: directory
+  displayName: "Parent Directory"
+  type: string
+
+- name: ignoreFileName
+  displayName: "Ignore File Name"
+  type: string
+  default: " "
+
+- name: includedDirectory
+  displayName: "Included Directory"
+  type: string
+  default: " "
+
+- name: skip
+  displayName: "Skip and return an empty list"
+  type: string
+  default: 'true'
+
+- name: displayName
+  displayName: "Job Display Name"
+  type: string
+  default: "Get Sub Directories"
+
+- name: jobName
+  displayName: "Job Name"
+  type: string
+  default: "getSubDirs"
+
+- name: poolName
+  displayName: "Self Hosted Agent Pool Name"
+  type: string
+  default: ""
+
+- name: vmImage
+  displayName: "MS Hosted Agent VM Image Name"
+  type: string
+  default: ""
+
+- name: dependsOn
+  displayName: "Depends on"
+  type: object
+  default: []
+
+- name: condition
+  displayName: "Custom Job Conditions"
+  type: string
+  default: "succeeded()"
+
+jobs:
+  - job: ${{ parameters.jobName }}
+    displayName: ${{ parameters.displayName }}
+    condition: ${{ parameters.condition }}
+    dependsOn: ${{parameters.dependsOn}}
+    variables:
+      - name: getSubDirScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-get-sub-directories.ps1"
+      - name: skip
+        value: ${{ parameters.skip }}
+      - name: includedDirectory
+        value: ${{ parameters.includedDirectory }}
+    workspace:
+      clean: all
+    pool:
+      ${{ if ne(parameters.vmImage, '') }}:
+        vmImage: ${{ parameters.vmImage }}
+      ${{ if ne(parameters.poolName, '') }}:
+        name: ${{ parameters.poolName }}
+    steps:
+      - checkout: self
+      - task: PowerShell@2
+        name: getSubDirsTask
+        displayName: "Get Sub Dirs"
+        inputs:
+          targetType: "filePath"
+          pwsh: true
+          filePath: $(getSubDirScriptPath)
+          arguments:
+            -directory "${{parameters.directory}}" `
+            -ignoreFileName "${{parameters.ignoreFileName}}" `
+            -includedDirectory "$(includedDirectory)" `
+            -skip $(skip)

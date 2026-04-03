@@ -71,6 +71,18 @@
           "False"
         ],
         "defaultValue": "True"
+      },
+      "logCategoryGroup": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Log Category Group",
+          "description": "Log Category Group to capture."
+        },
+        "allowedValues": [
+          "audit",
+          "allLogs"
+        ],
+        "defaultValue": "allLogs"
       }
     },
     "policyRule": {
@@ -98,8 +110,22 @@
           "existenceCondition": {
             "allOf": [
               {
-                "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
-                "equals": "True"
+                "count": {
+                  "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs[*].categoryGroup",
+                        "equals": "[parameters('logCategoryGroup')]"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+                        "equals": "true"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
               },
               {
                 "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
@@ -133,6 +159,9 @@
                   "logsEnabled": {
                     "type": "string"
                   },
+                  "logCategoryGroup": {
+                    "type": "string"
+                  },
                   "location": {
                     "type": "string"
                   }
@@ -160,7 +189,7 @@
                       ],
                       "logs": [
                         {
-                          "category": "FunctionAppLogs",
+                          "categoryGroup": "[parameters('logCategoryGroup')]",
                           "enabled": "[parameters('logsEnabled')]"
                         }
                       ]
@@ -181,6 +210,9 @@
                 },
                 "logsEnabled": {
                   "value": "[parameters('logsEnabled')]"
+                },
+                "logCategoryGroup": {
+                  "value": "[parameters('logCategoryGroup')]"
                 },
                 "location": {
                   "value": "[field('location')]"

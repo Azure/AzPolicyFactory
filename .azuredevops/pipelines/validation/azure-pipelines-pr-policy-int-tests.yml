@@ -1,0 +1,34 @@
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+parameters:
+  - name: removeTestResource
+    displayName: Remove Test Resources
+    type: boolean
+    default: true
+
+  - name: testToRun
+    displayName: "Tests To Run (separate with commas ',')"
+    type: string
+    default: " "
+
+variables:
+  - template: ../../../settings.yml
+
+stages:
+# dev integration test stage
+  - template: ../../templates/template-stage-policy-integration-tests.yml
+    parameters:
+      vmImage: "${{ variables['defaultAgentPoolName'] }}"
+      azureServiceConnection: "${{ variables['ado-devPolicyServiceConnection'] }}"
+      azureLocation: "${{ variables['default-region'] }}"
+      environment: "${{ variables['devEnv'] }}"
+      #bicepModuleSubscriptionId: "${{ variables['vmlTemplateSpecsSubscriptionId'] }}"
+      deploymentMaxRetry: ${{ variables['policyIntegrationTestDeploymentMaxRetry'] }}
+      removeDeployment: ${{ parameters.removeTestResource }}
+      #preferredAzurePowerShellVersion: "${{ variables['preferredAzurePowerShellVersion'] }}"
+      preferredBicepCliVersion: "${{ variables['preferredBicepCliVersion'] }}"
+      testDirectory: "${{ variables['policyIntegrationTestsDirectory'] }}"
+      testIgnoreFileName: "${{ variables['policyIntegrationTestIgnoreFileName'] }}"
+      testToRun: "${{ parameters.testToRun }}"

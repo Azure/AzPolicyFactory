@@ -4,7 +4,7 @@
     "displayName": "Azure Event Hub namespaces should disable public network access",
     "description": "Disable public network access for your Event Hub namespaces so that it's not accessible over the public internet. This can reduce data leakage risks",
     "metadata": {
-      "category": "Network Security",
+      "category": "Event Hub",
       "version": "1.1.0",
       "preview": false,
       "deprecated": false

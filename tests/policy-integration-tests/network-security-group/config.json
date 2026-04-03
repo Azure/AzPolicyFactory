@@ -1,0 +1,14 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-nsg",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"
+  ],
+  "testName": "NSG",
+  "testSubscription": "sub-d-lz-corp-01",
+  "nsgAssignmentName": "pa-d-nsg",
+  "diagSettingsAssignmentName": "pa-d-diag-settings",
+  "testResourceGroup": "rg-ae-d-policy-test-nsg-001",
+  "location": "australiaeast",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

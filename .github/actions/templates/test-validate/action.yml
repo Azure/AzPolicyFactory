@@ -288,7 +288,7 @@ runs:
     # Upload What-If Results Artifact
     - name: Upload What-If Results Artifact
       if: inputs.run-template-validation == 'true' && inputs.run-whatif-in-template-validation == 'true' && inputs.whatif-result-artifact-name != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ inputs.whatif-result-artifact-name }}
         path: "${{ inputs.template-file-directory }}/${{ inputs.whatif-result-artifact-name }}/"

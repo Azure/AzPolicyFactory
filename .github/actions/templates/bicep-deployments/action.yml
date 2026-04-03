@@ -205,7 +205,7 @@ runs:
     # Upload Deployment Outputs Artifact
     - name: Upload Deployment Outputs Artifact
       if: inputs.publish-deployment-outputs == 'true' && steps.deploy.outputs.deploymentOutputPublished == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: "${{ steps.deploy.outputs.deploymentName }}-Outputs"
         path: "${{ inputs.template-file-directory }}/Outputs/"

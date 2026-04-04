@@ -136,7 +136,8 @@
       "*.nuspec",
       ".testignore",
       "LICENSE",
-      ".DS_Store"
+      ".DS_Store",
+      ".prettierignore"
     ]
   }
 }

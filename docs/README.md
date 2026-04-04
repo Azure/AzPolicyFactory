@@ -65,6 +65,7 @@ The repository is organized into the following folders:
 | &nbsp;&nbsp;&nbsp;&nbsp;[`bicep/`](../tests/bicep/) | Pester tests for validating Bicep templates, modules, and bicepconfig settings |
 | &nbsp;&nbsp;&nbsp;&nbsp;[`policyAssignment/`](../tests/policyAssignment/) | Tests for policy assignment configuration syntax validation and cross-environment consistency checks |
 | &nbsp;&nbsp;&nbsp;&nbsp;[`policyExemption/`](../tests/policyExemption/) | Tests for policy exemption configuration syntax validation |
+| &nbsp;&nbsp;&nbsp;&nbsp;[`policy-integration-tests/`](../tests/policy-integration-tests/) | Policy integration tests |
 
 ## Pipeline and Workflow Overview
 
@@ -78,6 +79,7 @@ The repository includes the following CI/CD pipelines and GitHub Actions workflo
 | Policy Exemptions | [Link](../.azuredevops/pipelines/policies/azure-pipelines-policy-exemptions.yml) | [Link](../.github/workflows/alz-policy-exemptions.yml) | Deploys Azure Policy exemptions based on environment-specific configuration files |
 | PR Validation Code Scan | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml) | [Link](../.github/workflows/pr-code-scan.yml) | Runs GitHub Super-Linter to validate code quality and syntax in pull requests |
 | PR Validation for Policy Assignment Consistency | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml) | [Link](../.github/workflows/pr-policy-assignment-env-consistency.yml) | Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
+| Policy Integration Tests | [link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-int-tests.yml) | [link](../.github/workflows/policy-integration-tests.yml) | Tests assigned policies in Dev management group using real resources in Azure and validate the expected results |
 
 ## Configurations
 
@@ -86,6 +88,7 @@ The repository includes the following configuration files:
 | Name | Description |
 | :--- | :---------- |
 | [settings.yml](../settings.yml) | Centralized configuration file for pipeline variables and configurations |
+| [policy_integration_test_config.jsonc](../tests/policy-integration-tests/.shared/policy_integration_test_config.jsonc) | Configuration file for policy integration tests |
 | [ps-rule.yml](../.ps-rule/ps-rule.yml) | PSRule configuration file |
 | [bicepconfig.json](../bicepconfig.json) | Bicep configuration file |
 | [markdownlint.json](../.github/linters/markdownlint.json) | Markdownlint configuration file |

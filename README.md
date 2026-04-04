@@ -25,6 +25,7 @@ This repository contains the complete set of IaC solutions for deploying Azure P
   - Deploying Azure Policy Definitions, Initiatives, Assignments, and Exemptions
   - PR Validation Code Scan using GitHub Super-Linter
   - PR Validation for Azure Policy Assignment configurations between production and development environments
+  - Policy Integration Tests to test assigned policies on real resources in Azure and validate the expected results
 
 The solution automates the entire lifecycle of Azure Policy resources — from code commit through testing and validation to production deployment — ensuring quality and correctness at every stage.
 
@@ -39,7 +40,7 @@ The Azure Policy IaC solution in this repository includes the following key feat
 - Comprehensive set of tests and validation at different stages of the CI/CD pipelines to ensure the quality and correctness of the Azure Policy resources being deployed.
 - Follows industry best practices for Azure Policy management, safe deployment, code scan, and PR validation to ensure that the Azure Policy resources are deployed in a secure and compliant manner.
 - Unit tests for every policy resource being deployed.
-- Policy Integration Test (coming soon) to validate the functionality and effectiveness of the deployed Azure Policy resources in enforcing the desired governance and compliance requirements.
+- Policy Integration Test to validate the functionality and effectiveness of the deployed Azure Policy resources in enforcing the desired governance and compliance requirements.
 
 ## Recommended Architectural Approach for Azure Policy IaC
 

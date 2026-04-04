@@ -34,18 +34,6 @@
             "equals": "Microsoft.Storage/storageAccounts"
           },
           {
-            "not": {
-              "field": "tags[application]",
-              "equals": "databricks"
-            }
-          },
-          {
-            "not": {
-              "field": "tags[application]",
-              "equals": "purview"
-            }
-          },
-          {
             "anyOf": [
               {
                 "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",

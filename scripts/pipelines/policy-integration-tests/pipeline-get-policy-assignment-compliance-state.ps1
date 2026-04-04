@@ -147,7 +147,7 @@ if ($wait -eq 'true') {
     $shouldWait = $false
     $complianceState = getComplianceState -policyAssignmentId $policyAssignmentId
     Write-Verbose "$($complianceState.Count) of $($policyAssignmentId.count) policy assignments compliance state returned from ARG query." -Verbose
-    #Policy compliance state cannot be queries if there are no existing targetted resources in the assignment scope.
+    #Policy compliance state cannot be queried if there are no existing targeted resources in the assignment scope.
     #In this case, we will check the initial creation date (createdOn metadata) of the policy assignment and make sure we wait for at least 5 minutes from the initial creation date
     #If the policy assignment is previously created and the updated by the pipeline execution, the updatedOn metadata is ignored.
     Foreach ($assignment in $assignments) {

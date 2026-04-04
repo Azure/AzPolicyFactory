@@ -38,6 +38,10 @@ runs:
       shell: pwsh
       run: |
         ${{ github.workspace }}/scripts/pipelines/policy-integration-tests/pipeline-map-policy-integration-test-cases.ps1 `
-          -testConfigFilePath "${{ inputs.test-config-file-path }}" `
-          -targetGitBranch "${{ inputs.target-git-branch }}" `
-          -testCaseDir "${{ inputs.test-case-dir }}"
+          -testConfigFilePath "${TestConfigFilePath}" `
+          -targetGitBranch "${TargetGitBranch}" `
+          -testCaseDir "${TestCaseDir}"
+      env:
+        TestConfigFilePath: ${{ inputs.test-config-file-path }}
+        TargetGitBranch: ${{ inputs.target-git-branch }}
+        TestCaseDir: ${{ inputs.test-case-dir }}

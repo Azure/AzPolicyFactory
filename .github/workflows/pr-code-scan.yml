@@ -41,7 +41,7 @@ jobs:
           VALIDATE_BIOME_FORMAT: false
           VALIDATE_KUBERNETES_KUBECONFORM: false
           VALIDATE_JSCPD: false
-          FILTER_REGEX_EXCLUDE: '(bin/|obj/|\.vs/|node_modules/|\.vscode/)'
+          FILTER_REGEX_EXCLUDE: '(bin/|obj/|\.vs/|node_modules/|\.vscode/|tests/policy-integration-tests/\.test-template/)'
           LOG_LEVEL: ERROR
           VALIDATE_ARM: false
           IGNORE_GITIGNORED_FILES: true

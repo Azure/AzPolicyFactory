@@ -160,7 +160,7 @@ if (Test-path $BicepFilePath -PathType Leaf) {
       Write-Verbose "  - $rg" -verbose
     }
   }
-  #Create deployment result hastable to store the deployment result
+  #Create deployment result hashtable to store the deployment result
   If ($deploymentResultFilePath -ne '') {
     $deploymentResult.Add('bicepDeploymentScope', $templateScope)
     $deploymentResult.Add('bicepAdditionalResourceGroups', $additionalResourceGroups)

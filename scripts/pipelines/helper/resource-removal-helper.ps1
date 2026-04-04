@@ -559,7 +559,7 @@ function invokeResourceRemoval {
     'Microsoft.KeyVault/vaults/keys' {
       $resourceName = Split-Path $ResourceId -Leaf
       Write-Verbose ('[/] Skipping resource [{0}] of type [{1}]. Reason: It is handled by different logic.' -f $resourceName, $Type) -Verbose
-      # Also, we don't want to accidently remove keys of the dependency key vault
+      # Also, we don't want to accidentally remove keys of the dependency key vault
       break
     }
     'Microsoft.KeyVault/vaults/accessPolicies' {

@@ -19,7 +19,7 @@ Edit `config.json` in the new folder. The file supports the following properties
 | Property | Required | Description |
 | :------- | :------: | :---------- |
 | `policyAssignmentIds` | Yes | Array of policy assignment resource IDs to evaluate during testing. These policy assignments are the pre-requisites for the test. Test will not start until they have been initially evaluated after creation. |
-| `testName` | Yes | A short name for the test case. Used in test titles and output file names. |
+| `testName` | Yes | A short name for the test case. Used in test titles and output filenames. |
 | `assignmentName` | No | The name of the primary policy assignment being tested. |
 | `testSubscription` | Yes | The name of the subscription (as defined in the global config `subscriptions` map) to deploy test resources into. |
 | `testResourceGroup` | No | The resource group name for testing. If specified, a `$script:testResourceGroupId` variable is calculated. |
@@ -144,7 +144,7 @@ Tests are executed automatically by the Azure Policy integration test pipelines 
 
 ## Folder Structure
 
-```
+```text
 tests/policy-integration-tests/
 ├── .shared/                           # Shared config and initiation script
 │   ├── policy_integration_test_config.jsonc   # Global test configuration

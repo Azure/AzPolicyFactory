@@ -39,7 +39,12 @@ runs:
       shell: pwsh
       run: |
         ${{ github.workspace }}/scripts/pipelines/policy-integration-tests/pipeline-get-sub-directories.ps1 `
-          -directory "${{ inputs.directory }}" `
-          -ignoreFileName "${{ inputs.ignore-file-name }}" `
-          -includedDirectory "${{ inputs.included-directory }}" `
-          -skip "${{ inputs.skip }}"
+          -directory "${Directory }" `
+          -ignoreFileName "${IgnoreFileName}" `
+          -includedDirectory "${IncludedDirectory}" `
+          -skip "${Skip}"
+      env:
+        Directory: ${{ inputs.directory }}
+        IgnoreFileName: ${{ inputs.ignore-file-name }}
+        IncludedDirectory: ${{ inputs.included-directory }}
+        Skip: ${{ inputs.skip }}

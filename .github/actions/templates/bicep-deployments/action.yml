@@ -119,14 +119,14 @@ runs:
     # Download template file artifact if artifact name provided
     - name: Download Template File Artifact
       if: inputs.template-file-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.template-file-artifact-name }}
         path: ${{ inputs.template-file-directory }}
 
     - name: Download Additional Resource Artifact
       if: inputs.additional-resource-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.additional-resource-artifact-name }}
         path: "${{ inputs.additional-resource-directory }}"
@@ -134,7 +134,7 @@ runs:
     # Download Parameter file artifact if artifact name provided
     - name: Download Parameter File Artifact
       if: inputs.parameter-file-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.parameter-file-artifact-name }}
         path: "${{ inputs.parameter-file-directory }}"

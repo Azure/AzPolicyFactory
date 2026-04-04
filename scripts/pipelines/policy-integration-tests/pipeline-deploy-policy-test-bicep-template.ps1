@@ -88,14 +88,14 @@ If ($deploymentResultFilePath -ne '') {
 #create the test resource group if it's specified in the local config file and doesn't exist
 if ($testResourceGroupName) {
   $testResourceGroupResourceId = '/subscriptions/{0}/resourceGroups/{1}' -f $testSubId, $testResourceGroupName
-  $existingTestResourceGroup = getResourceViaARMAPI -ResourceId $testResourceGroupResourceId -apiVersion $resourceGroupApiVersion
+  $existingTestResourceGroup = getResourceViaARMAPI -ResourceId $testResourceGroupResourceId -apiVersion $resourceGroupApiVersion -maxRetry $maxRetry
   if (!($existingTestResourceGroup)) {
     if ($tagsForResourceGroup) {
       Write-Output "[$(getCurrentUTCString)]: Resource group '$testResourceGroupName' doesn't exist. Creating the resource group '$testResourceGroupName' with predefined tags..."
-      $testResourceGroup = newResourceGroupViaARMAPI -subscriptionId $testSubId -resourceGroupName $testResourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion-Tag $tags
+      $testResourceGroup = newResourceGroupViaARMAPI -subscriptionId $testSubId -resourceGroupName $testResourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion-Tag $tags -maxRetry $maxRetry
     } else {
       Write-Output "[$(getCurrentUTCString)]: Resource group '$testResourceGroupName' doesn't exist. Creating the resource group '$testResourceGroupName' without any tags..."
-      $testResourceGroup = newResourceGroupViaARMAPI -subscriptionId $testSubId -resourceGroupName $testResourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion
+      $testResourceGroup = newResourceGroupViaARMAPI -subscriptionId $testSubId -resourceGroupName $testResourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion -maxRetry $maxRetry
     }
 
   } else {
@@ -145,14 +145,14 @@ if (Test-path $BicepFilePath -PathType Leaf) {
       $subscriptionId = $globalTestConfig.subscriptions.$subscriptionName.id
       $rgResourceId = '/subscriptions/{0}/resourceGroups/{1}' -f $subscriptionId, $resourceGroupName
       Write-Verbose "Checking if the resource group '$rgResourceId' exists..." -verbose
-      $existingRg = getResourceViaARMAPI -ResourceId $rgResourceId -apiVersion $resourceGroupApiVersion
+      $existingRg = getResourceViaARMAPI -ResourceId $rgResourceId -apiVersion $resourceGroupApiVersion -maxRetry $maxRetry
       if ($existingRg) {
         Write-Verbose "[$(getCurrentUTCString)]: Resource group '$rgResourceId' already exists. Skipping creation." -verbose
         $additionalResourceGroups += $existingRg.id
       } else {
         Write-Output "[$(getCurrentUTCString)]: Resource group '$rgResourceId' doesn't exist. Creating in location '$testLocation'..."
         #create the resource group using ARM REST API directly so we don't have to change the subscription in the Az context
-        $additionalResourceGroups += newResourceGroupViaARMAPI -subscriptionId $subscriptionId -resourceGroupName $resourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion
+        $additionalResourceGroups += newResourceGroupViaARMAPI -subscriptionId $subscriptionId -resourceGroupName $resourceGroupName -location $testLocation -apiVersion $resourceGroupApiVersion -maxRetry $maxRetry
       }
     }
     Write-Verbose "[$(getCurrentUTCString)]: Additional resource groups:" -verbose

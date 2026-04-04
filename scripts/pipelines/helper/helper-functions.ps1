@@ -218,7 +218,8 @@ function getResourceViaARMAPI {
   Param(
     [Parameter(Mandatory = $true)][string]$resourceId,
     [Parameter(Mandatory = $true)][string]$apiVersion,
-    [Parameter(Mandatory = $false)][string]$token
+    [Parameter(Mandatory = $false)][string]$token,
+    [parameter(Mandatory = $false)][int]$maxRetry = 3
   )
   $uri = "https://management.azure.com{0}?api-version={1}" -f $resourceId, $apiVersion
   Write-Verbose "[$(getCurrentUTCString)]: Trying getting resource via the Resource provider API endpoint '$uri'" -Verbose
@@ -228,14 +229,18 @@ function getResourceViaARMAPI {
   $headers = @{
     'Authorization' = "Bearer $token"
   }
-  try {
-    $request = Invoke-WebRequest -Uri $uri -Method "GET" -Headers $headers
-    if ($request.StatusCode -ge 200 -and $request.StatusCode -lt 300) {
-      $resourceExists = $true
+  $retryCount = 0
+  do {
+    try {
+      $request = Invoke-WebRequest -Uri $uri -Method "GET" -Headers $headers
+      if ($request.StatusCode -ge 200 -and $request.StatusCode -lt 300) {
+        $resourceExists = $true
+      }
+    } catch {
+      $resourceExists = $false
     }
-  } catch {
-    $resourceExists = $false
-  }
+    $retryCount++
+  } while (-not $resourceExists -and $retryCount -lt $maxRetry)
   if ($resourceExists) {
     $resource = ($request.Content | ConvertFrom-Json -Depth 99)
   }
@@ -250,7 +255,8 @@ function newResourceGroupViaARMAPI {
     [Parameter(Mandatory = $true)][string]$location,
     [Parameter(Mandatory = $false)][hashtable]$tags,
     [Parameter(Mandatory = $false)][string]$token,
-    [Parameter(Mandatory = $false)][string]$apiVersion = '2021-04-01'
+    [Parameter(Mandatory = $false)][string]$apiVersion = '2021-04-01',
+    [parameter(Mandatory = $false)][int]$maxRetry = 3
   )
   $uri = "https://management.azure.com/subscriptions/{0}/resourceGroups/{1}?api-version={2}" -f $subscriptionId, $resourceGroupName, $apiVersion
   Write-Verbose "[$(getCurrentUTCString)]: Trying creating resource group via the Resource provider API endpoint '$uri'" -Verbose
@@ -268,15 +274,19 @@ function newResourceGroupViaARMAPI {
     $body.tags = $tags
   }
   $body = $body | ConvertTo-Json -Depth 10
-  try {
-    $request = Invoke-WebRequest -Uri $uri -Method "PUT" -Headers $headers -Body $body
-    if ($request.StatusCode -ge 200 -and $request.StatusCode -lt 300) {
-      $resourceGroupCreated = $true
+  $retryCount = 0
+  do {
+    try {
+      $request = Invoke-WebRequest -Uri $uri -Method "PUT" -Headers $headers -Body $body
+      if ($request.StatusCode -ge 200 -and $request.StatusCode -lt 300) {
+        $resourceGroupCreated = $true
+      }
+    } catch {
+      Write-Error $_.Exception.Message
+      $resourceGroupCreated = $false
     }
-  } catch {
-    Write-Error $_.Exception.Message
-    $resourceGroupCreated = $false
-  }
+    $retryCount++
+  } while (-not $resourceGroupCreated -and $retryCount -lt $maxRetry)
   if ($resourceGroupCreated) {
     Write-Verbose "Resource group '$resourceGroupName' created successfully." -Verbose
     $resourceGroupId = ($request.Content | ConvertFrom-Json -Depth 99).id

@@ -46,6 +46,7 @@
           "Sql",
           "Storage",
           "EventHub",
+          "AzureActiveDirectory",
           "*"
         ]
       }

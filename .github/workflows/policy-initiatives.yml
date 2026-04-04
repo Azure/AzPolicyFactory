@@ -2,6 +2,11 @@ name: policy-initiatives
 
 on:
   workflow_dispatch: # allows a manual run from the UI
+    inputs:
+      debug:
+        description: "Enable debug logging"
+        type: boolean
+        default: false
   workflow_run:
     workflows: ["policy-definitions"] # name of the triggering workflow
     types: [completed]
@@ -11,6 +16,7 @@ permissions:
   contents: read
 
 env:
+  ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
   variablesPath: "settings.yml"
   templateName: "PolicySet"
   templateFileDirectory: "bicep/templates/policyInitiatives"

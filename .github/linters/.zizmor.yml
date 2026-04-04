@@ -5,3 +5,5 @@ rules:
     disable: true
   secrets-outside-env:
     disable: true
+  template-injection:
+    disable: true

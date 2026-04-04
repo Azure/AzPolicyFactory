@@ -1,0 +1,43 @@
+name: "Detect Policy Integration Test Cases"
+description: "Map git file changes to policy integration test cases to determine which tests need to be executed. Requires checkout with fetch-depth: 0."
+author: "Tao Yang"
+
+inputs:
+  test-config-file-path:
+    description: "Test Global Config File Path"
+    required: true
+
+  target-git-branch:
+    description: "Target Git Branch"
+    required: false
+    default: "main"
+
+  test-case-dir:
+    description: "Test Case Directory"
+    required: false
+    default: "tests/policy-integration-tests"
+
+outputs:
+  shouldSkipTest:
+    description: "Whether the test execution should be skipped"
+    value: ${{ steps.mapTestCases.outputs.shouldSkipTest }}
+
+  requiredTestCases:
+    description: "Comma-separated list of required test cases, or '*' for all, or '_NONE_' if none"
+    value: ${{ steps.mapTestCases.outputs.requiredTestCases }}
+
+  runComplianceScan:
+    description: "Whether a compliance scan is required"
+    value: ${{ steps.mapTestCases.outputs.runComplianceScan }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Map Git File Changes to Test Cases
+      id: mapTestCases
+      shell: pwsh
+      run: |
+        ${{ github.workspace }}/scripts/pipelines/policy-integration-tests/pipeline-map-policy-integration-test-cases.ps1 `
+          -testConfigFilePath "${{ inputs.test-config-file-path }}" `
+          -targetGitBranch "${{ inputs.target-git-branch }}" `
+          -testCaseDir "${{ inputs.test-case-dir }}"

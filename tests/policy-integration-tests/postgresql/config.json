@@ -1,0 +1,12 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-postgresql"
+  ],
+  "testName": "PostgreSQL",
+  "assignmentName": "pa-d-postgresql",
+  "testSubscription": "sub-d-lz-corp-01",
+  "testResourceGroup": "rg-ae-d-policy-test-postgresql-001",
+  "location": "australiaeast",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

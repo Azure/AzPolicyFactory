@@ -74,6 +74,19 @@
           "Disabled"
         ],
         "defaultValue": "Deny"
+      },
+      "RR-006_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "RR-006 Effect: Azure Database for PostgreSQL Server",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
       }
     },
     "policyDefinitionGroups": [
@@ -152,6 +165,21 @@
           },
           "disallowedResourceType": {
             "value": "Microsoft.ContainerRegistry/registries/scopeMaps"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "RR-006",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deny-resource-type",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('RR-006_Effect')]"
+          },
+          "disallowedResourceType": {
+            "value": "Microsoft.DBforPostgreSQL/servers"
           }
         },
         "groupNames": [

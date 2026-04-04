@@ -1,0 +1,12 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV-LandingZones/providers/Microsoft.Authorization/policyAssignments/pa-d-pe-lz"
+  ],
+  "testName": "PE",
+  "peAssignmentName": "pa-d-pe-lz",
+  "testSubscription": "sub-d-lz-online-01",
+  "testResourceGroup": "rg-ae-d-policy-test-pe-001",
+  "location": "australiaeast",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

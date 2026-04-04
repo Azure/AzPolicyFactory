@@ -1,0 +1,590 @@
+parameters:
+  - name: poolName
+    displayName: "Self Hosted Agent Pool Name"
+    type: string
+    default: ""
+
+  - name: vmImage
+    displayName: "MS Hosted Agent VM Image Name"
+    type: string
+    default: ""
+
+  - name: condition
+    displayName: "Custom Stage Conditions"
+    type: string
+    default: "succeeded()"
+
+  - name: environment
+    displayName: "Environment"
+    type: string
+
+  - name: dependsOn
+    displayName: "Depends on"
+    type: object
+    default: []
+
+  - name: azureServiceConnection
+    displayName: "Name of the Azure Service Connection"
+    type: string
+
+  - name: azureLocation
+    displayName: "Policy Test Azure Location"
+    type: string
+
+  - name: bicepModuleSubscriptionId
+    displayName: "Bicep module subscription Id (Optional)"
+    type: string
+    default: ""
+
+  - name: deploymentMaxRetry
+    displayName: "Maximum retry attempt for the test Bicep template deployment"
+    type: number
+    default: 3
+
+  - name: timeoutInMinutes
+    displayName: "Timeout in Minutes"
+    type: number
+    default: 180
+
+  - name: preferredAzurePowerShellVersion
+    displayName: "Az Powershell module version."
+    type: string
+    default: ""
+
+  - name: preferredBicepCliVersion
+    displayName: "Bicep CLI version."
+    type: string
+    default: ""
+
+  - name: preferredTerraformVersion
+    displayName: "Terraform version."
+    type: string
+    default: "latest"
+
+  - name: testDirectory
+    displayName: "Directory contains Policy Integration Tests"
+    type: string
+
+  - name: removeDeployment
+    displayName: "Remove Deployment"
+    type: boolean
+    default: true
+
+  - name: testIgnoreFileName
+    displayName: "Test Ignore File Name"
+    type: string
+    default: " "
+
+  - name: testToRun
+    displayName: "Test To Run"
+    type: string
+    default: " "
+
+stages:
+  - stage: "policy_tests_${{ parameters.environment }}"
+    displayName: "Policy Integration Tests ${{ parameters.environment }}"
+    dependsOn: ${{ parameters.dependsOn }}
+    variables:
+      - template: ../../settings.yml
+      - group: 'policy-testing'
+      - name: testGlobalConfigFilePath
+        value: "tests/policy-integration-tests/.shared/policy_integration_test_config.jsonc"
+      - name: testInitiationScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-initiate-policy-integration-tests.ps1"
+      - name: getTestConfigsScript
+        value: "scripts/pipelines/policy-integration-tests/pipeline-get-test-config.ps1"
+      - name: testBicepDeploymentScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-deploy-policy-test-bicep-template.ps1"
+      - name: testTFDeploymentDestroyScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-deploy-destroy-policy-test-terraform-template.ps1"
+      - name: waitPolicyInitialEvalScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-get-policy-assignment-compliance-state.ps1"
+      - name: complianceScanScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-policy-int-test-compliance-scan.ps1"
+      - name: testDeploymentParseResultScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-create-pipeline-variables-from-json-file.ps1"
+      - name: testResourceDeleteScriptPath
+        value: "scripts/pipelines/policy-integration-tests/pipeline-delete-policy-test-deployed-resources.ps1"
+
+    condition: ${{ parameters.condition }}
+    jobs:
+    #initiation job to parse the global test config file
+    - job: initiation
+      displayName: "Tests initiation"
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      steps:
+        - checkout: self
+        - download: none
+        - task: PowerShell@2
+          name: listEnvVar
+          displayName: "List Environment Variables"
+          inputs:
+            targetType: "inline"
+            pwsh: true
+            script: |
+              get-childitem env:
+        - task: PowerShell@2
+          name: parseConfigFile
+          displayName: Parse Global Test Config File
+          inputs:
+            targetType: 'filePath'
+            pwsh: true
+            filePath: $(testInitiationScriptPath)
+            arguments:
+              -testDirectory '${{parameters.testDirectory}}' `
+              -testConfigFilePath '$(testGlobalConfigFilePath)'
+
+    #detect required integration test cases based on git file changes in a PR
+    - template: template-job-detect-policy-integration-test-cases.yml
+      parameters:
+        condition: "and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))"
+        displayName: "Detect Test Cases from Git Diff"
+        poolName: ${{parameters.poolName}}
+        vmImage: ${{parameters.vmImage}}
+        dependsOn: ['initiation']
+        testConfigFilePath: '$(testGlobalConfigFilePath)'
+        testCaseDir: ${{parameters.testDirectory}}
+        targetGitBranch: $(System.PullRequest.targetBranchName)
+
+    #determine the test delay minutes based on the in scope test cases
+    - job: "getTestConfigs"
+      displayName: "Get Test Configurations"
+      condition: in(dependencies.mapTestCases.result, 'Succeeded', 'Skipped')
+      dependsOn:
+        - initiation
+        - mapTestCases
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      variables:
+        testLocalConfigFileName: "$[ dependencies.initiation.outputs['parseConfigFile.testLocalConfigFileName'] ]"
+        testScriptName: "$[ dependencies.initiation.outputs['parseConfigFile.testScriptName'] ]"
+        appendModifyDelay: "$[ dependencies.initiation.outputs['parseConfigFile.waitTimeForAppendModifyPoliciesAfterDeployment'] ]"
+        policyComplianceStateDelay: "$[ dependencies.initiation.outputs['parseConfigFile.waitTimeForPolicyComplianceStateAfterDeployment'] ]"
+        DINEDelay: "$[ dependencies.initiation.outputs['parseConfigFile.waitTimeForDeployIfNotExistsPoliciesAfterDeployment'] ]"
+
+        ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+          includedDirectory: $[ dependencies.mapTestCases.outputs['mapTestCasesTask.requiredTestCases'] ]
+          skip: $[ dependencies.mapTestCases.outputs['mapTestCasesTask.shouldSkipTest'] ]
+        ${{ else }}:
+          includedDirectory: "${{parameters.testToRun}}"
+          skip: 'false'
+      steps:
+        - checkout: self
+        - download: none
+        - task: PowerShell@2
+          name: getTestConfigsTask
+          displayName: Get Test Config
+          inputs:
+            targetType: 'filePath'
+            pwsh: true
+            filePath: $(getTestConfigsScript)
+            arguments:
+              -directory '${{parameters.testDirectory}}' `
+              -ignoreFileName ${{parameters.testIgnoreFileName}} `
+              -includedDirectory "$(includedDirectory)" `
+              -policyComplianceStateDelay $(policyComplianceStateDelay) `
+              -appendModifyDelay $(appendModifyDelay) `
+              -DINEDelay $(DINEDelay) `
+              -testLocalConfigFileName $(testLocalConfigFileName) `
+              -testScriptName $(testScriptName) `
+              -skip $(skip)
+
+    #get sub directories job to get the list of test cases
+    - template: template-job-get-sub-directories.yml
+      parameters:
+        condition: and(in(dependencies.mapTestCases.result, 'Succeeded', 'Skipped'), eq(dependencies.getTestConfigs.result, 'Succeeded'))
+        directory:  ${{parameters.testDirectory}}
+        ignoreFileName: ${{parameters.testIgnoreFileName}}
+        ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+          includedDirectory: $[ dependencies.mapTestCases.outputs['mapTestCasesTask.requiredTestCases'] ]
+          skip: $[ dependencies.mapTestCases.outputs['mapTestCasesTask.shouldSkipTest'] ]
+        ${{ else }}:
+          includedDirectory: ${{parameters.testToRun}}
+          skip: 'false'
+        jobName: "getTests"
+        displayName: "Get Test Cases"
+        poolName: ${{parameters.poolName}}
+        vmImage: ${{parameters.vmImage}}
+        dependsOn:
+          - mapTestCases
+          - getTestConfigs
+
+    #deploy test bicep templates job to deploy the test bicep templates for each test case
+    - job: deployTestResources
+      displayName: "Deploy Resources"
+      condition: and(eq(dependencies.getTests.result, 'Succeeded'), ne(dependencies.getTests.outputs['getSubDirsTask.SubDirCount'], 0))
+      dependsOn:
+        - getTests
+        - initiation
+      workspace:
+        clean: all
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      variables:
+        - name: testBicepTemplateName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testBicepTemplateName'] ]"
+        - name: testTerraformDirectoryName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformDirectoryName'] ]"
+        - name: testLocalConfigFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testLocalConfigFileName'] ]"
+        - name: initialEvalMaximumWaitTime
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.initialEvalMaximumWaitTime'] ]"
+        - name: testBicepDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testBicepDeploymentOutputArtifactPrefix'] ]"
+        - name: testTerraformDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformDeploymentOutputArtifactPrefix'] ]"
+        - name: testDeploymentOutputFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testDeploymentOutputFileName'] ]"
+        - name: testTerraformStateFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformStateFileName'] ]"
+        - name: testTerraformEncryptedStateFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformEncryptedStateFileName'] ]"
+      strategy:
+          matrix: $[ dependencies.getTests.outputs['getSubDirsTask.SubDirectories']]
+      steps:
+        - checkout: self
+        - download: none
+        - template: ./template-task-install-ps-modules.yml
+          parameters:
+            displayName: "Install Az Module v${{parameters.preferredAzurePowerShellVersion}}"
+            moduleNames: "Az`@${{parameters.preferredAzurePowerShellVersion}}"
+            shouldInstall: ${{ ne(parameters.preferredAzurePowerShellVersion, '') }}
+        - template: ./template-task-install-bicep-cli.yml
+          parameters:
+            desiredVersion: '${{ parameters.preferredBicepCliVersion }}'
+        - task: TerraformInstaller@1
+          displayName: Install Terraform version ${{ parameters.preferredTerraformVersion }}
+          inputs:
+            terraformVersion: '${{ parameters.preferredTerraformVersion }}'
+        - task: AzurePowerShell@5
+          name: waitForInitialEval
+          displayName: "Wait Initial Policy Evaluation"
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            pwsh: true
+            #If preferredAzurePowerShellVersion is not provided, or it's running on Self-hosted agents, then use the latest version of Az module
+            ${{ if or(eq(parameters.preferredAzurePowerShellVersion, ''), ne(parameters.poolName, '')) }}:
+              azurePowerShellVersion: 'LatestVersion'
+            #if preferredAzurePowerShellVersion is provided, and it's running on MS-hosted agents, then use the provided version of Az module
+            ${{ else }}:
+              azurePowerShellVersion: 'OtherVersion'
+              preferredAzurePowerShellVersion: '${{parameters.preferredAzurePowerShellVersion}}'
+            scriptType: filePath
+            scriptPath: $(waitPolicyInitialEvalScriptPath)
+            scriptArguments:
+              -configFilePath '$(matrixSubDirRelativePath)/$(testLocalConfigFileName)' `
+              -wait 'true' `
+              -maximumWaitMinutes $(initialEvalMaximumWaitTime)
+        - task: AzurePowerShell@5
+          name: testBicepDeploy
+          displayName: "Deploy Test Bicep Template"
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            pwsh: true
+            #If preferredAzurePowerShellVersion is not provided, or it's running on Self-hosted agents, then use the latest version of Az module
+            ${{ if or(eq(parameters.preferredAzurePowerShellVersion, ''), ne(parameters.poolName, '')) }}:
+              azurePowerShellVersion: 'LatestVersion'
+            #if preferredAzurePowerShellVersion is provided, and it's running on MS-hosted agents, then use the provided version of Az module
+            ${{ else }}:
+              azurePowerShellVersion: 'OtherVersion'
+              preferredAzurePowerShellVersion: '${{parameters.preferredAzurePowerShellVersion}}'
+            scriptType: filePath
+            scriptPath: $(testBicepDeploymentScriptPath)
+            scriptArguments:
+              -BicepFilePath '$(matrixSubDirRelativePath)/$(testBicepTemplateName)' `
+              -TestConfigFilePath '$(matrixSubDirRelativePath)/$(testLocalConfigFileName)' `
+              -BuildNumber $(Build.BuildId) `
+              -maxRetry ${{ parameters.deploymentMaxRetry }} `
+              -bicepModuleSubscriptionId '${{ parameters.bicepModuleSubscriptionId }}' `
+              -deploymentResultFilePath '$(matrixSubDirFullPath)/$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)/$(testDeploymentOutputFileName)'
+            errorActionPreference: 'stop'
+        - task: PublishBuildArtifacts@1
+          displayName: "Publish Bicep Deployment Result Artifact"
+          condition: succeededOrFailed()
+          inputs:
+            artifactName: "$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            PathtoPublish: '$(matrixSubDirFullPath)/$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)'
+        - task: AzureCLI@2
+          name: testTFDeploy
+          displayName: "Deploy Test Terraform Template"
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: $(testTFDeploymentDestroyScriptPath)
+            arguments:
+              -TestConfigFilePath '$(matrixSubDirRelativePath)/$(testLocalConfigFileName)' `
+              -terraformPath '$(matrixSubDirRelativePath)/$(testTerraformDirectoryName)' `
+              -tfBackendConfigFileName 'backend-$(Build.BuildId).tf' `
+              -tfAction 'apply' `
+              -tfBackendStateFileDirectory '$(Build.ArtifactStagingDirectory)/$(matrixSubDirName)-tfstate-$(Build.BuildId)' `
+              -tfStateFileName '$(testTerraformStateFileName)' `
+              -tfEncryptedStateFileName '$(testTerraformEncryptedStateFileName)' `
+              -deploymentResultFileName '$(testDeploymentOutputFileName)' `
+              -uninitializeTerraform 'true' `
+              -aesEncryptionKey '$(aesEncryptionKey)' `
+              -aesIV '$(aesIV)'
+        - task: PublishBuildArtifacts@1
+          displayName: "Publish Terraform Deployment Result Artifact"
+          condition: succeededOrFailed()
+          inputs:
+            artifactName: "$(testTerraformDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(matrixSubDirName)-tfstate-$(Build.BuildId)'
+
+    #Run Policy Compliance Scan asynchronously after test resource deployment, before running the tests
+    - job: runPolicyComplianceScan
+      displayName: "Run Policy Compliance Scan"
+      condition: and(eq(dependencies.deployTestResources.result, 'Succeeded'), ne(dependencies.getTests.outputs['getSubDirsTask.SubDirCount'], 0))
+      dependsOn:
+        - initiation
+        - getTests
+        - getTestConfigs
+        - deployTestResources
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      variables:
+        - name: runComplianceScan
+          value: "$[ dependencies.getTestConfigs.outputs['getTestConfigsTask.runComplianceScan'] ]"
+        - name: complianceScanSubNames
+          value: "$[ dependencies.getTestConfigs.outputs['getTestConfigsTask.complianceScanSubNames'] ]"
+      steps:
+        - task: AzureCLI@2
+          displayName: Initiate Policy Compliance Scan
+          condition: and(succeeded(), eq(variables['runComplianceScan'], true))
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: $(complianceScanScriptPath)
+            arguments:
+              -testGlobalConfigFilePath '$(testGlobalConfigFilePath)' `
+              -complianceScanSubNames '$(complianceScanSubNames)'
+
+    #delay job to wait for the policy evaluation of deployed test resources to complete
+    - job: delayAfterTemplateDeployment
+      displayName: "Wait After Template Deployment"
+      condition: and(eq(dependencies.runPolicyComplianceScan.result, 'Succeeded'), eq(dependencies.initiation.outputs['parseConfigFile.bicepDeploymentRequired'], true), ne(dependencies.getTests.outputs['getSubDirsTask.SubDirCount'], 0))
+      dependsOn:
+        - getTests
+        - deployTestResources
+        - getTestConfigs
+        - runPolicyComplianceScan
+      pool: server
+      variables:
+        - name: waitMinutes
+          value: "$[ dependencies.getTestConfigs.outputs['getTestConfigsTask.testDelayStartMinutes'] ]"
+      steps:
+        - task: Delay@1
+          displayName: "Wait $(waitMinutes) min for initial evaluation"
+          inputs:
+            delayForMinutes: $(waitMinutes)
+
+    #execute each test case
+    - job: runTests
+      displayName: "Run Tests"
+      condition: and(not(failed()), ne(dependencies.getTests.outputs['getSubDirsTask.SubDirCount'], 0))
+      dependsOn:
+        - getTests
+        - initiation
+        - deployTestResources
+        - delayAfterTemplateDeployment
+      workspace:
+        clean: all
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      variables:
+        - name: testOutputFilePrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testOutputFilePrefix'] ]"
+        - name: testOutputFilePath
+          value: "$(matrixSubDirRelativePath)/$(testOutputFilePrefix)-$(matrixSubDirName).XML"
+        - name: testOutputFormat
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testOutputFormat'] ]"
+        - name: testScriptName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testScriptName'] ]"
+        - name: testBicepDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testBicepDeploymentOutputArtifactPrefix'] ]"
+        - name: testTerraformDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformDeploymentOutputArtifactPrefix'] ]"
+        - name: testDeploymentOutputFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testDeploymentOutputFileName'] ]"
+      strategy:
+        matrix: $[ dependencies.getTests.outputs['getSubDirsTask.SubDirectories']]
+      steps:
+        - template: ./template-task-install-ps-modules.yml
+          parameters:
+            displayName: "Install AzResourceTest Module"
+            moduleNames: "AzResourceTest`@2.0.3"
+        - template: ./template-task-install-bicep-cli.yml
+          parameters:
+            desiredVersion: '${{ parameters.preferredBicepCliVersion }}'
+        - task: TerraformInstaller@1
+          displayName: Install Terraform version ${{ parameters.preferredTerraformVersion }}
+          inputs:
+            terraformVersion: '${{ parameters.preferredTerraformVersion }}'
+        - template: ./template-task-install-ps-modules.yml
+          parameters:
+            displayName: "Install Az Module"
+            moduleNames: "Az`@${{parameters.preferredAzurePowerShellVersion}}"
+            shouldInstall: ${{ ne(parameters.preferredAzurePowerShellVersion, '') }}
+        - task: DownloadBuildArtifacts@1
+          displayName: "Download Bicep Deployment Result Artifact"
+          inputs:
+            artifactName: "$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            downloadPath: "$(matrixSubDirFullPath)"
+        - task: DownloadBuildArtifacts@1
+          displayName: "Download Terraform Deployment Result Artifact"
+          inputs:
+            artifactName: "$(testTerraformDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            downloadPath: "$(matrixSubDirFullPath)"
+        - task: Powershell@2
+          name: parseBicepDeploymentResult
+          displayName: "Parse Bicep Deployment Result - $(matrixSubDirName)"
+          inputs:
+            targetType: 'filePath'
+            filePath: $(testDeploymentParseResultScriptPath)
+            arguments:
+              -jsonFilePath $(matrixSubDirFullPath)/$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)/$(testDeploymentOutputFileName) `
+              -overallJsonVariableName 'bicepDeploymentResult'
+        - task: Powershell@2
+          name: parseTerraformDeploymentResult
+          displayName: "Parse Terraform Deployment Result - $(matrixSubDirName)"
+          inputs:
+            targetType: 'filePath'
+            filePath: $(testDeploymentParseResultScriptPath)
+            arguments:
+              -jsonFilePath $(matrixSubDirFullPath)/$(testTerraformDeploymentOutputArtifactPrefix)-$(matrixSubDirName)/$(testDeploymentOutputFileName)
+              -overallJsonVariableName 'terraformDeploymentResult'
+        - task: AzureCLI@2 #must run using AzureCLI task because Terraform only supports Azure CLI authentication
+          name: resourceTest
+          displayName: "Resource Test - $(matrixSubDirName)"
+          env:
+            bicepDeploymentResult: $(parseBicepDeploymentResult.bicepDeploymentResult)
+            terraformDeploymentResult: $(parseTerraformDeploymentResult.terraformDeploymentResult)
+            outputFilePath: $(testOutputFilePath)
+            outputFormat: $(testOutputFormat)
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: '$(matrixSubDirRelativePath)/$(testScriptName)'
+        - task: PublishTestResults@2
+          displayName: "Publish Test results - $(matrixSubDirName)"
+          inputs:
+            testRunTitle: "PolicyIntegrationTest-$(matrixSubDirName)"
+            testRunner: NUnit
+            testResultsFiles: "$(testOutputFilePath)"
+            failTaskOnFailedTests: true
+            failTaskOnMissingResultsFile: true
+            failTaskOnFailureToPublishResults: true
+
+    #remove the deployed test resources
+    - job: resourceRemoval
+      displayName: "Remove Resources"
+      condition: and(succeededOrFailed(), eq(${{ parameters.removeDeployment }}, true), ne(dependencies.getTests.outputs['getSubDirsTask.SubDirCount'], 0))
+      dependsOn:
+        - getTests
+        - initiation
+        - deployTestResources
+        - runTests
+      workspace:
+        clean: all
+      pool:
+        ${{ if ne(parameters.vmImage, '') }}:
+          vmImage: ${{ parameters.vmImage }}
+        ${{ if ne(parameters.poolName, '') }}:
+          name: ${{ parameters.poolName }}
+      variables:
+        - name: testBicepDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testBicepDeploymentOutputArtifactPrefix'] ]"
+        - name: testTerraformDeploymentOutputArtifactPrefix
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformDeploymentOutputArtifactPrefix'] ]"
+        - name: testTerraformDirectoryName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformDirectoryName'] ]"
+        - name: testDeploymentOutputFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testDeploymentOutputFileName'] ]"
+        - name: testTerraformStateFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformStateFileName'] ]"
+        - name: testTerraformEncryptedStateFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testTerraformEncryptedStateFileName'] ]"
+        - name: testLocalConfigFileName
+          value: "$[ dependencies.initiation.outputs['parseConfigFile.testLocalConfigFileName'] ]"
+      strategy:
+        matrix: $[ dependencies.getTests.outputs['getSubDirsTask.SubDirectories']]
+      steps:
+        - task: TerraformInstaller@1
+          displayName: Install Terraform version ${{ parameters.preferredTerraformVersion }}
+          inputs:
+            terraformVersion: '${{ parameters.preferredTerraformVersion }}'
+        - task: DownloadBuildArtifacts@1
+          displayName: "Download Terraform Deployment Result Artifact"
+          inputs:
+            artifactName: "$(testTerraformDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            downloadPath: '$(Build.ArtifactStagingDirectory)/$(matrixSubDirName)-tfstate-$(Build.BuildId)'
+        - task: DownloadBuildArtifacts@1
+          displayName: "Download Bicep Deployment Result Artifact"
+          inputs:
+            artifactName: "$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)"
+            downloadPath: "$(matrixSubDirFullPath)"
+        - task: Powershell@2
+          name: parseBicepDeploymentResult
+          displayName: "Parse Bicep Deployment Result - $(matrixSubDirName)"
+          inputs:
+            targetType: 'filePath'
+            filePath: $(testDeploymentParseResultScriptPath)
+            arguments:
+              -jsonFilePath $(matrixSubDirFullPath)/$(testBicepDeploymentOutputArtifactPrefix)-$(matrixSubDirName)/$(testDeploymentOutputFileName)
+              -overallJsonVariableName 'bicepDeploymentResult'
+        - task: AzurePowerShell@5
+          name: removeBicepTestResources
+          displayName: "Remove Bicep Test Resources"
+          condition: and(succeeded(), or (not(eq(variables['bicepDeploymentId'],'')), eq(variables['bicepRemoveTestResourceGroup'],'True')))
+          env:
+            bicepDeploymentResult: "$(bicepDeploymentResult)"
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            pwsh: true
+            #If preferredAzurePowerShellVersion is not provided, or it's running on Self-hosted agents, then use the latest version of Az module
+            ${{ if or(eq(parameters.preferredAzurePowerShellVersion, ''), ne(parameters.poolName, '')) }}:
+              azurePowerShellVersion: 'LatestVersion'
+            #if preferredAzurePowerShellVersion is provided, and it's running on MS-hosted agents, then use the provided version of Az module
+            ${{ else }}:
+              azurePowerShellVersion: 'OtherVersion'
+              preferredAzurePowerShellVersion: '${{parameters.preferredAzurePowerShellVersion}}'
+            scriptType: filePath
+            scriptPath: $(testResourceDeleteScriptPath)
+            errorActionPreference: 'stop'
+        - task: AzureCLI@2
+          name: testTFDestroy
+          displayName: "Remove Test Terraform Resources"
+          inputs:
+            azureSubscription: "${{parameters.azureServiceConnection}}"
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: $(testTFDeploymentDestroyScriptPath)
+            arguments:
+              -TestConfigFilePath '$(matrixSubDirRelativePath)/$(testLocalConfigFileName)' `
+              -terraformPath '$(matrixSubDirRelativePath)/$(testTerraformDirectoryName)' `
+              -tfBackendConfigFileName 'backend-$(Build.BuildId).tf' `
+              -tfAction 'destroy' `
+              -tfBackendStateFileDirectory '$(Build.ArtifactStagingDirectory)/$(matrixSubDirName)-tfstate-$(Build.BuildId)/$(testTerraformDeploymentOutputArtifactPrefix)-$(matrixSubDirName)' `
+              -tfStateFileName '$(testTerraformStateFileName)' `
+              -tfEncryptedStateFileName '$(testTerraformEncryptedStateFileName)' `
+              -uninitializeTerraform 'true' `
+              -aesEncryptionKey '$(aesEncryptionKey)' `
+              -aesIV '$(aesIV)'

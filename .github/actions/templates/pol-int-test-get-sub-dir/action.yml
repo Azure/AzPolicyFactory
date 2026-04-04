@@ -1,0 +1,45 @@
+name: "Get Sub Directories"
+description: "Get all sub directories in the specified directory"
+author: "Tao Yang"
+
+inputs:
+  directory:
+    description: "Parent Directory"
+    required: true
+
+  ignore-file-name:
+    description: "Ignore File Name"
+    required: false
+    default: " "
+
+  included-directory:
+    description: "Included Directory"
+    required: false
+    default: " "
+
+  skip:
+    description: "Skip and return an empty list"
+    required: false
+    default: "true"
+
+outputs:
+  SubDirCount:
+    description: "Number of sub directories found"
+    value: ${{ steps.getSubDirsTask.outputs.SubDirCount }}
+
+  SubDirectories:
+    description: "JSON object containing sub directory details"
+    value: ${{ steps.getSubDirsTask.outputs.SubDirectories }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get Sub Dirs
+      id: getSubDirsTask
+      shell: pwsh
+      run: |
+        ${{ github.workspace }}/scripts/pipelines/policy-integration-tests/pipeline-get-sub-directories.ps1 `
+          -directory "${{ inputs.directory }}" `
+          -ignoreFileName "${{ inputs.ignore-file-name }}" `
+          -includedDirectory "${{ inputs.included-directory }}" `
+          -skip "${{ inputs.skip }}"

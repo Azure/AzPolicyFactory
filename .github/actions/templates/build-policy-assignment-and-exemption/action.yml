@@ -57,7 +57,7 @@ runs:
   using: "composite"
   steps:
     - name: Azure Login
-      uses: Azure/login@v2
+      uses: azure/login@v3
       with:
         creds: ${{ env.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
@@ -91,7 +91,7 @@ runs:
         Write-Output '::endgroup::'
 
     - name: Upload Bicep Template Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: "${{ inputs.bicep-template-build-artifact-name }}"
         path: "${{ inputs.template-file-directory }}/${{ inputs.bicep-template-build-artifact-name }}"
@@ -120,7 +120,7 @@ runs:
 
     - name: Upload Config File Artifact
       if: inputs.resource-type == 'assignment'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: "${{ inputs.config-build-artifact-name }}"
         path: "${{ inputs.output-dir }}/${{ inputs.config-build-artifact-name }}"

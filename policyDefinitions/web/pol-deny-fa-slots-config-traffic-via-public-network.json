@@ -41,14 +41,50 @@
             "notContains": "workflowapp"
           },
           {
+            "field": "kind",
+            "notContains": "azurecontainerapps"
+          },
+          {
             "anyOf": [
               {
-                "field": "Microsoft.Web/sites/slots/vnetImagePullEnabled",
-                "notEquals": "true"
+                "allOf": [
+                  {
+                    "value": "[requestContext().apiVersion]",
+                    "less": "2024-11-01"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "field": "Microsoft.Web/sites/slots/vnetImagePullEnabled",
+                        "notEquals": "true"
+                      },
+                      {
+                        "field": "Microsoft.Web/sites/slots/vnetContentShareEnabled",
+                        "notEquals": "true"
+                      }
+                    ]
+                  }
+                ]
               },
               {
-                "field": "Microsoft.Web/sites/slots/vnetContentShareEnabled",
-                "notEquals": "true"
+                "allOf": [
+                  {
+                    "value": "[requestContext().apiVersion]",
+                    "greaterOrEquals": "2024-11-01"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "field": "Microsoft.Web/sites/slots/outboundVnetRouting.imagePullTraffic",
+                        "notEquals": "true"
+                      },
+                      {
+                        "field": "Microsoft.Web/sites/slots/outboundVnetRouting.contentShareTraffic",
+                        "notEquals": "true"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

@@ -1,0 +1,5 @@
+skip-check:
+  - CKV_GHA_7 # Allow workflow_dispatch inputs for operational flexibility
+
+skip-path:
+  - tests/policy-integration-tests

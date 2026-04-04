@@ -1,0 +1,25 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-p-postgresql",
+    "displayName": "PostgreSQL Policies Prod",
+    "description": "Policy Assignment for Azure PostgreSQL - Prod",
+    "metadata": {
+      "category": "PostgreSQL"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-postgresql",
+    "identity": "SystemAssigned",
+    "parameters": {
+      "PGS-001_Effect": {
+        "value": "Deny"
+      },
+      "PGS-002_Effect": {
+        "value": "Deny"
+      }
+    },
+    "roleDefinitionIds": [],
+    "nonComplianceMessages": []
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
+}

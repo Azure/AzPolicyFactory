@@ -1,0 +1,22 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/Microsoft.Authorization/policyAssignments/pa-d-web",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/Microsoft.Authorization/policyAssignments/pa-d-pedns",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/microsoft.authorization/policyAssignments/pa-d-diag-settings"
+  ],
+  "testName": "AppServices",
+  "testSubscription": "sub-d-lz-corp-01",
+  "testResourceGroup": "rg-ae-d-policy-test-web-001",
+  "additionalResourceGroups": {
+    "crossSubPe": {
+      "subscription": "sub-d-lz-online-01",
+      "resourceGroup": "rg-ae-d-pol-test-web-cross-sub-pe-01"
+    }
+  },
+  "AppServicesAssignmentName": "pa-d-web",
+  "diagSettingsAssignmentName": "pa-d-diag-settings",
+  "peDNSAssignmentName": "pa-d-pedns",
+  "location": "australiaeast",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

@@ -232,7 +232,7 @@
             "value": "NetworkWatcherRG"
           },
           "networkWatcherName": {
-            "value": "NetworkWatcher_australiaeast"
+            "value": "NetworkWatcher_australiasoutheast"
           },
           "workspaceResourceId": {
             "value": "[parameters('vnetFlowLogWorkspaceResourceId')]"

@@ -19,7 +19,9 @@
         "value": "Deny"
       },
       "PE-003_AllowedCrossSubPrivateLinkResources": {
-        "value": []
+        "value": [
+          "/subscriptions/dc2d72b7-a48d-45e8-91cc-81193ecc659b/resourcegroups/rg-ae-d-policy-test-web-001/providers/Microsoft.Web/sites/web-typoltst-web1-02"
+        ]
       }
     },
     "nonComplianceMessages": []

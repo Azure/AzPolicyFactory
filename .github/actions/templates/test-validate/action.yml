@@ -133,7 +133,7 @@ runs:
     # Download Parameter file artifact if artifact name provided
     - name: Download Parameter File Artifact
       if: inputs.parameter-file-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.parameter-file-artifact-name }}
         path: "${{ inputs.template-file-directory }}/psrule-test/"
@@ -162,14 +162,14 @@ runs:
     # Download template file artifact if artifact name provided
     - name: Download Template File Artifact
       if: inputs.template-file-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.template-file-artifact-name }}
         path: ${{ inputs.template-file-directory }}
 
     - name: Download Additional Resource Artifact
       if: inputs.additional-resource-artifact-name != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ inputs.additional-resource-artifact-name }}
         path: "${{ inputs.additional-resource-directory }}"
@@ -199,7 +199,7 @@ runs:
     # Run Bicep Linter and Build
     - name: Azure Login
       if: inputs.run-psrule-tests == 'true' || inputs.run-bicep-linter == 'true' || inputs.run-template-validation == 'true' || inputs.run-whatif-in-template-validation == 'true'
-      uses: Azure/login@v2
+      uses: azure/login@v3
       with:
         creds: ${{ env.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
@@ -288,7 +288,7 @@ runs:
     # Upload What-If Results Artifact
     - name: Upload What-If Results Artifact
       if: inputs.run-template-validation == 'true' && inputs.run-whatif-in-template-validation == 'true' && inputs.whatif-result-artifact-name != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ inputs.whatif-result-artifact-name }}
         path: "${{ inputs.template-file-directory }}/${{ inputs.whatif-result-artifact-name }}/"

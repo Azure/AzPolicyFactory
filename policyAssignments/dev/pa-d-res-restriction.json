@@ -24,6 +24,9 @@
       },
       "RR-005_Effect": {
         "value": "Deny"
+      },
+      "RR-006_Effect": {
+        "value": "Deny"
       }
     },
     "notScopes": [
@@ -49,6 +52,10 @@
       {
         "policyDefinitionReferenceId": "RR-005",
         "message": "The resource type 'Microsoft.ContainerRegistry/registries/scopeMaps' is not allowed."
+      },
+      {
+        "policyDefinitionReferenceId": "RR-006",
+        "message": "The resource type 'Microsoft.DBforPostgreSQL/servers' is not allowed. Use PostgreSQL Flexible Server instead."
       }
     ]
   },

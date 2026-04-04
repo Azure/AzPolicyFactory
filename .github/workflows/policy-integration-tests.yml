@@ -1,8 +1,3 @@
-# ──────────────────────────────────────────────────────────────
-# Policy Integration Tests
-# Converted from Azure DevOps pipeline:
-#   .azuredevops/pipelines/validation/azure-pipelines-pr-policy-int-tests.yml
-# ──────────────────────────────────────────────────────────────
 name: policy-integration-tests
 
 on:
@@ -149,20 +144,14 @@ jobs:
             -directory '${{ env.testDirectory }}' `
             -ignoreFileName '${{ env.testIgnoreFileName }}' `
             -includedDirectory "${IncludedDirectory}" `
-            -policyComplianceStateDelay "${PolicyComplianceStateDelay}" `
-            -appendModifyDelay "${AppendModifyDelay}" `
-            -DINEDelay "${DINEDelay}" `
-            -testLocalConfigFileName "${TestLocalConfigFileName}" `
-            -testScriptName "${TestScriptName}" `
-            -skip "${Skip}"
+            -policyComplianceStateDelay ${{ needs.initiation.outputs.waitTimeForPolicyComplianceStateAfterDeployment }} `
+            -appendModifyDelay ${{ needs.initiation.outputs.waitTimeForAppendModifyPoliciesAfterDeployment }} `
+            -DINEDelay ${{ needs.initiation.outputs.waitTimeForDeployIfNotExistsPoliciesAfterDeployment }} `
+            -testLocalConfigFileName '${{ needs.initiation.outputs.testLocalConfigFileName }}' `
+            -testScriptName '${{ needs.initiation.outputs.testScriptName }}' `
+            -skip ${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.shouldSkipTest || 'false' }}
         env:
           IncludedDirectory: ${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.requiredTestCases || inputs.testToRun || ' ' }}
-          PolicyComplianceStateDelay: ${{ needs.initiation.outputs.waitTimeForPolicyComplianceStateAfterDeployment }}
-          AppendModifyDelay: ${{ needs.initiation.outputs.waitTimeForAppendModifyPoliciesAfterDeployment }}
-          DINEDelay: ${{ needs.initiation.outputs.waitTimeForDeployIfNotExistsPoliciesAfterDeployment }}
-          TestLocalConfigFileName: ${{ needs.initiation.outputs.testLocalConfigFileName }}
-          TestScriptName: ${{ needs.initiation.outputs.testScriptName }}
-          Skip: ${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.shouldSkipTest || 'false' }}
 
   # ──────────────────────────────────────────
   # Get test case sub directories
@@ -194,6 +183,11 @@ jobs:
           ignore-file-name: "${{ env.testIgnoreFileName }}"
           included-directory: "${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.requiredTestCases || inputs.testToRun || ' ' }}"
           skip: "${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.shouldSkipTest || 'false' }}"
+      - name: Debug Outputs
+        shell: bash
+        run: |
+          echo "SubDirCount='${{ steps.getSubDirs.outputs.SubDirCount }}'"
+          echo 'SubDirectories=${{ steps.getSubDirs.outputs.SubDirectories }}'
 
   # ──────────────────────────────────────────
   # Deploy test resources (matrix)
@@ -240,28 +234,19 @@ jobs:
         shell: pwsh
         run: |
           ./${{ env.waitPolicyInitialEvalScriptPath }} `
-            -configFilePath '${ ConfigFilePath }' `
+            -configFilePath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}' `
             -wait 'true' `
-            -maximumWaitMinutes '${ MaximumWaitMinutes }'
-        env:
-          ConfigFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}"
-          MaximumWaitMinutes: "${{ needs.initiation.outputs.initialEvalMaximumWaitTime }}"
+            -maximumWaitMinutes ${{ needs.initiation.outputs.initialEvalMaximumWaitTime }}
       - name: Deploy Test Bicep Template
         shell: pwsh
         run: |
           ./${{ env.testBicepDeploymentScriptPath }} `
-            -BicepFilePath '${BicepFilePath}' `
-            -TestConfigFilePath '${TestConfigFilePath}' `
-            -BuildNumber '${BuildNumber}' `
-            -maxRetry '${MaxRetry}' `
+            -BicepFilePath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testBicepTemplateName }}' `
+            -TestConfigFilePath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}' `
+            -BuildNumber ${{ github.run_number }} `
+            -maxRetry ${{ env.deploymentMaxRetry }} `
             -bicepModuleSubscriptionId '' `
-            -deploymentResultFilePath '${deploymentResultFilePath}'
-        env:
-          BicepFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testBicepTemplateName }}"
-          TestConfigFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}"
-          BuildNumber: ${{ github.run_number }}
-          MaxRetry: ${{ env.deploymentMaxRetry }}
-          deploymentResultFilePath: "${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}"
+            -deploymentResultFilePath '${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}'
       - name: Publish Bicep Deployment Result Artifact
         if: always()
         uses: actions/upload-artifact@v7
@@ -272,26 +257,17 @@ jobs:
         shell: pwsh
         run: |
           ./${{ env.testTFDeploymentDestroyScriptPath }} `
-            -TestConfigFilePath '${TestConfigFilePath}' `
-            -terraformPath '${TerraformPath}' `
-            -tfBackendConfigFileName '${TfBackendConfigFileName}' `
+            -TestConfigFilePath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}' `
+            -terraformPath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testTerraformDirectoryName }}' `
+            -tfBackendConfigFileName 'backend-${{ github.run_id }}.tf' `
             -tfAction 'apply' `
-            -tfBackendStateFileDirectory '${TfBackendStateFileDirectory}' `
-            -tfStateFileName '${TfStateFileName}' `
-            -tfEncryptedStateFileName '${TfEncryptedStateFileName}' `
-            -deploymentResultFileName '${DeploymentResultFileName}' `
+            -tfBackendStateFileDirectory '${{ runner.temp }}/${{ matrix.matrixSubDirName }}-tfstate-${{ github.run_id }}' `
+            -tfStateFileName '${{ needs.initiation.outputs.testTerraformStateFileName }}' `
+            -tfEncryptedStateFileName '${{ needs.initiation.outputs.testTerraformEncryptedStateFileName }}' `
+            -deploymentResultFileName '${{ needs.initiation.outputs.testDeploymentOutputFileName }}' `
             -uninitializeTerraform 'true' `
             -aesEncryptionKey '${{ secrets.AES_ENCRYPTION_KEY }}' `
             -aesIV '${{ secrets.AES_IV }}'
-        env:
-          TestConfigFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}"
-          TerraformPath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testTerraformDirectoryName }}"
-          TfBackendConfigFileName: "backend-${{ github.run_id }}.tf"
-          TfBackendStateFileDirectory: "${{ runner.temp }}/${{ matrix.matrixSubDirName }}-tfstate-${{ github.run_id }}"
-          TfStateFileName: "${{ needs.initiation.outputs.testTerraformStateFileName }}"
-          TfEncryptedStateFileName: "${{ needs.initiation.outputs.testTerraformEncryptedStateFileName }}"
-          DeploymentResultFileName: "${{ needs.initiation.outputs.testDeploymentOutputFileName }}"
-
       - name: Publish Terraform Deployment Result Artifact
         if: always()
         uses: actions/upload-artifact@v7
@@ -332,9 +308,7 @@ jobs:
         run: |
           ./${{ env.complianceScanScriptPath }} `
             -testGlobalConfigFilePath '${{ env.testGlobalConfigFilePath }}' `
-            -complianceScanSubNames '${ ComplianceScanSubNames }'
-        env:
-          ComplianceScanSubNames: ${{ needs.getTestConfigs.outputs.complianceScanSubNames }}
+            -complianceScanSubNames '${{ needs.getTestConfigs.outputs.complianceScanSubNames }}'
 
   # ──────────────────────────────────────────
   # Wait after template deployment for policy
@@ -358,8 +332,8 @@ jobs:
       - name: "Wait ${{ needs.getTestConfigs.outputs.testDelayStartMinutes }} min for initial evaluation"
         shell: pwsh
         run: |
-          Write-Output "::group::Waiting ${TestDelayStartMinutes} minutes for Initial Policy Evaluation"
-          $delayMinutes = '${TestDelayStartMinutes}'
+          Write-Output "::group::Waiting ${{ needs.getTestConfigs.outputs.testDelayStartMinutes }} minutes for Initial Policy Evaluation"
+          $delayMinutes = '${{ needs.getTestConfigs.outputs.testDelayStartMinutes }}'
           $now = "$([DateTime]::UtcNow.ToString('u')) UTC"
           if ($delayMinutes -match '^\d+$' -and [int]$delayMinutes -gt 0) {
             Write-Output "[$now]: Waiting $delayMinutes minutes for policy evaluation..."
@@ -368,8 +342,6 @@ jobs:
             Write-Output "[$now]: No delay required (value: '$delayMinutes')"
           }
           Write-Output '::endgroup::'
-        env:
-          TestDelayStartMinutes: ${{ needs.getTestConfigs.outputs.testDelayStartMinutes }}
 
   # ──────────────────────────────────────────
   # Execute test cases (matrix)
@@ -435,19 +407,15 @@ jobs:
         shell: pwsh
         run: |
           ./${{ env.testDeploymentParseResultScriptPath }} `
-            -jsonFilePath '${ JsonFilePath }' `
+            -jsonFilePath '${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}' `
             -overallJsonVariableName 'bicepDeploymentResult'
-        env:
-          JsonFilePath: "${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}"
       - name: "Parse Terraform Deployment Result - ${{ matrix.matrixSubDirName }}"
         id: parseTerraformDeploymentResult
         shell: pwsh
         run: |
           ./${{ env.testDeploymentParseResultScriptPath }} `
-            -jsonFilePath '${ JsonFilePath }' `
+            -jsonFilePath '${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testTerraformDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}' `
             -overallJsonVariableName 'terraformDeploymentResult'
-        env:
-          JsonFilePath: "${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testTerraformDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}"
       - name: "Resource Test - ${{ matrix.matrixSubDirName }}"
         shell: pwsh
         env:
@@ -455,10 +423,8 @@ jobs:
           terraformDeploymentResult: ${{ steps.parseTerraformDeploymentResult.outputs.terraformDeploymentResult }}
           outputFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testOutputFilePrefix }}-${{ matrix.matrixSubDirName }}.XML"
           outputFormat: ${{ needs.initiation.outputs.testOutputFormat }}
-          TestScriptName: ${{ needs.initiation.outputs.testScriptName }}
         run: |
-          ./${{ matrix.matrixSubDirRelativePath }}/${ TestScriptName }
-
+          ./${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testScriptName }}
       - name: "Process Test Results - ${{ matrix.matrixSubDirName }}"
         if: always()
         uses: ./.github/actions/templates/parse-pester-results
@@ -520,10 +486,8 @@ jobs:
         shell: pwsh
         run: |
           ./${{ env.testDeploymentParseResultScriptPath }} `
-            -jsonFilePath '${ JsonFilePath }' `
+            -jsonFilePath '${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}' `
             -overallJsonVariableName 'bicepDeploymentResult'
-        env:
-          JsonFilePath: "${{ matrix.matrixSubDirFullPath }}/${{ needs.initiation.outputs.testBicepDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}/${{ needs.initiation.outputs.testDeploymentOutputFileName }}"
       - name: "Remove Bicep Test Resources - ${{ matrix.matrixSubDirName }}"
         if: >-
           steps.parseBicepDeploymentResult.outputs.bicepDeploymentId != '' ||
@@ -538,20 +502,13 @@ jobs:
         shell: pwsh
         run: |
           ./${{ env.testTFDeploymentDestroyScriptPath }} `
-            -TestConfigFilePath '${ TestConfigFilePath }' `
-            -terraformPath '${ TerraformPath }' `
-            -tfBackendConfigFileName '${ TfBackendConfigFileName }' `
+            -TestConfigFilePath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}' `
+            -terraformPath '${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testTerraformDirectoryName }}' `
+            -tfBackendConfigFileName 'backend-${{ github.run_id }}.tf' `
             -tfAction 'destroy' `
-            -tfBackendStateFileDirectory '${ TfBackendStateFileDirectory }' `
-            -tfStateFileName '${ TfStateFileName }' `
-            -tfEncryptedStateFileName '${ TfEncryptedStateFileName }' `
+            -tfBackendStateFileDirectory '${{ runner.temp }}/${{ matrix.matrixSubDirName }}-tfstate-${{ github.run_id }}/${{ needs.initiation.outputs.testTerraformDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}' `
+            -tfStateFileName '${{ needs.initiation.outputs.testTerraformStateFileName }}' `
+            -tfEncryptedStateFileName '${{ needs.initiation.outputs.testTerraformEncryptedStateFileName }}' `
             -uninitializeTerraform 'true' `
             -aesEncryptionKey '${{ secrets.AES_ENCRYPTION_KEY }}' `
             -aesIV '${{ secrets.AES_IV }}'
-        env:
-          TestConfigFilePath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testLocalConfigFileName }}"
-          TerraformPath: "${{ matrix.matrixSubDirRelativePath }}/${{ needs.initiation.outputs.testTerraformDirectoryName }}"
-          TfBackendConfigFileName: "backend-${{ github.run_id }}.tf"
-          TfBackendStateFileDirectory: "${{ runner.temp }}/${{ matrix.matrixSubDirName }}-tfstate-${{ github.run_id }}/${{ needs.initiation.outputs.testTerraformDeploymentOutputArtifactPrefix }}-${{ matrix.matrixSubDirName }}"
-          TfStateFileName: "${{ needs.initiation.outputs.testTerraformStateFileName }}"
-          TfEncryptedStateFileName: "${{ needs.initiation.outputs.testTerraformEncryptedStateFileName }}"

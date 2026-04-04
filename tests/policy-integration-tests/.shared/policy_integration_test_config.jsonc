@@ -119,7 +119,6 @@
       "scripts/pipelines/pipeline-get-deployment-target-from-parameter-file.ps1",
       "scripts/pipelines/pipeline-get-parameter-files.ps1",
       "scripts/pipelines/pipeline-install-moduleFromRepo.ps1",
-      "scripts/pipelines/pipeline-template-deployment.ps1",
       "scripts/pipelines/pipeline-template-deployment-rest.ps1",
       "scripts/pipelines/pipeline-template-validation.ps1",
       "scripts/pipelines/pipeline-set-policy-resource-bicep-template-file.ps1",

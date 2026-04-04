@@ -14,8 +14,13 @@ on:
       - ".github/workflows/pr-policy-assignment-env-consistency.yml"
       - ".github/actions/templates/test-policy-assignment-env-consistency/**"
   workflow_dispatch: # allow manual trigger
-
+    inputs:
+      debug:
+        description: "Enable debug logging"
+        type: boolean
+        default: false
 env:
+  ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
   devConfigurationFilesDirectory: "policyAssignments/dev"
   prodConfigurationFilesDirectory: "policyAssignments/prod"
 

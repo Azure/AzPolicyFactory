@@ -143,15 +143,13 @@ jobs:
           ./${{ env.getTestConfigsScript }} `
             -directory '${{ env.testDirectory }}' `
             -ignoreFileName '${{ env.testIgnoreFileName }}' `
-            -includedDirectory "${IncludedDirectory}" `
+            -includedDirectory "${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.requiredTestCases || inputs.testToRun || ' ' }}" `
             -policyComplianceStateDelay ${{ needs.initiation.outputs.waitTimeForPolicyComplianceStateAfterDeployment }} `
             -appendModifyDelay ${{ needs.initiation.outputs.waitTimeForAppendModifyPoliciesAfterDeployment }} `
             -DINEDelay ${{ needs.initiation.outputs.waitTimeForDeployIfNotExistsPoliciesAfterDeployment }} `
             -testLocalConfigFileName '${{ needs.initiation.outputs.testLocalConfigFileName }}' `
             -testScriptName '${{ needs.initiation.outputs.testScriptName }}' `
             -skip ${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.shouldSkipTest || 'false' }}
-        env:
-          IncludedDirectory: ${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.requiredTestCases || inputs.testToRun || ' ' }}
 
   # ──────────────────────────────────────────
   # Get test case sub directories
@@ -183,11 +181,6 @@ jobs:
           ignore-file-name: "${{ env.testIgnoreFileName }}"
           included-directory: "${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.requiredTestCases || inputs.testToRun || ' ' }}"
           skip: "${{ github.event_name == 'pull_request' && needs.mapTestCases.outputs.shouldSkipTest || 'false' }}"
-      - name: Debug Outputs
-        shell: bash
-        run: |
-          echo "SubDirCount='${{ steps.getSubDirs.outputs.SubDirCount }}'"
-          echo 'SubDirectories=${{ steps.getSubDirs.outputs.SubDirectories }}'
 
   # ──────────────────────────────────────────
   # Deploy test resources (matrix)

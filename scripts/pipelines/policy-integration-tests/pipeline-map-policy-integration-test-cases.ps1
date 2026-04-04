@@ -159,9 +159,11 @@ function getTestCasesFromAssignment {
     [string]$policyIntegrationTestsPath
   )
   $testsInScope = @()
-  $testCases = Get-ChildItem -path $policyIntegrationTestsPath -Depth 1 -Directory
+  Write-Verbose "  - Looking for test cases that are impacted by the policy assignment '$assignmentName' from '$policyIntegrationTestsPath'." -Verbose
+  $testCases = Get-ChildItem -path $policyIntegrationTestsPath -Depth 0 -Directory
 
   foreach ($testCase in $testCases) {
+    Write-Verbose "   - Checking test case '$($testCase.Name)' for assignment '$assignmentName'..." -Verbose
     $testConfigFile = join-Path -Path $testCase.FullName -ChildPath 'config.json' -Resolve
     $testConfig = Get-Content -Path $testConfigFile -Raw | ConvertFrom-Json -Depth 99
     $policyAssignmentIds = $testConfig.policyAssignmentIds
@@ -523,7 +525,6 @@ Foreach ($file in $modifiedFiles) {
     Write-Verbose "  - File '$file' is not in the global test paths. Will Check if individual tests need to be executed." -Verbose
     $getRequiredTestCasesParams = @{
       changeFilePath                                             = $file
-      policyIntegrationTestsPath                                 = $policyIntegrationTestsPath
       policyInitiativesPath                                      = $policyInitiativesPath
       policyAssignmentsPath                                      = $policyAssignmentsPath
       gitRoot                                                    = $gitRoot

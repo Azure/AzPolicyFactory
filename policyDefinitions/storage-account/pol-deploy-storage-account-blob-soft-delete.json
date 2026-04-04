@@ -56,18 +56,6 @@
             "equals": "Microsoft.Storage/storageAccounts"
           },
           {
-            "not": {
-              "field": "tags[application]",
-              "equals": "databricks"
-            }
-          },
-          {
-            "not": {
-              "field": "tags[application]",
-              "equals": "purview"
-            }
-          },
-          {
             "field": "kind",
             "in": [
               "Storage",

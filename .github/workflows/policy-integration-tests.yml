@@ -358,8 +358,8 @@ jobs:
       - name: "Wait ${{ needs.getTestConfigs.outputs.testDelayStartMinutes }} min for initial evaluation"
         shell: pwsh
         run: |
-          Write-Output "::group::Waiting ${{ env.TestDelayStartMinutes }} minutes for Initial Policy Evaluation"
-          $delayMinutes = '${{ env.TestDelayStartMinutes }}'
+          Write-Output "::group::Waiting ${TestDelayStartMinutes} minutes for Initial Policy Evaluation"
+          $delayMinutes = '${TestDelayStartMinutes}'
           $now = "$([DateTime]::UtcNow.ToString('u')) UTC"
           if ($delayMinutes -match '^\d+$' -and [int]$delayMinutes -gt 0) {
             Write-Output "[$now]: Waiting $delayMinutes minutes for policy evaluation..."

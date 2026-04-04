@@ -14,7 +14,8 @@
       },
       "MON-001_allowedEmailDomains": {
         "value": [
-          "contoso.com"
+          "contoso.com",
+          "microsoft.com"
         ]
       },
       "MON-002_Effect": {

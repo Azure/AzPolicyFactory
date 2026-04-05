@@ -47,7 +47,7 @@
   "hr-style": {
     "style": "---"
   },
-  "no-emphasis-as-header": false,
+  "no-emphasis-as-heading": false,
   "no-space-in-emphasis": true,
   "no-space-in-code": true,
   "no-space-in-links": true,

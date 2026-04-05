@@ -357,8 +357,9 @@ On the other hand, the AzAPI provider uses the **EXACT** same payload as the res
 In summary, if you evaluating `Append`, `Modify`, `Audit` or `AuditIfNotExists` effects by evaluating the deployed resource configuration or the policy compliance state of these resources in Azure, you can use either AzureRM or AzAPI provider for the Policy Integration Tests. However, if you want to evaluate `Deny` or `Audit` effect policies by validating the resource configuration without deploying the resources, you **MUST** use the AzAPI provider for the Policy Integration Tests.
 
 **TL,DR**:
-  - In the `main-test-terraform` project, you can use either AzureRM or AzAPI providers
-  - In the `main-bad-terraform` and `main-good-terraform` projects, you **MUST** only use the AzAPI provider
+
+- In the `main-test-terraform` project, you can use either AzureRM or AzAPI providers
+- In the `main-bad-terraform` and `main-good-terraform` projects, you **MUST** only use the AzAPI provider
 
 </details>
 
@@ -367,7 +368,9 @@ In summary, if you evaluating `Append`, `Modify`, `Audit` or `AuditIfNotExists` 
 <details>
 <summary>Click to expand</summary>
 
-If you are using the cloud version of Azure DevOps or GitHub Actions, the logs and artifacts generated in the pipeline / workflow runs are stored in a centralized storage which is encrypted at rest. However, since the storage used by the platform are typically owned and operated by the platform provider (Microsoft and GitHub in this case), to add an extra layer of security for the Terraform state files, we have implemented an additional encryption mechanism in the pipeline / workflow using AES encryption.
+If you are using the cloud version of Azure DevOps or GitHub Actions, the logs and artifacts generated in the pipeline / workflow runs are stored in a centralized storage which is encrypted at rest.
+
+However, since the storage used by the platform are typically owned and operated by the platform provider (Microsoft and GitHub in this case), to add an extra layer of security for the Terraform state files, we have implemented an additional encryption mechanism in the pipeline / workflow using AES encryption.
 
 By adding the extra layer of encryption, we can ensure that even if someone gains unauthorized access to the storage where the pipeline / workflow logs and artifacts are stored, they will not be able to access the sensitive information in the Terraform state files without the AES encryption key and initialization vector (IV) which are stored securely in the pipeline / workflow variables as secrets.
 
@@ -430,7 +433,7 @@ The following properties in the [Policy Integration Test global configuration fi
 - Append and Modify effect policies
   - `waitTimeForAppendModifyPoliciesAfterDeployment`: Set to 1. As long as the policy assignment has completed the initial evaluation, there is no need to wait. We have configured the pipeline to wait for 1 minute for this use case just to be safe.
 - Resource Existence validation for policies with `DeployIfNotExists` effect
-  - `waitTimeForDeployIfNotExistsPoliciesAfterDeployment`: Set to 5. This is the time required for the deployment to be triggered and completed for policies with `DeployIfNotExists` effect. It also caters for the time required for the Azure Resource Graph to index the resource changes (if querying resource existence through Azure Resource Graph in the test validation step). This may need to increase if you are seeing failures. Especially when you have DeployIfNotExists policies that kicks off deployments require longer time to complete or the optional `evaluationDelay` property are not set in the policy definition.
+  - `waitTimeForDeployIfNotExistsPoliciesAfterDeployment`: Set to 5. This is the time required for `DeployIfNotExists` policy deployments to trigger and complete, including Azure Resource Graph indexing if querying resource existence via ARG. Increase this value if you experience failures due to long-running deployments or missing `evaluationDelay` in the policy definition.
 
 </details>
 

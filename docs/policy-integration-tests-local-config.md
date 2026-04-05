@@ -18,7 +18,7 @@ The following mandatory variables are defined in the local configuration file:
 
 | Name | Expected Data Type | Description | Example |
 | :--- | :----------------- | :---------- | :------ |
-| `policyAssignmentIds` | Yes | Array of policy assignment resource IDs to evaluate during testing. These policy assignments are the pre-requisites for the test. Test will not start until they have been initially evaluated after creation. | `["/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-pedns", "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"]` |
+| `policyAssignmentIds` | Yes | Array of pre-requisites policy assignment resource IDs for the test. Test will not start until they have been initially evaluated after creation. | `["/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-pedns", "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"]` |
 | `testName` | String | Name of the test case. This is used for to form the Pester test container | `storageAccount` |
 | `testSubscription` | String | Name of the subscription used for testing. This should be one of the subscriptions defined in the global configuration file. | `sub-d-lz-corp-01` |
 | `location` | String | Azure region where the test resources will be deployed. | `australiaeast` |

@@ -14,7 +14,7 @@ Before running the tests, make sure to review and update the following general s
 
 ## Test Configurations
 
-Unless there are specific requirements for certain tests, the default values for these settings should work for most scenarios. However, you may need to adjust some of these settings based on the specific policies being tested, or should you wish to change the default file names, or wait times for tests for different policy effects.
+Unless there are specific requirements for certain tests, the default values for these settings should work for most scenarios. However, you may need to adjust some of these settings based on the specific policies being tested, or should you wish to change the default filenames, or wait times for tests for different policy effects.
 
 ### Bicep
 
@@ -32,8 +32,8 @@ Unless there are specific requirements for certain tests, the default values for
 | `terraformViolateDirectoryName` | string | Name of the Terraform directory used for validate against Policy Violation API that expected to violate deny or audit policies. |
 | `terraformComplyDirectoryName` | string | Name of the Terraform directory used for validate against Policy Violation API that expected to comply with the policy. |
 | `testTerraformBackendConfigFileName` | string | Name of the Terraform file that contains the backend configuration. This file should be located in the `testTerraformDirectoryName` directory. |
-| `testTerraformStateFileName` | string | Terraform state file name. |
-| `testTerraformEncryptedStateFileName` | string | Encrypted Terraform state file name. |
+| `testTerraformStateFileName` | string | Terraform state filename. |
+| `testTerraformEncryptedStateFileName` | string | Encrypted Terraform state filename. |
 
 ### Test Execution Settings
 

@@ -82,7 +82,7 @@ $tests = @()
 
 A Bicep template with the target deployment scope of either `subscription` or `resourceGroup` must be created and it should contain configurations that violate the testing policies.
 
->**NOTE**: When testing the `Deny` policy violation for resources within a resource group, **DO NOT** create a Bicep template with the `subscription` deployment scope that also deploys the resource group. ARM What-If API will not correctly identify the policy violation for a resource inside a resource group if the resource group does not exist. Instead, create a `resource group` scoped test template. The pipeline will automatically create the resource group in a pre-configured region with pre-configured tags if it does not exist.
+>**NOTE**: When testing the `Deny` policy violation for resources within a resource group, **DO NOT** create a Bicep template with the `subscription` deployment scope that also deploys the resource group. ARM What-If API will not identify the policy violation for a resource inside a resource group if the resource group does not exist. Instead, create a `resource group` scoped test template. The pipeline will automatically create the resource group in a pre-configured region with if it does not exist.
 
 To configure the test:
 
@@ -288,7 +288,7 @@ The following example test cases can be found here:
 | [key-vault](../tests/policy-integration-tests/key-vault) | Azure Key Vault | `Deny`, `Audit`, `Modify`, `DeployIfNotExists` | Reference for testing Key Vault related policies using a set of Bicep templates. |
 | [monitor](../tests/policy-integration-tests/monitor) | Azure Monitor resources such as Log Analytics Workspace and Action Group, etc. | `Deny`, `Audit`, `DeployIfNotExists` | Reference for testing Azure Monitor related policies using a set of Bicep templates, as well as using Azure Policy Restriction API. |
 | [network-security-group](../tests/policy-integration-tests/network-security-group) | Azure Network Security Group | `Deny`, `DeployIfNotExists` | Reference for testing NSG related policies using a set of Bicep templates. |
-| [postgresql](../tests/policy-integration-tests/postgresql) | Azure Database for PostgreSQL | `Deny` | Reference for testing PostgreSQL related policies using a set of Bicep templates. |
+| [PostgreSQL](../tests/policy-integration-tests/postgresql) | Azure Database for PostgreSQL | `Deny` | Reference for testing PostgreSQL related policies using a set of Bicep templates. |
 | [private-endpoint](../tests/policy-integration-tests/private-endpoint) | Azure Private Endpoint | `Deny` | Reference for testing Private Endpoint related policies using Bicep template. |
 | [storage-account](../tests/policy-integration-tests/storage-account) | Azure Storage Account | `Deny`, `Audit`, `Modify`, `DeployIfNotExists`  | Reference for testing Storage Account related policies using Terraform (using the Terraform `AzAPI` provider and Azure Policy Restriction API). |
 | [tags](../tests/policy-integration-tests/tags) | Subscription and Resource Group tags | `Deny`, `Modify` | Reference for testing subscription and resource group tagging policies using Bicep templates and manual What-If API response from resource update request (updating tags of an existing subscription). |

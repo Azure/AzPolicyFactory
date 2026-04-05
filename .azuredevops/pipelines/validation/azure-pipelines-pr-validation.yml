@@ -26,6 +26,6 @@ stages:
               -e GITHUB_ACTIONS_ZIZMOR_CONFIG_FILE=.zizmor.yml \
               -e MARKDOWN_CONFIG_FILE=.markdownlint.json \
               -v $(System.DefaultWorkingDirectory):/tmp/lint \
-              ghcr.io/super-linter/super-linter:v8.5.0
+              ghcr.io/super-linter/super-linter:v8.6.0
           displayName: 'GitHub Super-Linter Code Scan'
 

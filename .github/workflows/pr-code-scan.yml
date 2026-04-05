@@ -46,4 +46,4 @@ jobs:
           VALIDATE_ARM: false
           IGNORE_GITIGNORED_FILES: true
           GITHUB_ACTIONS_ZIZMOR_CONFIG_FILE: .zizmor.yml
-          MARKDOWN_CONFIG_FILE: .markdownlint.json
+          MARKDOWN_CONFIG_FILE: ../../.markdownlint.json

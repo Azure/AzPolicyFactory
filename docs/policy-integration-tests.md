@@ -11,9 +11,9 @@ Policy Integration tests are implemented to test assigned policies that have the
 
 >**NOTE**: Only Azure resources that are deployed to `subscription` or `resourceGroup` levels can be governed by Azure Policy. `Tenant` and `ManagementGroup` level resources cannot be governed by Azure Policy. Therefore, the Policy integration tests cannot cover these types of resources.
 
-## Potential Pipeline Workflow
+## Policy Integration Test Pipeline Workflow
 
-The policy integration tests can be embedded into CI/CD pipelines. The pipelines can be configured to run automatically when a new pull request is created on the repository that contains the Azure Policy Infrastructure as Code solutions. Below is a potential workflow of the pipeline:
+The policy integration tests are embedded into CI/CD pipelines. The ADO pipeline and GitHub Workflow are configured to run automatically when a new pull request is created. Below is a potential workflow of the pipeline:
 
 ```mermaid
 flowchart TD

@@ -160,7 +160,7 @@ if ($wait -eq 'true') {
         if ($($timeDifference.TotalMinutes -lt $waitMinutesForNewAssignments)) {
           Write-Verbose "  - Initial creation date: $($initialCreationDate)" -Verbose
           Write-Verbose "  - Current date (UTC): $utcNow" -Verbose
-          Write-Verbose "  - Waiting for 5 minutes from the initial creation date..." -Verbose
+          Write-Verbose "  - Waiting for 1 minute from the initial creation date..." -Verbose
           $shouldWait = $true
         } else {
           Write-Verbose "  - Initial creation date: $($initialCreationDate)" -Verbose

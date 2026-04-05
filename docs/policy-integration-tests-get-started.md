@@ -1,34 +1,20 @@
-# Azure Policy Integration Tests
+# Policy Integration Tests - Get Started Guide
 
 ## Overview
 
-This directory contains integration tests for Azure Policy assignments. Each subfolder (except `.shared` and `test-template`) represents a test case targeting specific policy definitions or initiatives.
+The [`tests/policy-integration-tests`](../tests/policy-integration-tests) directory contains integration tests for Azure Policy assignments. Each subfolder (except `.shared` and `.test-template`) represents a test case targeting specific policy definitions or initiatives.
 
-The `test-template` folder provides a starting point for creating new tests. Copy it, customise the configuration and templates, then define your test assertions.
+The `.test-template` folder provides a starting point for creating new tests. Copy it, customise the configuration and templates, then define your test assertions.
 
 ## Developing a New Test
 
 ### 1. Copy the test template
 
-Copy the `test-template` folder and rename it to reflect the policy or scenario being tested (e.g. `storage-account`, `key-vault`).
+Copy the `.test-template` folder and rename it to reflect the policy or scenario being tested (e.g. `storage-account`, `key-vault`).
 
 ### 2. Update the local configuration (`config.json`)
 
-Edit `config.json` in the new folder. The file supports the following properties:
-
-| Property | Required | Description |
-| :------- | :------: | :---------- |
-| `policyAssignmentIds` | Yes | Array of policy assignment resource IDs to evaluate during testing. These policy assignments are the pre-requisites for the test. Test will not start until they have been initially evaluated after creation. |
-| `testName` | Yes | A short name for the test case. Used in test titles and output filenames. |
-| `assignmentName` | No | The name of the primary policy assignment being tested. |
-| `testSubscription` | Yes | The name of the subscription (as defined in the global config `subscriptions` map) to deploy test resources into. |
-| `testResourceGroup` | No | The resource group name for testing. If specified, a `$script:testResourceGroupId` variable is calculated. |
-| `testManagementGroup` | No | The management group name that are used to form the policy assignment scope in the `tests.ps1` script. |
-| `location` | No | Azure region for resource deployments. |
-| `tagsForResourceGroup` | No | Boolean. Whether to apply tags to the test resource group. Defaults to `false`. |
-| `removeTestResourceGroup` | Yes | Boolean. Whether to remove the test resource group after the test run. Defaults to `true`. |
-
-You can also add custom properties (e.g. `diagSettingsAssignmentName`) and access them in `tests.ps1` as `$script:LocalConfig_<propertyName>`.
+Edit `config.json` in the new folder. Refer to [Policy Integration Tests - Local Configuration](./policy-integration-tests-local-config.md) for details on the required and optional configuration properties.
 
 ### 3. Define Bicep and/or Terraform templates
 

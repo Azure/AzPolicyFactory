@@ -16,18 +16,11 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region defining tests
-<#
-Test cases:
-- VNET-001: Gateway Subnet should not have Network Security Group associated (Deny)
-- VNET-002: Subnets should be associated with a Network Security Group (Deny)
-- VNET-003: Configure virtual networks to enable vnet flow log and traffic analytics (Australia East) (DeployIfNotExists)
-- VNET-004: Configure virtual networks to enable vnet flow log and traffic analytics (Australia Southeast) (DeployIfNotExists)
-- DS-058: Configure Diagnostic logging for Virtual Network (DeployIfNotExists)
-#>
+
 #variables
 #Australia East VNet
 $resourceId = $script:bicepDeploymentOutputs.resourceId.value

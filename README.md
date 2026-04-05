@@ -42,6 +42,21 @@ The Azure Policy IaC solution in this repository includes the following key feat
 - Unit tests for every policy resource being deployed.
 - Policy Integration Test to validate the functionality and effectiveness of the deployed Azure Policy resources in enforcing the desired governance and compliance requirements.
 
+### Tests for Azure Policy
+
+The key to successfully implementing Azure Policy is to have confidence that your policies are correctly defined and will work as expected in your environment. The `AzPolicyFactory` solution is strongly focused in testing every step along the deployment process.
+
+The following Tests are included in the `AzPolicyFactory` solution:
+
+- **Policy Definitions and Initiatives Syntax Tests:** Static tests for syntax and best practices validation of policy definitions.
+- **Bicep Template PSRule Tests:** Validate Bicep templates for policy definitions using [PSRule for Azure](https://azure.github.io/PSRule.Rules.Azure/).
+- **Bicep Template Test Deployments:** Validate policy definition Bicep templates against Azure deployment engine to ensure they can be successfully deployed.
+- **Policy Assignments and Exemptions Syntax Tests:** Static tests for syntax validation of the configuration files for policy assignments and exemptions.
+- **Policy Assignments Environment Consistency Tests:** Validate that the policy assignments defined for production and development environments are consistent with each other to ensure the policies being tested in the development environment are the same as those being deployed to production.
+- **Policy Integration Tests:** Deploy real resources in Azure that are expected to either comply or violate the assigned policies, then validate the policy states and policy violation results to ensure the policies are working as expected in the Azure environment.
+
+For more details on the tests included in this solution, please refer to the [Tests for Azure Policy](./policy-testing.md) documentation.
+
 ## Recommended Architectural Approach for Azure Policy IaC
 
 A key element for any successful IaC implementation is to have a dedicated dev/test environment that mimics the production environment as closely as possible. This is especially important for Azure Policy resources because they have a direct impact on the governance and compliance of the Azure environment.

@@ -1,6 +1,6 @@
 # Policy Integration Tests Global Configuration File
 
-This document describes the properties in the [`policy_integration_test_config.jsonc`](policy_integration_test_config.jsonc) configuration file used by the policy integration test framework.
+This document describes the properties in the [`policy_integration_test_config.jsonc`](../tests/policy-integration-tests/.shared/policy_integration_test_config.jsonc) configuration file used by the policy integration test framework.
 
 ## General Settings
 

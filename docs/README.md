@@ -15,8 +15,11 @@ The following DevOps / CICD platforms are supported:
 | Policy Initiatives | [Documentation](ado-pipelines/policy-initiatives.md) | [Documentation](github-action/policy-initiatives.md) | Deploys Azure Policy initiatives (policy sets) to the target Azure environment |
 | Policy Assignments | [Documentation](ado-pipelines/policy-assignments.md) | [Documentation](github-action/policy-assignments.md) | Deploys Azure Policy assignments based on environment-specific configuration files |
 | Policy Exemptions | [Documentation](ado-pipelines/policy-exemptions.md) | [Documentation](github-action/policy-exemptions.md) | Deploys Azure Policy exemptions based on environment-specific configuration files |
-| PR Validation Code Scan | [Documentation](ado-pipelines/pr-validation.md) | [Documentation](github-action/pr-code-scan.md) | Runs GitHub Super-Linter to validate code quality and syntax in pull requests |
-| PR Validation for Policy Assignment Consistency | [Documentation](ado-pipelines/pr-policy-assignment-env-consistency.md) | [Documentation](github-action/pr-policy-assignment-env-consistency.md) | Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
+
+## Test and Validation Pipelines and Workflows
+
+- PR Validation Code Scan: Runs GitHub Super-Linter to validate code quality and syntax in pull requests
+- PR Validation for Policy Assignment Consistency:Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
 
 ## Instructions
 
@@ -24,7 +27,7 @@ The following DevOps / CICD platforms are supported:
 - [Setup Guide for GitHub Actions Workflows](github-action/setup-guide.md)
 - [Add Policy Resources to the Repository](add-policy-resources.md)
 - [Policy Assignment Environment Consistency Tests](assignment-environment-consistency-tests.md)
-- [How to generate documentations for Bicep templates and modules](generate-bicep-docs.md)
+- [How to generate documentation for Bicep templates and modules](generate-bicep-docs.md)
 - [Policy Integration Tests](policy-integration-tests.md)
   - [Get Started Guide for Policy Integration Tests](policy-integration-tests-get-started.md)
   - [Global Configuration for Policy Integration Tests](policy-integration-tests-global-config.md)
@@ -83,7 +86,7 @@ The repository includes the following CI/CD pipelines and GitHub Actions workflo
 | Policy Exemptions | [Link](../.azuredevops/pipelines/policies/azure-pipelines-policy-exemptions.yml) | [Link](../.github/workflows/alz-policy-exemptions.yml) | Deploys Azure Policy exemptions based on environment-specific configuration files |
 | PR Validation Code Scan | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml) | [Link](../.github/workflows/pr-code-scan.yml) | Runs GitHub Super-Linter to validate code quality and syntax in pull requests |
 | PR Validation for Policy Assignment Consistency | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml) | [Link](../.github/workflows/pr-policy-assignment-env-consistency.yml) | Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
-| Policy Integration Tests | [link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-int-tests.yml) | [link](../.github/workflows/policy-integration-tests.yml) | Tests assigned policies in Dev management group using real resources in Azure and validate the expected results |
+| Policy Integration Tests | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-int-tests.yml) | [Link](../.github/workflows/policy-integration-tests.yml) | Tests assigned policies in Dev management group using real resources in Azure and validate the expected results |
 
 
 ## Configurations
@@ -128,7 +131,7 @@ flowchart TD
     deployPolicyInitiativeDev[Run Policy Initiative Pipeline / Workflow from Feature Branch]-->
     deployPolicyAssignmentDev[Run Policy Assignment Pipeline / Workflow from Feature Branch]-->
     deployPolicyExemptionDev[Run Policy Exemption Pipeline / Workflow from Feature Branch]-->
-    manualRunIntTest[Manully run Policy Integration Tests if required]
+    manualRunIntTest[Manually run Policy Integration Tests if required]
     style start fill:#28F906,stroke:#333,stroke-width:4px
 ```
 

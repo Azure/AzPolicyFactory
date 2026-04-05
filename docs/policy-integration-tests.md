@@ -261,21 +261,21 @@ You can access the test outputs in the following locations:
 
 **Azure DevOps**
 
-![ADO Test Output](../docs/images/pol-int-test-ado-stdout.png)
+![ADO Test Output](./images/pol-int-test-ado-stdout.png)
 
 **GitHub Actions**
 
-![GitHub Actions Test Output](../docs/images/pol-int-test-gh-stdout.png)
+![GitHub Actions Test Output](./images/pol-int-test-gh-stdout.png)
 
 ### Pipeline run
 
 **Azure DevOps**
 
-![ADO Test Output](../docs/images/pol-int-test-ado-pipeline-run.png)
+![ADO Test Output](./images/pol-int-test-ado-pipeline-run.png)
 
 **GitHub Actions**
 
-![GitHub Actions Test Output](../docs/images/pol-int-test-gh-pipeline-run.png)
+![GitHub Actions Test Output](./images/pol-int-test-gh-pipeline-run.png)
 
 ## Example Test Cases
 

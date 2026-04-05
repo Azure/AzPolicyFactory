@@ -4,7 +4,7 @@
 
 The [Policy Assignments GitHub Actions Workflow](../../.github/workflows/policy-assignments.yml) deploys all required policy assignments to the target Azure environments.
 
-![Policy Assignments Workflow](../images/github-action-policy-assignments.png)
+![Policy Assignments Workflow](../images/github-workflow-policy-assignments.png)
 
 The workflow consists of the following jobs:
 

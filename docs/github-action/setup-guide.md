@@ -2,7 +2,7 @@
 
 This document provides a step-by-step guide to set up the GitHub Actions workflows for deploying Azure Policy resources using the AzPolicyFactory solution.
 
-Before you begin, make sure you have the necessary pre-requisites in place as outlined in the [Pre-requisites](pre-requisites.md) document.
+Before you begin, make sure you have the necessary pre-requisites in place as outlined in the [Pre-requisites](../pre-requisites.md) document.
 
 ## Step 1: Create GitHub Secrets for Azure authentication
 
@@ -51,7 +51,7 @@ Update the following variable values in the [settings.yml](../../settings.yml) f
 
 ## Step 3: Add Policy Resources to the repository
 
-Follow the instructions in the [Add Policy Resources](add-policy-resources.md) document to add the following resources to the repository:
+Follow the instructions in the [Add Policy Resources](../add-policy-resources.md) document to add the following resources to the repository:
 
 - Custom Azure Policy definitions in the `./policyDefinitions` folder
 - Custom Azure Policy initiatives in the `./policyInitiatives` folder

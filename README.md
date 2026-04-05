@@ -40,7 +40,7 @@ The Azure Policy IaC solution in this repository includes the following key feat
 - Comprehensive set of tests and validation at different stages of the CI/CD pipelines to ensure the quality and correctness of the Azure Policy resources being deployed.
 - Follows industry best practices for Azure Policy management, safe deployment, code scan, and PR validation to ensure that the Azure Policy resources are deployed in a secure and compliant manner.
 - Unit tests for every policy resource being deployed.
-- Policy Integration Test to validate the functionality and effectiveness of the deployed Azure Policy resources in enforcing the desired governance and compliance requirements.
+- [**Policy Integration Tests**](./docs/policy-integration-tests.md) to validate the functionality and effectiveness of the deployed Azure Policy resources in enforcing the desired governance and compliance requirements.
 
 ### Tests for Azure Policy
 
@@ -55,7 +55,7 @@ The following Tests are included in the `AzPolicyFactory` solution:
 - **Policy Assignments Environment Consistency Tests:** Validate that the policy assignments defined for production and development environments are consistent with each other to ensure the policies being tested in the development environment are the same as those being deployed to production.
 - **Policy Integration Tests:** Deploy real resources in Azure that are expected to either comply or violate the assigned policies, then validate the policy states and policy violation results to ensure the policies are working as expected in the Azure environment.
 
-For more details on the tests included in this solution, please refer to the [Tests for Azure Policy](./policy-testing.md) documentation.
+For more details on the tests included in this solution, please refer to the [Tests for Azure Policy](./docs/policy-testing.md) documentation.
 
 ## Recommended Architectural Approach for Azure Policy IaC
 

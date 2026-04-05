@@ -110,7 +110,7 @@ If the assignment is targeting a subscription, replace the `managementGroupId` p
 
 If the assignment is targeting a resource group, remove the `managementGroupId` property and add `subscriptionId` and `resourceGroupName` properties and provide the target resource group name.
 
-> :memo: NOTE: the Policy Assignment ADO pipeline and GitHub actions workflow will automatically populate the `nonComplianeceMessages` property based on assigned policies during the build stage / job. You do not need to provide any value for this property when creating the policy assignment configuration file.
+> :memo: NOTE: the Policy Assignment ADO pipeline and GitHub actions workflow will automatically populate the `nonComplianceMessages` property based on assigned policies during the build stage / job. You do not need to provide any value for this property when creating the policy assignment configuration file.
 
 ## Step 4: Add Policy Exemptions to the repository
 
@@ -124,6 +124,7 @@ The configuration files must be aligned with the JSON schema file [policyExempti
 Example:
 
 ```json
+{
   "$schema": "../policyExemption.schema.json",
   "policyExemption": {
     "name": "pex-lz-corp-sub-eh-001",
@@ -157,6 +158,7 @@ Example:
     ]
   },
   "subscriptionId": "0f1b7d98-c832-4d46-8a29-a0c63d54a2fa"
+}
 ```
 
 In the above example, the policy exemption is scoped to the subscription `0f1b7d98-c832-4d46-8a29-a0c63d54a2fa`.
@@ -172,7 +174,7 @@ This script has included the following tests based on the metadata property valu
 - Requester and Approver should be different people (`requestedBy` and `approvedBy` properties should have different value)
 - Exemption approved date should be a validate date in the past (`approvedOn` property value should be a valid date and should be less than the current date)
 
-These tests are excluded by the Policy Exmemption ADO pipeline and GitHub actions workflow by default. You can enable them by removing the `ExcludeTag` filter in the Pester test task in the Test stages / jobs in the ADO pipeline and GitHub actions workflow.
+These tests are excluded by the Policy Exemption ADO pipeline and GitHub actions workflow by default. You can enable them by removing the `ExcludeTag` filter in the Pester test task in the Test stages / jobs in the ADO pipeline and GitHub actions workflow.
 
 > :memo: NOTE: The Policy Exemption ADO pipeline and GitHub actions workflow evaluates the expiry date of each exemption based on the value from `expiresOn` property during the build stage / job. If the exemption is expired, the pipeline / workflow will automatically exclude the expired exemption from the deployment. However, this does not automatically remove the expired exemption from Azure.
 

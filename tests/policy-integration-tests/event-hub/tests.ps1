@@ -16,20 +16,10 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region test specific configuration and tests
-<#
-Test cases in scope:
-- EH-001: Restrict Event Hub Local Authentication (Deny)
-- EH-002: Event Hub must have the minimum TLS version configured as per standard - (Deny)
-- EH-003: Event Hub Restrict Public Network Access - (Deny)
-- EH-004: Event Hub should use CMK Encryption - (Audit)
-- EH-005: Event Hub namespaces should use private link - (AuditIfNotExists)
-- PEDENS-007: Configure a private dns zone id for Event Hub - (DeployIfNotExists)
-- DS-032: custom policy - eh-config-diag-logs - Configure Diagnostic Setting for Event Hub - (DeployIfNotExists)
-#>
 
 #Parse deployment outputs
 $resourceId = $script:bicepDeploymentOutputs.resourceId.value

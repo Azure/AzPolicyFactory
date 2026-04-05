@@ -39,9 +39,7 @@
   },
   "no-multiple-space-blockquote": true,
   "no-blanks-blockquote": true,
-  "ol-prefix": {
-    "style": "one_or_ordered"
-  },
+  "ol-prefix": false,
   "list-marker-space": true,
   "blanks-around-fences": true,
   "blanks-around-lists": true,
@@ -49,7 +47,7 @@
   "hr-style": {
     "style": "---"
   },
-  "no-emphasis-as-header": true,
+  "no-emphasis-as-heading": false,
   "no-space-in-emphasis": true,
   "no-space-in-code": true,
   "no-space-in-links": true,

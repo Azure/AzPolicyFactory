@@ -16,28 +16,10 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region defining tests
-<#
-Test cases:
-- DS-026: Configure Diagnostic Settings for Function App (DeployIfNotExists)
-- DS-062: Configure Diagnostic Settings for App Services (DeployIfNotExists)
-- PEDNS-006: Configure Private DNS Record for Web App Private Endpoint (DeployIfNotExists)
-- PEDNS-015: Configure Private DNS Record for Web App Slots Private Endpoint (DeployIfNotExists)
-- WEB-001: App Service and function app slots should only be accessible over HTTPS (Deny)
-- WEB-002: App Service and Function apps should only be accessible over HTTPS (Deny)
-- WEB-003: Function apps should only use approved identity providers for authentication (Deny)
-- WEB-004: Prevent cross-subscription Private Link for App Services and Function Apps (Audit)
-- WEB-005: Function apps should route application traffic over the virtual network (Deny)
-- WEB-006: App Service and Function apps should route configuration traffic over the virtual network (Deny)
-- WEB-007: Function apps should route configuration traffic over the virtual network (Deny)
-- WEB-008: Function app slots should route configuration traffic over the virtual network (Deny)
-- WEB-009: App Service apps should use a SKU that supports private link (Deny)
-- WEB-010: Public network access should be disabled for App Services and Function Apps (Deny)
-- WEB-011: Public network access should be disabled for App Service and Function App slots (Deny)
-#>
 
 #Parse deployment outputs
 $functionAppResourceId = $script:bicepDeploymentOutputs.resourceId.value

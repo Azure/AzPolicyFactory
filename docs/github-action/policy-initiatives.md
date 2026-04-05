@@ -18,9 +18,9 @@ The workflow consists of the following jobs:
 - Deploy Prod
 
 1. After the `Initiation` job, the `Policy Tests` job performs a number of predefined Pester tests for each policy initiative file that are to be deployed.
-2. The `Build Dev` and `Build Prod` jobs are kicked off concurrently upon the successful completion of the `Policy Tests` job. These jobs are responsible for building the policy definition Bicep template for the development and production environments respectively.
+2. The `Build Dev` and `Build Prod` jobs are kicked off concurrently upon the successful completion of the `Policy Tests` job. These jobs are responsible for building the policy initiative Bicep template for the development and production environments respectively.
 3. The `Test Dev` and `Test Prod` jobs are responsible for performing additional tests in their respective environments. They are kicked off after the `Build Dev` and `Build Prod` jobs respectively.
-4. The `Deploy Dev` job is kicked off upon successful completion of the `Test Dev` job. It is responsible for deploying the policy definitions to the development environment.
+4. The `Deploy Dev` job is kicked off upon successful completion of the `Test Dev` job. It is responsible for deploying the policy initiatives to the development environment.
 5. The `Deploy Prod` job will only be kicked off when all the following conditions are met:
     - The `Deploy Dev` job has completed successfully.
     - The `Test Prod` job has completed successfully.

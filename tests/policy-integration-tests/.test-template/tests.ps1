@@ -16,7 +16,7 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region defining tests

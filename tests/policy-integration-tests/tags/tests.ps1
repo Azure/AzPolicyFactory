@@ -16,28 +16,10 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region test specific configuration and tests
-<#
-Test cases:
-- TAG-001: Subscription Should have appid tag (deny)
-- TAG-002: Subscription Should have dataclass tag with allowed value (deny)
-- TAG-003: Subscription Should have owner tag (deny)
-- TAG-004: Subscription Should have supportteam tag (deny)
-- TAG-005: Inherit the tag from the Subscription to Resource Group if missing (appid)
-- TAG-006: Inherit the tag from the Subscription to Resource Group if missing (dataclass)
-- TAG-007: Inherit the tag from the Subscription to Resource Group if missing (owner)
-- TAG-008: Inherit the tag from the Subscription to Resource Group if missing (supportteam)
-- TAG-013: Resource Group Should have required tag value for dataclass tag (deny)
-- TAG-014: Resource Should have required tag value for dataclass tag (deny)
-- TAG-015: Subscription Should have required tag value for environment tag (deny)
-- TAG-016: Resource Group Should have required tag value for environment tag (deny)
-- TAG-017: Resource Should have required tag value for environment tag (deny)
-- TAG-018: Inherit the tag from the Subscription to Resource Group if missing (environment)
-#>
-
 #variables
 
 #Parse deployment outputs

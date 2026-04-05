@@ -16,25 +16,10 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region test specific configuration and tests
-<#
-Test cases:
-- PEDNS-012: Configure a private DNS Zone ID for Azure Container Registry (DeployIfNotExists)
-- DS-003: Deploy Diagnostic Settings for Container Registry to Log Analytics workspace. (DeployIfNotExists)
-- TAG-005: Inherit the tag from the Subscription to Resource Group if missing (appid)
-- TAG-006: Inherit the tag from the Subscription to Resource Group if missing (dataclass)
-- TAG-007: Inherit the tag from the Subscription to Resource Group if missing (owner)
-- TAG-008: Inherit the tag from the Subscription to Resource Group if missing (supportteam)
-- TAG-018: Inherit the tag from the Subscription to Resource Group if missing (environment)
-- TAG-009: Inherit the tag from the Resource Group to Resources if missing (appid)
-- TAG-010: Inherit the tag from the Resource Group to Resources if missing (dataclass)
-- TAG-011: Inherit the tag from the Resource Group to Resources if missing (owner)
-- TAG-012: Inherit the tag from the Resource Group to Resources if missing (supportteam)
-- TAG-019: Inherit the tag from the Resource Group to Resources if missing (environment)
-#>
 
 #Parse deployment outputs
 $resourceId = $script:bicepDeploymentOutputs.resourceId.value

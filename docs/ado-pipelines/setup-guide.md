@@ -2,7 +2,7 @@
 
 This document provides a step-by-step guide to set up the Azure DevOps (ADO) pipelines for deploying Azure Policy resources using the AzPolicyFactory solution.
 
-Before you begin, make sure you have the necessary pre-requisites in place as outlined in the [Pre-requisites](pre-requisites.md) document.
+Before you begin, make sure you have the necessary pre-requisites in place as outlined in the [Pre-requisites](../pre-requisites.md) document.
 
 ## Step 1: Create Service Connections in your Azure DevOps Project
 
@@ -32,7 +32,7 @@ Update the following variable values in the [settings.yml](../../settings.yml) f
 
 ## Step 3: Add Policy Resources to the repository
 
-Follow the instructions in the [Add Policy Resources](add-policy-resources.md) document to add the following resources to the repository:
+Follow the instructions in the [Add Policy Resources](../add-policy-resources.md) document to add the following resources to the repository:
 
 - Custom Azure Policy definitions in the `./policyDefinitions` folder
 - Custom Azure Policy initiatives in the `./policyInitiatives` folder
@@ -45,10 +45,10 @@ Create the following pipelines in your Azure DevOps project using the YAML files
 
 | Pipeline Name | Description | YAML File |
 | :------------ | :---------- | :-------- |
-| Policy-Definitions | deploys custom Azure Policy definitions | [`azure-pipelines-policy-definitions.yml`](.azuredevops/pipelines/policies/azure-pipelines-policy-definitions.yml) |
-| Policy-Initiatives | deploys custom Azure Policy initiatives | [`azure-pipelines-policy-initiatives.yml`](.azuredevops/pipelines/policies/azure-pipelines-policy-initiatives.yml) |
-| Policy-Assignments | deploys Azure Policy assignments | [`azure-pipelines-policy-assignments.yml`](.azuredevops/pipelines/policies/azure-pipelines-policy-assignments.yml) |
-| Policy-Exemptions | deploys Azure Policy exemptions | [`azure-pipelines-policy-exemptions.yml`](.azuredevops/pipelines/policies/azure-pipelines-policy-exemptions.yml) |
+| Policy-Definitions | deploys custom Azure Policy definitions | [`azure-pipelines-policy-definitions.yml`](../../.azuredevops/pipelines/policies/azure-pipelines-policy-definitions.yml) |
+| Policy-Initiatives | deploys custom Azure Policy initiatives | [`azure-pipelines-policy-initiatives.yml`](../../.azuredevops/pipelines/policies/azure-pipelines-policy-initiatives.yml) |
+| Policy-Assignments | deploys Azure Policy assignments | [`azure-pipelines-policy-assignments.yml`](../../.azuredevops/pipelines/policies/azure-pipelines-policy-assignments.yml) |
+| Policy-Exemptions | deploys Azure Policy exemptions | [`azure-pipelines-policy-exemptions.yml`](../../.azuredevops/pipelines/policies/azure-pipelines-policy-exemptions.yml) |
 
 >:exclamation: IMPORTANT: You **MUST** create the ADO pipelines with the **EXACT** name as shown in the table above. The pipeline YAML files reference each other and rely on the pipeline names to trigger the correct downstream pipelines. If you choose to use different pipeline names, you will need to update the downstream pipeline YAML files to reference the new pipeline names.
 
@@ -71,7 +71,7 @@ This pipeline validates and compares the values in each production policy assign
 
 | Pipeline Name | Description | YAML File |
 | :------------ | :---------- | :-------- |
-| Validate-Policy-Assignment-Environment-Consistency | validates and compares policy assignment configuration files between environments | [`azure-pipelines-pr-policy-assignment-env-consistency-tests.yml`](.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml) |
+| Validate-Policy-Assignment-Environment-Consistency | validates and compares policy assignment configuration files between environments | [`azure-pipelines-pr-policy-assignment-env-consistency-tests.yml`](../../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml) |
 
 This is to ensure any value deviations between the two environments are intentional and reviewed before being merged into the main branch.
 
@@ -81,7 +81,7 @@ The pipeline will fail if any differences are detected between the production an
 
 This pipeline should be triggered automatically when a pull request is created that includes changes to any of the policy assignment configuration files or the related pipeline YAML files.
 
-- `Build pipeline`: [`azure-pipelines-pr-policy-assignment-env-consistency-tests.yml`](.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml)
+- `Build pipeline`: [`azure-pipelines-pr-policy-assignment-env-consistency-tests.yml`](../../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml)
 - Path filter: `/policyAssignments/*; /.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-config-tests.yml; /.azuredevops/templates/template-stage-policy-assignment-config-tests.yml; /tests/policy/assignment/environment-consistency/*`
 - trigger: `Automatic`
 - Policy requirement: `Required`
@@ -94,11 +94,11 @@ This pipeline performs a code scan using GitHub Super-Linter to validate all the
 
 | Pipeline Name | Description | YAML File |
 | :------------ | :---------- | :-------- |
-| PR-Code-Scan | performs a code scan using GitHub Super-Linter to validate all the files in the repository | [`azure-pipelines-pr-validation.yml`](.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml) |
+| PR-Code-Scan | performs a code scan using GitHub Super-Linter to validate all the files in the repository | [`azure-pipelines-pr-validation.yml`](../../.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml) |
 
 Once the pipeline is created, configure the branch protection policy for the `main` branch to include this pipeline as a required check before merging.
 
-- `Build pipeline`: [`azure-pipelines-pr-validation.yml`](.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml)
+- `Build pipeline`: [`azure-pipelines-pr-validation.yml`](../../.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml)
 - Path filter: leave it blank
 - trigger: `Automatic`
 - Policy requirement: `Required`

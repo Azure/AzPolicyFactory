@@ -1,7 +1,6 @@
 {
   "policyAssignmentIds": [
-    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-monitor",
-    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-tags"
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-monitor"
   ],
   "testName": "AzureMonitor",
   "assignmentName": "pa-d-monitor",

@@ -22,6 +22,16 @@
     - [Do I need to update the Bicep templates when I add new policy resources to the repository?](#do-i-need-to-update-the-bicep-templates-when-i-add-new-policy-resources-to-the-repository)
   - [Azure Configurations](#azure-configurations)
     - [What is the purpose of dedicated development management group hierarchy in the recommended architecture for Azure Policy IaC implementation?](#what-is-the-purpose-of-dedicated-development-management-group-hierarchy-in-the-recommended-architecture-for-azure-policy-iac-implementation)
+  - [Testing](#testing)
+    - [What is the purpose of Policy Assignment Environment Consistency tests and why are they important?](#what-is-the-purpose-of-policy-assignment-environment-consistency-tests-and-why-are-they-important)
+    - [My Policy Integration Tests failed, how do I troubleshoot the failures?](#my-policy-integration-tests-failed-how-do-i-troubleshoot-the-failures)
+    - [What Terraform for Azure providers can I use for the Policy Integration Tests?](#what-terraform-for-azure-providers-can-i-use-for-the-policy-integration-tests)
+    - [Why do I need to encrypt the Terraform state file in the Policy Integration Test pipeline / workflow?](#why-do-i-need-to-encrypt-the-terraform-state-file-in-the-policy-integration-test-pipeline--workflow)
+    - [In Policy Integration Test pipeline / workflow, do I need to configure a remote backend for Terraform state management?](#in-policy-integration-test-pipeline--workflow-do-i-need-to-configure-a-remote-backend-for-terraform-state-management)
+    - [A Policy Integration Test case that uses Terraform failed with an error indicating resource already exists](#a-policy-integration-test-case-that-uses-terraform-failed-with-an-error-indicating-resource-already-exists)
+    - [How does the Policy Integration Test pipeline determine which subscriptions to trigger policy compliance scan for and how long does it have to wait after the resource deployments](#how-does-the-policy-integration-test-pipeline-determine-which-subscriptions-to-trigger-policy-compliance-scan-for-and-how-long-does-it-have-to-wait-after-the-resource-deployments)
+    - [How do I define the wait time for each policy effect type in the Policy Integration Test pipeline / workflow?](#how-do-i-define-the-wait-time-for-each-policy-effect-type-in-the-policy-integration-test-pipeline--workflow)
+    - [In the Policy Integration Test pipeline / workflow, what happens if the required policy assignments are missing or not evaluated](#in-the-policy-integration-test-pipeline--workflow-what-happens-if-the-required-policy-assignments-are-missing-or-not-evaluated)
 
 ## Pipeline Configurations
 
@@ -34,13 +44,13 @@ You can exclude specific Pester tests by excluding the test tags associated with
 
 For the 3 sets of tests included from the `AzPolicyTest` module, use the following commands to get the list of available tags for each test:
 
-1. Firstly, install the `AzPolicyTest` module from the PowerShell Gallery if you haven't already:
+Firstly, install the `AzPolicyTest` module from the PowerShell Gallery if you haven't already:
 
 ```powershell
 Install-Module -Name AzPolicyTest -Scope CurrentUser
 ```
 
-2. To get the list of tags for each test, you can run the following command:
+Then, to get the list of tags for each test, you can run the following command:
 
 ```powershell
 #Policy Definition tests
@@ -83,7 +93,7 @@ The pipeline / workflow parameters for excluded tags for each test type are as f
 At the moment, the following Pester tests used in this project do not support excluding tags:
 
 - Bicep Support File tests
-- PSRule tests (configured using the PSRule configuration file [ps-rule.yaml](../ps-rule.yaml))
+- PSRule tests (configured using the PSRule configuration file [ps-rule.yml](../.ps-rule/ps-rule.yml))
 - Policy Assignment Environment Consistency tests
 
 </details>
@@ -276,4 +286,165 @@ The policy development management group hierarchy should mirror the production m
 
 However, we do not need to recreate all the production subscriptions in the policy development management group hierarchy. This will be explained in detail in the Policy Integration Test documentation which is coming soon.
 
+</details>
+
+## Testing
+
+### What is the purpose of Policy Assignment Environment Consistency tests and why are they important?
+
+<details>
+<summary>Click to expand</summary>
+
+When deploying Policy definitions and initiatives, the same artifacts are deployed to both development and production management group hierarchies. Unlike policy definitions and initiatives, the policy assignments have different configurations for each environment.
+
+There is no way to test the exact same policy assignment configuration in the development environment before deploying to production because the resources referenced in the policy assignment for the development environment are different from those in production and some assignments may have different settings between environments.
+
+The Policy Assignment Environment Consistency tests PR validation pipeline was the result of an actual failed policy deployment in production environments in a customer's environment due to the inconsistency between the policy assignment configurations for development and production environments.
+
+The tests are designed to validate the consistency of the policy assignment configurations between development and production environments to prevent such issues from happening again in the future.
+
+Refer to the [Policy Assignment Environment Consistency Tests documentation](./assignment-environment-consistency-tests.md) for more details.
+
+</details>
+
+### My Policy Integration Tests failed, how do I troubleshoot the failures?
+
+<details>
+<summary>Click to expand</summary>
+
+Troubleshooting the policy integration test pipeline failure can be hard because by default the pipeline will remove the deployed resources at the end of the test run, which makes it hard to investigate the failed resources in Azure.
+
+To make it easier to troubleshoot the failures, we have added few parameters in the Pipeline / workflow to allow you to keep the deployed resources in Azure after the test run for investigation and have verbose output in the pipeline logs to provide more context on the test execution and failure.
+
+You can manually execute the Policy Integration Test pipeline / workflow with the following parameters:
+
+Azure DevOps Pipeline Parameters:
+
+![ADO Pipeline Parameters 1](./images/pol-int-test-ado-parameters-01.png)
+
+![ADO Pipeline Parameters 2](./images/pol-int-test-ado-parameters-02.png)
+
+GitHub Action Workflow Inputs:
+
+![GitHub Action Workflow Inputs](./images/pol-int-test-gh-inputs.png)
+
+- **Remove Test Resources:** Untick this parameter to keep the deployed resources in Azure after the test run for investigation. By default, this parameter is set to `true` which means the deployed resources will be removed at the end of the test run.
+- **Tests To Run (separate with commas ','):** Specify the test cases you want to run. By default, all test cases will be executed. You can specify the test cases by their test names defined in the local configuration file for each test case (e.g. `storage-account`, `key-vault`).
+- **Enable system diagnostics (ADO) / Enable debug logging (GitHub Actions):** Enable this option to have more verbose output in the pipeline logs for troubleshooting. By default, this option is set to `false` which means the pipeline logs will not be verbose.
+
+>:memo: Remember to clean up the deployed resources manually in Azure after you have finished the investigation if you choose to keep the resources for troubleshooting.
+
+</details>
+
+### What Terraform for Azure providers can I use for the Policy Integration Tests?
+
+<details>
+<summary>Click to expand</summary>
+
+Currently there are 2 Terraform providers for Azure:
+
+- [AzureRM Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs) - The most widely used Terraform provider for Azure, which supports a wide range of Azure resources and is maintained by HashiCorp in collaboration with Microsoft.
+- [AzAPI Provider](https://registry.terraform.io/providers/Azure/azapi/latest/docs) - A newer Terraform provider for Azure, which provides support for Azure resources that are not yet supported in the AzureRM provider by directly calling the Azure REST APIs.
+
+Natively in Azure Resource Manager deployment API, the [`what-if` API](https://learn.microsoft.com/rest/api/resources/deployments/what-if?view=rest-resources-2025-04-01&tabs=HTTP) can be used to validate a deployment against assigned policies with `deny` effect. However, since `terraform plan` command does not use the ARM deployment APIs, it does not have the capability for Azure Policy evaluation.
+
+We are leveraging the [Policy Restriction API](https://learn.microsoft.com/rest/api/policyinsights/policy-restrictions?view=rest-policyinsights-2024-10-01) to evaluate the resource configuration for Terraform. This API supports both `deny` and `audit` effect policies.
+
+To use the Policy Restriction API, we have to pass the resource configuration payload EXACTLY as what the resource provider defines it (like Bicep templates). The resource configuration payload in AzureRM is obscured and does not align with the definitions from each Azure Resource Provider. It is not possible to reconstruct the resource configuration payload in AzureRM to match the format required by the Policy Restriction API.
+
+On the other hand, the AzAPI provider uses the **EXACT** same payload as the resource provider, hence we can use the `terraform plan` output from AzAPI provider to call the Policy Restriction API for policy evaluation.
+
+In summary, if you evaluating `Append`, `Modify`, `Audit` or `AuditIfNotExists` effects by evaluating the deployed resource configuration or the policy compliance state of these resources in Azure, you can use either AzureRM or AzAPI provider for the Policy Integration Tests. However, if you want to evaluate `Deny` or `Audit` effect policies by validating the resource configuration without deploying the resources, you **MUST** use the AzAPI provider for the Policy Integration Tests.
+
+**TL,DR**:
+
+- In the `main-test-terraform` project, you can use either AzureRM or AzAPI providers
+- In the `main-bad-terraform` and `main-good-terraform` projects, you **MUST** only use the AzAPI provider
+
+</details>
+
+### Why do I need to encrypt the Terraform state file in the Policy Integration Test pipeline / workflow?
+
+<details>
+<summary>Click to expand</summary>
+
+If you are using the cloud version of Azure DevOps or GitHub Actions, the logs and artifacts generated in the pipeline / workflow runs are stored in a centralized storage which is encrypted at rest.
+
+However, since the storage used by the platform are typically owned and operated by the platform provider (Microsoft and GitHub in this case), to add an extra layer of security for the Terraform state files, we have implemented an additional encryption mechanism in the pipeline / workflow using AES encryption.
+
+By adding the extra layer of encryption, we can ensure that even if someone gains unauthorized access to the storage where the pipeline / workflow logs and artifacts are stored, they will not be able to access the sensitive information in the Terraform state files without the AES encryption key and initialization vector (IV) which are stored securely in the pipeline / workflow variables as secrets.
+
+Although this is not a mandatory requirement, it is recommended because Terraform state file may contain sensitive information if the Terraform code is not aligned with best practices.
+
+</details>
+
+### In Policy Integration Test pipeline / workflow, do I need to configure a remote backend for Terraform state management?
+
+<details>
+<summary>Click to expand</summary>
+
+No. The terraform deployments are short-lived and will be destroyed at the end of each test run. The lifecycle of the terraform state files are limited to the duration of the test run.
+
+To make the terraform state file available across multiple stages / jobs in the pipeline / workflow, we have configured the pipeline to upload the state file as a pipeline artifact after the terraform deployment stage / job, and download the state file artifact in the subsequent stages / jobs that need to access the state file.
+
+</details>
+
+### A Policy Integration Test case that uses Terraform failed with an error indicating resource already exists
+
+<details>
+<summary>Click to expand</summary>
+
+A resource deployment step may fail with the error similar to the following:
+
+![Terraform Resource Already Exists Error](./images/pol-int-test-tf-error-existing-resource.png)
+
+This error typically occurs when the test resources were deployed by Terraform in a previous run and were not destroyed at the end of the test run due to a failure in the destroy step or because the "Remove Test Resources" parameter was set to false for troubleshooting purposes.
+
+To resolve this issue, you must manually delete all the resources defined in the Terraform project and re-run the failed pipeline / workflow.
+
+</details>
+
+### How does the Policy Integration Test pipeline determine which subscriptions to trigger policy compliance scan for and how long does it have to wait after the resource deployments
+
+<details>
+<summary>Click to expand</summary>
+
+The `Get Test Configuration` job in the Policy Integration Test pipeline / workflow runs a PowerShell script to scan each in scope test cases and identify the following:
+
+- Which test configurations from the `AzResourceTest` module are used by each test case
+- Which subscriptions are targeted for each test case based on the test configuration
+
+It also retrieves the required wait time for each policy effect type from the [Policy Integration Test global configuration file](./policy-integration-tests-global-config.md).
+
+From here, it determines which subscriptions will need to trigger the policy compliance scan (based on the use of the `New-ARTPolicyStateTestConfig` command), and what is the maximum wait time for the pipeline based on the configuration from the global configuration file.
+
+The Pipeline then uses the output of this job to trigger (or skip triggering) the policy compliance scan for each required subscription in the subsequent job after the resource deployment, and to determine how long it should wait before checking the policy compliance state for the test resources.
+</details>
+
+### How do I define the wait time for each policy effect type in the Policy Integration Test pipeline / workflow?
+
+<details>
+<summary>Click to expand</summary>
+
+The following properties in the [Policy Integration Test global configuration file](./policy-integration-tests-global-config.md) are used to define the wait time for each policy effect type:
+
+- Policy Compliance state validation (for all effect types)
+  - `waitTimeForPolicyComplianceStateAfterDeployment`: Set to 15. This is the time required for the policy compliance scan to finish. Based on our experience, 15 minutes is typically sufficient in this case.
+- Append and Modify effect policies
+  - `waitTimeForAppendModifyPoliciesAfterDeployment`: Set to 1. As long as the policy assignment has completed the initial evaluation, there is no need to wait. We have configured the pipeline to wait for 1 minute for this use case just to be safe.
+- Resource Existence validation for policies with `DeployIfNotExists` effect
+  - `waitTimeForDeployIfNotExistsPoliciesAfterDeployment`: Set to 5. This is the time required for `DeployIfNotExists` policy deployments to trigger and complete, including Azure Resource Graph indexing if querying resource existence via ARG. Increase this value if you experience failures due to long-running deployments or missing `evaluationDelay` in the policy definition.
+
+</details>
+
+### In the Policy Integration Test pipeline / workflow, what happens if the required policy assignments are missing or not evaluated
+
+<details>
+<summary>Click to expand</summary>
+
+In the [local configuration file](./policy-integration-tests-local-config.md) of each test case, the `policyAssignmentIds` property defines the required policy assignments for the test case.
+
+If any of the required policy assignments are missing, the test case will fail.
+
+If any of the required policy assignments are not evaluated yet (after initial deployment or after a change is made to the policy assignment), the Policy Integration Test pipeline / workflow will wait for up to 20 minutes for the policy assignments to complete the initial evaluation cycle.
 </details>

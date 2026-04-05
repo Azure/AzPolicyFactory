@@ -127,6 +127,9 @@
     //changes to the following files will be ignored and will not trigger any tests.
     "ignoredFiles": [
       "*.md",
+      "*.png",
+      "*.jpg",
+      "*.jpeg",
       ".gitignore",
       "markdownlint.json",
       "ps-rule.yaml",

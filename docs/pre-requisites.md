@@ -6,13 +6,13 @@ Before you can use the ADO pipelines and GitHub Actions workflows provided in Az
 
 You need to have an Azure DevOps project or a GitHub repository where you want to set up the pipelines or workflows.
 
-Once the ADO project or GitHub repository is created, can add the files from this repository to your ADO or GitHub repository. You can either copy the files directly or use Git to clone this repository and push the files to your own repository.
+Once the ADO project or GitHub repository is created, you can add the files from this repository to your ADO or GitHub repository. You can either copy the files directly or use Git to clone this repository and push the files to your own repository.
 
 To push the files to your own repository, you can follow these steps:
 
 ```bash
 git remote add origin <your-repository-url>
-git checkout -b feature/initial-ssetup
+git checkout -b feature/initial-setup
 git add .
 git commit -m "Initial commit of pipeline/workflow files"
 git push --set-upstream origin feature/initial-ssetup
@@ -33,4 +33,4 @@ New-AzRoleAssignment -ObjectId <Enterprise App Object ID> -Scope '/providers/Mic
 
 ```
 
-> :memo: Note: If you are using a same Microsoft Entra ID tenant for both development and production environments, make sure you have separate service principals for each environment. It is a security risk for using the same identity for production and non-production environments.
+> :memo: Note: If you are using the same Microsoft Entra ID tenant for both development and production environments, make sure you have separate service principals for each environment. It is a security risk for using the same identity for production and non-production environments.

@@ -4,7 +4,7 @@
 
 The [Policy Exemptions GitHub Actions Workflow](../../.github/workflows/policy-exemptions.yml) deploys all required policy exemptions to the target Azure environments.
 
-![Policy Exemptions Workflow](../images/github-action-policy-exemptions.png)
+![Policy Exemptions Workflow](../images/github-workflow-policy-exemptions.png)
 
 The workflow consists of the following jobs:
 

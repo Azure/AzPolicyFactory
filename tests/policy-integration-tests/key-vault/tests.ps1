@@ -16,20 +16,10 @@ Write-Output "Initiating test with global config file: $globalConfigFilePath and
 $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '../.shared/initiate-test.ps1').Path
 . $initiateTestScriptPath -globalConfigFilePath $globalConfigFilePath -TestDirectory $TestDirectory
 
-# Refer to the ../README.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
+# Refer to the ../../docs/policy-integration-test-get-started.md for details on the expected variables to be set by the initiate-test script and the structure of those variables.
 #endregion
 
 #region test specific configuration and tests
-<#
-The following policy definitions are tested:
-  - Resource Group inherit the 'dataclass' tag from subscription
-  - Resource Group inherit the 'owner' tag from subscription
-  - Azure Key Vault should disable public network access (Audit)
-  - Key Vault should have purge protection enabled (Modify)
-  - Private DNS Record for Key Vault PE must exist (DeployIfNotExists)
-  - Diagnostic Settings for Key Vault Must Be Configured (DeployIfNotExists)
-  - KeyVault permission model should be configured to use Azure RBAC (Deny)
-#>
 
 #Parse Deployment outputs
 $resourceId = $script:bicepDeploymentOutputs.resourceId.Value

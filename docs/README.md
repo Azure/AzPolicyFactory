@@ -15,8 +15,11 @@ The following DevOps / CICD platforms are supported:
 | Policy Initiatives | [Documentation](ado-pipelines/policy-initiatives.md) | [Documentation](github-action/policy-initiatives.md) | Deploys Azure Policy initiatives (policy sets) to the target Azure environment |
 | Policy Assignments | [Documentation](ado-pipelines/policy-assignments.md) | [Documentation](github-action/policy-assignments.md) | Deploys Azure Policy assignments based on environment-specific configuration files |
 | Policy Exemptions | [Documentation](ado-pipelines/policy-exemptions.md) | [Documentation](github-action/policy-exemptions.md) | Deploys Azure Policy exemptions based on environment-specific configuration files |
-| PR Validation Code Scan | [Documentation](ado-pipelines/pr-validation.md) | [Documentation](github-action/pr-code-scan.md) | Runs GitHub Super-Linter to validate code quality and syntax in pull requests |
-| PR Validation for Policy Assignment Consistency | [Documentation](ado-pipelines/pr-policy-assignment-env-consistency.md) | [Documentation](github-action/pr-policy-assignment-env-consistency.md) | Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
+
+## Test and Validation Pipelines and Workflows
+
+- PR Validation Code Scan: Runs GitHub Super-Linter to validate code quality and syntax in pull requests
+- PR Validation for Policy Assignment Consistency:Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
 
 ## Instructions
 
@@ -24,7 +27,11 @@ The following DevOps / CICD platforms are supported:
 - [Setup Guide for GitHub Actions Workflows](github-action/setup-guide.md)
 - [Add Policy Resources to the Repository](add-policy-resources.md)
 - [Policy Assignment Environment Consistency Tests](assignment-environment-consistency-tests.md)
-- [How to generate documentations for Bicep templates and modules](generate-bicep-docs.md)
+- [How to generate documentation for Bicep templates and modules](generate-bicep-docs.md)
+- [Policy Integration Tests](policy-integration-tests.md)
+  - [Get Started Guide for Policy Integration Tests](policy-integration-tests-get-started.md)
+  - [Global Configuration for Policy Integration Tests](policy-integration-tests-global-config.md)
+  - [Local Configuration for Policy Integration Tests](policy-integration-tests-local-config.md)
 
 ## FAQs
 
@@ -65,6 +72,7 @@ The repository is organized into the following folders:
 | &nbsp;&nbsp;&nbsp;&nbsp;[`bicep/`](../tests/bicep/) | Pester tests for validating Bicep templates, modules, and bicepconfig settings |
 | &nbsp;&nbsp;&nbsp;&nbsp;[`policyAssignment/`](../tests/policyAssignment/) | Tests for policy assignment configuration syntax validation and cross-environment consistency checks |
 | &nbsp;&nbsp;&nbsp;&nbsp;[`policyExemption/`](../tests/policyExemption/) | Tests for policy exemption configuration syntax validation |
+| &nbsp;&nbsp;&nbsp;&nbsp;[`policy-integration-tests/`](../tests/policy-integration-tests/) | Policy integration tests |
 
 ## Pipeline and Workflow Overview
 
@@ -78,6 +86,8 @@ The repository includes the following CI/CD pipelines and GitHub Actions workflo
 | Policy Exemptions | [Link](../.azuredevops/pipelines/policies/azure-pipelines-policy-exemptions.yml) | [Link](../.github/workflows/alz-policy-exemptions.yml) | Deploys Azure Policy exemptions based on environment-specific configuration files |
 | PR Validation Code Scan | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-validation.yml) | [Link](../.github/workflows/pr-code-scan.yml) | Runs GitHub Super-Linter to validate code quality and syntax in pull requests |
 | PR Validation for Policy Assignment Consistency | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-assignment-env-consistency-tests.yml) | [Link](../.github/workflows/pr-policy-assignment-env-consistency.yml) | Validates that policy assignment configurations in development and production environments are consistent and do not contain unintended differences |
+| Policy Integration Tests | [Link](../.azuredevops/pipelines/validation/azure-pipelines-pr-policy-int-tests.yml) | [Link](../.github/workflows/policy-integration-tests.yml) | Tests assigned policies in Dev management group using real resources in Azure and validate the expected results |
+
 
 ## Configurations
 
@@ -86,6 +96,7 @@ The repository includes the following configuration files:
 | Name | Description |
 | :--- | :---------- |
 | [settings.yml](../settings.yml) | Centralized configuration file for pipeline variables and configurations |
+| [policy_integration_test_config.jsonc](../tests/policy-integration-tests/.shared/policy_integration_test_config.jsonc) | Configuration file for policy integration tests |
 | [ps-rule.yml](../.ps-rule/ps-rule.yml) | PSRule configuration file |
 | [bicepconfig.json](../bicepconfig.json) | Bicep configuration file |
 | [markdownlint.json](../.github/linters/markdownlint.json) | Markdownlint configuration file |
@@ -104,3 +115,58 @@ This repository includes a comprehensive set of Azure Policy resources that can 
 | Policy Initiatives | [policyInitiatives/](../policyInitiatives/) | Azure Policy initiative (policy set) definition files |
 | Policy Assignments | [policyAssignments/](../policyAssignments/) | Azure Policy assignment configuration files (JSON), organized by environment |
 | Policy Exemptions | [policyExemptions/](../policyExemptions/) | Azure Policy exemption configuration files (JSON), organized by environment |
+
+## Order of Deployment
+
+The policy resources are recommended to be developed, deployed and tested in the development management group prior to production deployment. The diagram below illustrates the recommended approach for developing and deploying Azure Policy resources in the development management group:
+
+```mermaid
+flowchart TD
+    start[Start]  -->
+    createGitBranch[Create a Git feature branch] -->
+    policyCode[Create or Update code for Policy Definitions, Initiatives, Assignments and Exemptions] -->
+    policyAssignmentEnvConsistCode[Create or Update Policy Assignment environment consistency configuration file] -->
+    policyIntTestCode[Create or Update Policy Integration Tests]-->
+    deployPolicyDefDev[Run Policy Definition Pipeline / Workflow from Feature Branch] -->
+    deployPolicyInitiativeDev[Run Policy Initiative Pipeline / Workflow from Feature Branch]-->
+    deployPolicyAssignmentDev[Run Policy Assignment Pipeline / Workflow from Feature Branch]-->
+    deployPolicyExemptionDev[Run Policy Exemption Pipeline / Workflow from Feature Branch]-->
+    manualRunIntTest[Manually run Policy Integration Tests if required]
+    style start fill:#28F906,stroke:#333,stroke-width:4px
+```
+
+Once the policy resources are developed and fully tested in the development management group, then follow the recommended approach as shown below to promote the code to the default branch for production deployment:
+
+```mermaid
+flowchart TD
+    pr[Raise PR]-->prCodeScan[PR Validation - Code Scan]
+    pr[Raise PR]-->policyIntTest[PR Validation - Policy Integration Tests]
+    pr[Raise PR]-->assignmentEnvConsistency[PR Validation - Policy Assignment Environment Consistency Tests]
+    prCodeScan-->prreview[PR Review]
+    policyIntTest-->prreview[PR Review]
+    assignmentEnvConsistency-->prreview[PR Review]
+    prreview-->prmerge[PR Merge]-->Complete
+    style pr fill:#28F906,stroke:#333,stroke-width:4px
+```
+
+Once the code is merged to the default branch, the pipelines and workflows for production deployment are daisy-chained. To start the deployment, manually trigger the `Policy Definitions` pipeline / workflow, which will then trigger the `Policy Initiatives`, `Policy Assignments`, and `Policy Exemptions` pipelines / workflows in sequence (as shown below).
+
+```mermaid
+flowchart TD
+    trigger[Manually trigger Policy Definitions pipeline / workflow] -->
+    deployPolicyDef[Deploy Policy Definitions] -->
+    defSuccess{Success?} -->|Yes|deployPolicyInitiative[Automatically Deploy Policy Initiatives]
+    defSuccess-->|No|EndWithError[End with Error]
+    deployPolicyInitiative -->
+    intSuccess{Success?}-->|Yes|deployPolicyAssignment[Automatically Deploy Policy Assignments]
+    intSuccess-->|No|EndWithError
+    deployPolicyAssignment -->
+    assignSuccess{Success?}-->|Yes|deployPolicyExemption[Automatically Deploy Policy Exemptions]
+    assignSuccess-->|No|EndWithError
+    deployPolicyExemption-->
+    exemptSuccess{Success?}-->|Yes|EndSuccessfully[Completed Successfully]
+    exemptSuccess-->|No|EndWithError
+    style trigger fill:#28F906,stroke:#333,stroke-width:4px
+    style EndSuccessfully fill:#28F906,stroke:#333,stroke-width:4px
+    style EndWithError fill:#FF0000,stroke:#333,stroke-width:4px
+```

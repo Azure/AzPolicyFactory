@@ -1,6 +1,6 @@
 # PSDocs Related scripts
 
-* [**generateTemplateReadme.ps1**](./generateTemplateReadme.ps1) - Script to generate README.md for the bicep template
+- [**generateTemplateReadme.ps1**](./generateTemplateReadme.ps1) - Script to generate README.md for the bicep template
  process.
 
 ## generateTemplateReadme.ps1

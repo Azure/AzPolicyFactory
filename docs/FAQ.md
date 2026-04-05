@@ -44,13 +44,13 @@ You can exclude specific Pester tests by excluding the test tags associated with
 
 For the 3 sets of tests included from the `AzPolicyTest` module, use the following commands to get the list of available tags for each test:
 
-1. Firstly, install the `AzPolicyTest` module from the PowerShell Gallery if you haven't already:
+Firstly, install the `AzPolicyTest` module from the PowerShell Gallery if you haven't already:
 
 ```powershell
 Install-Module -Name AzPolicyTest -Scope CurrentUser
 ```
 
-2. To get the list of tags for each test, you can run the following command:
+Then, to get the list of tags for each test, you can run the following command:
 
 ```powershell
 #Policy Definition tests
@@ -318,13 +318,13 @@ To make it easier to troubleshoot the failures, we have added few parameters in 
 
 You can manually execute the Policy Integration Test pipeline / workflow with the following parameters:
 
-**Azure DevOps Pipeline Parameters**
+Azure DevOps Pipeline Parameters:
 
 ![ADO Pipeline Parameters 1](./images/pol-int-test-ado-parameters-01.png)
 
 ![ADO Pipeline Parameters 2](./images/pol-int-test-ado-parameters-02.png)
 
-**GitHub Action Workflow Inputs**
+GitHub Action Workflow Inputs:
 
 ![GitHub Action Workflow Inputs](./images/pol-int-test-gh-inputs.png)
 

@@ -144,8 +144,8 @@ xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk= zoGQQ+iRPZ5+LnJ/uU/egA==     256 20
 
 Create a variable group called `**policy-testing**` in your Azure DevOps project and add the generated AES key and IV as secret variables in the variable group:
 
-- **aesEncryptionKey**: the generated AES key value (i.e. `xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk=`)
-- **aesIV**: the generated AES IV value (i.e. `zoGQQ+iRPZ5+LnJ/uU/egA==`)
+- **aesEncryptionKey**: the value of the generated AES key (i.e. `xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk=`)
+- **aesIV**: the value of the generated AES IV (i.e. `zoGQQ+iRPZ5+LnJ/uU/egA==`)
 
 ![variable-group](../images/pol-int-test-ado-variable-group.jpg)
 

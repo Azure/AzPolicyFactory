@@ -151,8 +151,8 @@ xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk= zoGQQ+iRPZ5+LnJ/uU/egA==     256 20
 
 Create the following secrets in your GitHub repository to store the AES key and IV values:
 
-- **AES_ENCRYPTION_KEY**: the generated AES key value (i.e. `xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk=`)
-- **AES_IV**: the generated AES IV value (i.e. `zoGQQ+iRPZ5+LnJ/uU/egA==`)
+- **AES_ENCRYPTION_KEY**: the value of the generated AES key (i.e. `xvO6cbYyQao8ZbD+mtLSYmb0gzN+kYllxF83nOSDNgk=`)
+- **AES_IV**: the value of the generated AES IV (i.e. `zoGQQ+iRPZ5+LnJ/uU/egA==`)
 
 ![GitHub Secrets Configuration](../images/pol-int-test-gh-secrets.jpg)
 

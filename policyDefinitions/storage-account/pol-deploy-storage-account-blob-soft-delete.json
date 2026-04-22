@@ -4,7 +4,7 @@
     "displayName": "Deploy Storage Account Blob Service Soft Delete",
     "description": "This policy enables soft delete for Storage Account Blob Service.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

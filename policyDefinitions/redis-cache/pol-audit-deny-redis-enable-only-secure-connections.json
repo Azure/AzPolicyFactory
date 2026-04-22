@@ -4,7 +4,7 @@
     "displayName": "Only secure connections to your Azure Cache for Redis should be enabled",
     "description": "Deny connections to Azure Cache for Redis if not via SSL. Use of secure connections ensures authentication between the server and the service and protects data in transit from network layer attacks such as man-in-the-middle, eavesdropping, and session-hijacking.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Redis Cache",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

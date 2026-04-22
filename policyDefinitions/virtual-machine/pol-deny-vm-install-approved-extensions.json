@@ -4,7 +4,7 @@
     "displayName": "Only approved VM extensions should be installed",
     "description": "This policy governs the virtual machine extensions that are not approved. Any unapproved VM extensions would be denied.",
     "metadata": {
-      "category": "Compute-VM",
+      "category": "Compute",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

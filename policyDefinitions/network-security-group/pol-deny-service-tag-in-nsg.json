@@ -5,7 +5,7 @@
     "mode": "All",
     "description": "This policy deny's the use of specific service tag in NSG rules",
     "metadata": {
-      "category": "Network Security",
+      "category": "Network Security Group",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

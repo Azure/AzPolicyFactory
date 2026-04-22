@@ -4,7 +4,7 @@
     "displayName": "Azure Cache for Redis should use private link",
     "description": "Private endpoints lets you connect your virtual network to Azure services without a public IP address at the source or destination. By mapping private endpoints to your Azure Cache for Redis instances, data leakage risks are reduced. Learn more at: https://docs.microsoft.com/azure/azure-cache-for-redis/cache-private-link.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Redis Cache",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

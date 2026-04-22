@@ -4,7 +4,7 @@
     "displayName": "Internet-facing virtual machines should be protected with network security groups",
     "description": "This policy protects your internet-facing virtual machines from potential threats by restricting access with network security groups (NSG).",
     "metadata": {
-      "category": "Network Security",
+      "category": "Compute",
       "version": "3.0.0",
       "preview": false,
       "deprecated": false,

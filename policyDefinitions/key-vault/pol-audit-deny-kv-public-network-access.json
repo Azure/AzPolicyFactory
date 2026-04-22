@@ -4,7 +4,7 @@
     "displayName": "Azure Key Vault should disable public network access",
     "description": "Disable public network access for your key vault so that it's not accessible over the public internet. This can reduce data leakage risks.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Key Vault",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

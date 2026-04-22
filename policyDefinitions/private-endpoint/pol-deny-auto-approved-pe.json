@@ -4,7 +4,7 @@
     "displayName": "Restrict Automatically Approved Private Endpoints for a resource type",
     "description": "When creating a Private Endpoint for a selected resource type, the Private Endpoint must be configured for manual approval.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Private Endpoint",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

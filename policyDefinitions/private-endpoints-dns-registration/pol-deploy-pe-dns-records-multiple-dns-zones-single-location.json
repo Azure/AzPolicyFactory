@@ -4,7 +4,7 @@
     "displayName": "Configure Private Endpoints to use Private DNS Zones (Multiple DNS Zones Single Location)",
     "description": "This policy creates a Private DNS Group link for a Azure PaaS Private Endpoint Resource that requires DNS records in multiple Private DNS zones.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Private Endpoint",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

@@ -5,7 +5,7 @@
     "description": "This policy restrict cross-subscription Private Endpoints except for the service aliases or resource Ids from the approved list.",
     "mode": "Indexed",
     "metadata": {
-      "category": "Network Security",
+      "category": "Private Endpoint",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

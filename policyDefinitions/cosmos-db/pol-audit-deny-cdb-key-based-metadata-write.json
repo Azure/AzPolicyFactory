@@ -4,7 +4,7 @@
     "displayName": "Azure Cosmos DB key based metadata write access should be disabled",
     "description": "This policy restricts Azure Cosmos DB accounts disable key based metadata write access.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Cosmos DB",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

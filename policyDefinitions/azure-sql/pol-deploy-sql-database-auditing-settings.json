@@ -4,7 +4,7 @@
     "displayName": "Deploy SQL database auditing settings",
     "description": "Deploy auditing settings to SQL Database when it not exist in the deployment.",
     "metadata": {
-      "category": "Application and Database security",
+      "category": "Azure SQL",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

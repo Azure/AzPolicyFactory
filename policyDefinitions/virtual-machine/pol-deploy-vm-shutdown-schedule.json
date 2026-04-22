@@ -4,7 +4,7 @@
     "displayName": "Deploy Virtual Machine Auto Shutdown Schedule",
     "description": "This policy deploys a Auto shutdown schedule for a Virtual Machine.",
     "metadata": {
-      "category": "Asset Management",
+      "category": "Compute",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

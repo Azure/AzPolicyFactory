@@ -4,7 +4,7 @@
     "displayName": "Storage accounts should have the specified minimum TLS version",
     "description": "Configure a minimum TLS version for secure communication between the client application and the storage account. To minimize security risk, the recommended minimum TLS version is the latest released version, which is currently TLS 1.2.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

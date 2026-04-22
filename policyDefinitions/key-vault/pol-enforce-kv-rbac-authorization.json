@@ -4,7 +4,7 @@
     "displayName": "Azure Key Vault should use RBAC permission model",
     "description": "Enable RBAC permission model across Key Vaults. Learn more at: https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-migration",
     "metadata": {
-      "category": "Identity and Access management",
+      "category": "Key Vault",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

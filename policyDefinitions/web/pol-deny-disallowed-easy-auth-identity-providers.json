@@ -4,7 +4,7 @@
     "displayName": "Function apps should only use approved identity providers for authentication",
     "description": "Only approved Easy Auth identity providers cant be used in Function Apps.",
     "metadata": {
-      "category": "Web",
+      "category": "App Service",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

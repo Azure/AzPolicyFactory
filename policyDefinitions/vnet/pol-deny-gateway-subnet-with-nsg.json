@@ -6,7 +6,7 @@
     "description": "Gateway Subnets must not have a Network Security Group associated with them. This policy denies the creation of a Gateway Subnet with an NSG.",
     "metadata": {
       "version": "1.0.0",
-      "category": "Network",
+      "category": "Virtual Network",
       "preview": false,
       "deprecated": false
     },

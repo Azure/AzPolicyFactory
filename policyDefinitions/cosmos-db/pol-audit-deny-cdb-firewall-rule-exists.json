@@ -4,7 +4,7 @@
     "displayName": "Azure Cosmos DB accounts should have firewall rules",
     "description": "Firewall rules should be defined on your Azure Cosmos DB accounts to prevent traffic from unauthorized sources. Accounts that have at least one IP rule defined with the virtual network filter enabled are deemed compliant. Accounts disabling public access are also deemed compliant.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Cosmos DB",
       "version": "2.0.0",
       "preview": false,
       "deprecated": false,

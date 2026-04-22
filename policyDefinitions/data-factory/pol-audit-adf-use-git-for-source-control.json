@@ -4,7 +4,7 @@
     "displayName": "Azure Data Factory should use a Git repository for source control",
     "description": "Enable source control on data factories, to gain capabilities such as change tracking, collaboration, continuous integration, and deployment.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Data Factory",
       "version": "1.0.0-preview",
       "preview": true,
       "deprecated": false,

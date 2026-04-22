@@ -4,7 +4,7 @@
     "displayName": "Secure transfer to storage accounts should be enabled",
     "description": "Secure transfer is an option that forces your storage account to accept requests only from secure connections (HTTPS). Use of HTTPS ensures authentication between the server and the service and protects data in transit from network layer attacks such as man-in-the-middle, eavesdropping, and session-hijacking. Premium File Storage is excluded from this policy since NFS Shares require secure transfers to be disabled.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": true,

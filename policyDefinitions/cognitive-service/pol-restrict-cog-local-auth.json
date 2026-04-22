@@ -1,14 +1,13 @@
 {
-  "name": "pol-audit-deny-redis-disable-public-network-access",
+  "name": "pol-restrict-cog-local-auth",
   "properties": {
-    "displayName": "Azure Cache for Redis should disable public network access",
-    "description": "Disabling public network access improves security by ensuring that the Azure Cache for Redis isn't exposed on the public internet. You can limit exposure of your Azure Cache for Redis by creating private endpoints instead.",
+    "displayName": "Cognitive Services accounts should have local authentication methods disabled",
+    "description": "Disable local authentication methods so that your Cognitive Services accounts require Azure Active Directory identities exclusively for authentication. Learn more at: https://aka.ms/cs/auth.",
     "metadata": {
-      "category": "Redis Cache",
+      "category": "Cognitive Services",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "470baccb-7e51-4549-8b1a-3e5be069f663"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {
@@ -31,11 +30,11 @@
         "allOf": [
           {
             "field": "type",
-            "equals": "Microsoft.Cache/Redis"
+            "equals": "Microsoft.CognitiveServices/accounts"
           },
           {
-            "field": "Microsoft.Cache/Redis/publicNetworkAccess",
-            "notEquals": "Disabled"
+            "field": "Microsoft.CognitiveServices/accounts/disableLocalAuth",
+            "notEquals": true
           }
         ]
       },

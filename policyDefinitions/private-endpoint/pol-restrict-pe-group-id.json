@@ -5,7 +5,7 @@
     "mode": "Indexed",
     "description": "This policy deny's the use of specific Group Id in Private Endpoints",
     "metadata": {
-      "category": "Network Security",
+      "category": "Private Endpoint",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

@@ -4,7 +4,7 @@
     "displayName": "Azure Databricks Workspaces should disable public network access",
     "description": "Disabling public network access improves security by ensuring that the resource isn't exposed on the public internet. You can control exposure of your resources by creating private endpoints instead. Learn more at: https://learn.microsoft.com/azure/databricks/administration-guide/cloud-configurations/azure/private-link.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Databricks",
       "version": "1.0.1",
       "preview": false,
       "deprecated": false,

@@ -4,7 +4,7 @@
     "displayName": "Storage account encryption scopes should use double encryption for data at rest",
     "description": "Enable infrastructure encryption for encryption at rest of your storage account encryption scopes for added security. Infrastructure encryption ensures that your data is encrypted twice.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

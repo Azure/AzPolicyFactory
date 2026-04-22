@@ -4,7 +4,7 @@
     "displayName": "Public network access should be disabled for Container registries",
     "description": "Disabling public network access improves security by ensuring that container registries are not exposed on the public internet. Creating private endpoints can limit exposure of container registry resources.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Container Registry",
       "version": "1.0.0",
       "preview": false,
       "deprecated": true,

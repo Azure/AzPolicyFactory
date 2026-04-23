@@ -1,0 +1,43 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-d-cosmos",
+    "displayName": "Azure Cosmos DB Policies Dev",
+    "description": "Policy Assignment for Azure Cosmos DB - Dev",
+    "metadata": {
+      "category": "Azure Cosmos DB"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cosmos-db",
+    "identity": "None",
+    "parameters": {
+      "COSMOS-001_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-002_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-003_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-004_Effect": {
+        "value": "Audit"
+      },
+      "COSMOS-005_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-006_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-006_minimalTlsVersion": {
+        "value": "Tls12"
+      },
+      "COSMOS-007_Effect": {
+        "value": "Deny"
+      }
+    },
+    "nonComplianceMessages": [],
+    "roleDefinitionIds": []
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
+  "managementGroupId": "CONTOSO-DEV"
+}

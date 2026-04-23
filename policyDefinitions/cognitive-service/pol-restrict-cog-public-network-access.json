@@ -1,0 +1,55 @@
+{
+  "name": "pol-restrict-cog-public-network-access",
+  "properties": {
+    "displayName": "Cognitive Services accounts should restrict public network access",
+    "description": "Disabling public network access improves security by ensuring that your Cognitive Services account isn't exposed on the public internet",
+    "metadata": {
+      "category": "Cognitive Services",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "mode": "Indexed",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.CognitiveServices/accounts/publicNetworkAccess",
+                "notEquals": "Disabled"
+              },
+              {
+                "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",
+                "notEquals": "Deny"
+              }
+            ]
+          }
+
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

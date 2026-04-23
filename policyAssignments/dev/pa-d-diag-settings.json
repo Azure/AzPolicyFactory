@@ -204,6 +204,9 @@
       },
       "DS-062_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "DS-063_Effect": {
+        "value": "DeployIfNotExists"
       }
     },
     "roleDefinitionIds": [

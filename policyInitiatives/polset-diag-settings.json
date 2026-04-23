@@ -777,6 +777,18 @@
           "Disabled"
         ],
         "defaultValue": "DeployIfNotExists"
+      },
+      "DS-063_Effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "DS-063 Effect: Configure Diagnostic Setting for Azure Cognitive Services Projects",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
       }
     },
     "policyDefinitionGroups": [
@@ -2276,6 +2288,30 @@
           },
           "effect": {
             "value": "[parameters('DS-062_Effect')]"
+          },
+          "logAnalytics": {
+            "value": "[parameters('logAnalytics')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2022_A.8.15",
+          "AU_ISM_580",
+          "CB-AZ-021"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "DS-063",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-diag-cognitiveProjects",
+        "parameters": {
+          "profileName": {
+            "value": "[parameters('profileName')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
+          "effect": {
+            "value": "[parameters('DS-063_Effect')]"
           },
           "logAnalytics": {
             "value": "[parameters('logAnalytics')]"

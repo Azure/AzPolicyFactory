@@ -1,7 +1,7 @@
 {
-  "name": "pol-deploy-diag-appins-law-contoso-poc",
+  "name": "pol-deploy-diag-appInsights",
   "properties": {
-    "displayName": "Configure Diagnostic Settings for AppInsights to Log Analytics workspace",
+    "displayName": "Deploy the diagnostic settings for AppInsights to Log Analytics workspace",
     "description": "This policy automatically deploys and enable diagnostic settings to Log Analytics",
     "metadata": {
       "category": "Logging and monitoring",

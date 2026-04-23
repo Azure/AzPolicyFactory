@@ -100,12 +100,16 @@
                       },
                       {
                         "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
-                        "equals": "true"
+                        "equals": "[parameters('logsEnabled')]"
                       }
                     ]
                   }
                 },
                 "equals": 1
+              },
+              {
+                "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+                "equals": "[parameters('metricsEnabled')]"
               },
               {
                 "field": "Microsoft.Insights/diagnosticSettings/workspaceId",

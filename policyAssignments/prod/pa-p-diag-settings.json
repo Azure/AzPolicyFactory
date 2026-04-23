@@ -43,6 +43,12 @@
       "DS-008_Effect": {
         "value": "DeployIfNotExists"
       },
+      "DS-008_LogsToEnable": {
+        "value": [
+          "AppSystemEvents",
+          "OTelResources"
+        ]
+      },
       "DS-009_Effect": {
         "value": "DeployIfNotExists"
       },

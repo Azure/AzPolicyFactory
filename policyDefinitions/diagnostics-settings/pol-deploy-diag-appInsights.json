@@ -1,7 +1,7 @@
 {
-  "name": "pol-deploy-diag-appInsights",
+  "name": "pol-deploy-diag-appins-law-contoso-poc",
   "properties": {
-    "displayName": "Deploy the diagnostic settings for AppInsights to Log Analytics workspace",
+    "displayName": "Configure Diagnostic Settings for AppInsights to Log Analytics workspace",
     "description": "This policy automatically deploys and enable diagnostic settings to Log Analytics",
     "metadata": {
       "category": "Logging and monitoring",
@@ -39,15 +39,6 @@
         ],
         "defaultValue": "DeployIfNotExists"
       },
-      "logAnalytics": {
-        "type": "string",
-        "metadata": {
-          "displayName": "Log Analytics workspace",
-          "description": "Select the Log Analytics workspace from dropdown list",
-          "strongType": "omsWorkspace",
-          "assignPermissions": true
-        }
-      },
       "metricsEnabled": {
         "type": "string",
         "metadata": {
@@ -60,17 +51,16 @@
         ],
         "defaultValue": "True"
       },
-      "logsEnabled": {
-        "type": "string",
+      "logsToEnable": {
+        "type": "array",
         "metadata": {
-          "displayName": "Enable logs",
-          "description": "Whether to enable logs stream to the Log Analytics workspace - True or False"
+          "displayName": "Logs to be enable",
+          "description": "Diagnostic logs to be enabled"
         },
-        "allowedValues": [
-          "True",
-          "False"
-        ],
-        "defaultValue": "True"
+        "defaultValue": [
+          "AppSystemEvents",
+          "OTelResources"
+        ]
       }
     },
     "policyRule": {
@@ -90,16 +80,22 @@
           "existenceCondition": {
             "allOf": [
               {
-                "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
-                "equals": "True"
+                "count": {
+                  "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+                  "where": {
+                    "field": "Microsoft.Insights/diagnosticSettings/logs[*].category",
+                    "in": "[parameters('logsToEnable')]"
+                  }
+                },
+                "equals": "[length(parameters('logsToEnable'))]"
               },
               {
-                "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
-                "equals": "True"
+                "field": "Microsoft.Insights/diagnosticSettings/metrics[*].enabled",
+                "equals": "[parameters('metricsEnabled')]"
               },
               {
                 "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
-                "matchInsensitively": "[parameters('logAnalytics')]"
+                "matchInsensitively": "[field('Microsoft.Insights/Components/WorkspaceResourceId')]"
               }
             ]
           },
@@ -116,14 +112,11 @@
                   "resourceName": {
                     "type": "string"
                   },
-                  "logAnalytics": {
-                    "type": "string"
-                  },
                   "metricsEnabled": {
                     "type": "string"
                   },
-                  "logsEnabled": {
-                    "type": "string"
+                  "logsToEnable": {
+                    "type": "array"
                   },
                   "location": {
                     "type": "string"
@@ -138,7 +131,7 @@
                     "location": "[parameters('location')]",
                     "dependsOn": [],
                     "properties": {
-                      "workspaceId": "[parameters('logAnalytics')]",
+                      "workspaceId": "[reference(resourceId('Microsoft.Insights/Components', parameters('resourceName')), '2020-02-02', 'Full').properties.WorkspaceResourceId]",
                       "metrics": [
                         {
                           "category": "AllMetrics",
@@ -150,10 +143,14 @@
                           "timeGrain": null
                         }
                       ],
-                      "logs": [
+                      "copy": [
                         {
-                          "categoryGroup": "allLogs",
-                          "enabled": "[parameters('logsEnabled')]"
+                          "name": "logs",
+                          "count": "[length(parameters('logsToEnable'))]",
+                          "input": {
+                            "category": "[parameters('logsToEnable')[copyIndex('logs')]]",
+                            "enabled": "True"
+                          }
                         }
                       ]
                     }
@@ -165,14 +162,11 @@
                 "profileName": {
                   "value": "[parameters('profileName')]"
                 },
-                "logAnalytics": {
-                  "value": "[parameters('logAnalytics')]"
-                },
                 "metricsEnabled": {
                   "value": "[parameters('metricsEnabled')]"
                 },
-                "logsEnabled": {
-                  "value": "[parameters('logsEnabled')]"
+                "logsToEnable": {
+                  "value": "[parameters('logsToEnable')]"
                 },
                 "location": {
                   "value": "[field('location')]"

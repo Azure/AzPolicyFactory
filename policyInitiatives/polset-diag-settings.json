@@ -130,6 +130,17 @@
         ],
         "defaultValue": "DeployIfNotExists"
       },
+      "DS-008_LogsToEnable": {
+        "type": "array",
+        "metadata": {
+          "displayName": "DS-008 Logs to enable",
+          "description": "Diagnostic logs to be enabled."
+        },
+        "defaultValue": [
+          "AppSystemEvents",
+          "OTelResources"
+        ]
+      },
       "DS-009_Effect": {
         "type": "string",
         "metadata": {
@@ -993,8 +1004,8 @@
           "effect": {
             "value": "[parameters('DS-008_Effect')]"
           },
-          "logAnalytics": {
-            "value": "[parameters('logAnalytics')]"
+          "logsToEnable": {
+            "value": "[parameters('DS-008_LogsToEnable')]"
           }
         },
         "groupNames": [

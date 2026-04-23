@@ -184,39 +184,7 @@
                       ],
                       "logs": [
                         {
-                          "category": "DataPlaneRequests",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "MongoRequests",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "QueryRuntimeStatistics",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "PartitionKeyStatistics",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "PartitionKeyRUConsumption",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "ControlPlaneRequests",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "CassandraRequests",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "GremlinRequests",
-                          "enabled": "[parameters('logsEnabled')]"
-                        },
-                        {
-                          "category": "TableApiRequests",
+                          "categoryGroup": "allLogs",
                           "enabled": "[parameters('logsEnabled')]"
                         }
                       ]

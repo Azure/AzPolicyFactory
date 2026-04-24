@@ -11,7 +11,7 @@
     "identity": "SystemAssigned",
     "parameters": {
       "profileName": {
-        "value": "setByPolicyLAW"
+        "value": "setByPolicy"
       },
       "evaluationDelay": {
         "value": "AfterProvisioning"

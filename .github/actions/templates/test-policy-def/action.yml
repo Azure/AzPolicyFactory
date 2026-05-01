@@ -1,5 +1,6 @@
 name: "Policy Definition Pester Tests"
-description: "Runs Pester tests for Azure Policy Definitions, Initiatives, and JSON content using the AzPolicyTest module"
+description: "Runs Pester tests for Azure Policy Definitions, Initiatives, and
+  JSON content using the AzPolicyTest module"
 author: "Tao Yang"
 
 inputs:
@@ -41,7 +42,9 @@ runs:
   using: "composite"
   steps:
     - name: Install AzPolicyTest Module
-      if: inputs.run-policy-json-pester-tests == 'true' || inputs.run-policy-initiative-pester-tests == 'true' || inputs.run-policy-definition-pester-tests == 'true'
+      if: inputs.run-policy-json-pester-tests == 'true' ||
+        inputs.run-policy-initiative-pester-tests == 'true' ||
+        inputs.run-policy-definition-pester-tests == 'true'
       shell: pwsh
       env:
         INPUT_WORKSPACE_DIRECTORY: ${{ github.workspace }}
@@ -50,7 +53,7 @@ runs:
         Write-Output '::group::Install AzPolicyTest Module'
         $scriptPath = "$env:INPUT_WORKSPACE_DIRECTORY/scripts/pipelines/pipeline-install-moduleFromRepo.ps1"
         & $scriptPath `
-          -modules 'AzPolicyTest@2.8.2' `
+          -modules 'AzPolicyTest@3.0.0' `
           -repoName 'PSGallery' `
           -maxRetry 3 `
           -allowPrerelease 'false'

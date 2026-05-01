@@ -62,7 +62,7 @@ stages:
         - template: ./template-task-install-ps-modules.yml
           parameters:
             displayName: "Install AzPolicyTest Module"
-            moduleNames: "AzPolicyTest`@2.8.2"
+            moduleNames: "AzPolicyTest`@3.0.0"
             shouldInstall: ${{ or(eq(parameters.runPolicyJsonPesterTests, true), eq(parameters.runPolicyInitiativePesterTests, true), eq(parameters.runPolicyDefinitionPesterTests, true)) }}
 
         - pwsh: |

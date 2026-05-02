@@ -13,7 +13,7 @@ var additionalMetadata = union(policyExemption.?metadata ?? {}, {
   hidden_vml_version: loadJsonContent('./version.json').version
 })
 
-resource exemption 'Microsoft.Authorization/policyExemptions@2026-01-01-preview' = {
+resource exemption 'Microsoft.Authorization/policyExemptions@2025-12-01-preview' = {
   name: policyExemption.name
   properties: {
     displayName: policyExemption.?displayName

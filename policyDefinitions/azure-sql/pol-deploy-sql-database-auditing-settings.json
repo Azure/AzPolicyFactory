@@ -10,6 +10,7 @@
       "deprecated": false
     },
     "mode": "All",
+    "version": "1.0.0",
     "parameters": {
       "auditActionsAndGroups": {
         "type": "array",

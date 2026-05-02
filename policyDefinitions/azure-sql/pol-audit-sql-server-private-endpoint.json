@@ -11,7 +11,6 @@
       "source_builtIn_name": "7698e800-9299-47a6-b3b6-5a0fee576eed"
     },
     "mode": "Indexed",
-    "version": "1.1.0",
     "parameters": {
       "effect": {
         "type": "string",

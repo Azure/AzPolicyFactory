@@ -55,6 +55,9 @@
       "PEDNS-015_Effect": {
         "value": "DeployIfNotExists"
       },
+      "PEDNS-016_Effect": {
+        "value": "DeployIfNotExists"
+      },
       "evaluationDelay": {
         "value": "AfterProvisioning"
       },

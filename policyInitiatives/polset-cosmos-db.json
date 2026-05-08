@@ -261,8 +261,7 @@
       },
             {
         "policyDefinitionReferenceId": "COSMOS-007",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0473574d-2d43-4217-aefe-941fcdf7e684",
-        "definitionVersion": "1.1.*",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-allowed-locations",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-007_Effect')]"

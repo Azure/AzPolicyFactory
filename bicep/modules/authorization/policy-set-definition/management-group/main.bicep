@@ -16,7 +16,7 @@ var additionalMetadata = {
 }
 
 @batchSize(15)
-resource policySets 'Microsoft.Authorization/policySetDefinitions@2025-12-01-preview' = [
+resource policySets 'Microsoft.Authorization/policySetDefinitions@2026-01-01-preview' = [
   for policySetDefinition in policySetDefinitions: {
     name: policySetDefinition.name
     properties: {

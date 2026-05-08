@@ -54,5 +54,6 @@
     "unauthorized",
     "vnet",
     "whatif"
-  ]
+  ],
+  "sarif-viewer.connectToGithubCodeScanning": "off"
 }

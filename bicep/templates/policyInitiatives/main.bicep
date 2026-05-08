@@ -27,6 +27,7 @@ var mappedPolicySetDefinitions = map(range(0, length(policySetDefinitions)), i =
         '{policyLocationResourceId}',
         managementGroupId
       )
+      definitionVersion: policySetDefinitions[i].properties.policyDefinitions[c].?definitionVersion
       parameters: policySetDefinitions[i].properties.policyDefinitions[c].?parameters
       groupNames: policySetDefinitions[i].properties.policyDefinitions[c].?groupNames
     })

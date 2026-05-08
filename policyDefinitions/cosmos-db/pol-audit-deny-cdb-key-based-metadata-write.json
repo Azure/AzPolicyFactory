@@ -7,8 +7,7 @@
       "category": "Cosmos DB",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "4750c32b-89c0-46af-bfcb-2e4541a818d5"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {

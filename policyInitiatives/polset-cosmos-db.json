@@ -230,8 +230,7 @@
       },
       {
         "policyDefinitionReferenceId": "COSMOS-005",
-        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/4750c32b-89c0-46af-bfcb-2e4541a818d5",
-        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-key-based-metadata-write",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-005_Effect')]"

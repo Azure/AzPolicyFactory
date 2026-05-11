@@ -37,7 +37,7 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
     networkAclBypass: 'AzureServices'
     enablePartitionMerge: false
     publicNetworkAccess: 'Enabled' // this should violate the policy COSMOS-002, COSMOS-003
-    minimalTlsVersion: 'TLS1_1' // this should violate the policy COSMOS-006
+    minimalTlsVersion: 'Tls11' // this should violate the policy COSMOS-006
     disableKeyBasedMetadataWriteAccess: false // this should violate the policy COSMOS-005
   }
 }

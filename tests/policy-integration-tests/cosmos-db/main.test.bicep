@@ -53,7 +53,7 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
     networkAclBypass: 'AzureServices'
     enablePartitionMerge: false
     publicNetworkAccess: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
+    minimalTlsVersion: 'Tls12'
     disableKeyBasedMetadataWriteAccess: true
     //keyVaultKeyUri: '' // this should violate the policy COSMOS-004
   }

@@ -231,7 +231,9 @@
           "effect": {
             "value": "[parameters('COG-006_Effect')]"
           },
-          "modelFormat": "OpenAI",
+          "modelFormat": {
+            "value": "OpenAI"
+          },
           "allowedNames": {
             "value": "[parameters('COG-006_allowedNames')]"
           }
@@ -248,7 +250,9 @@
           "effect": {
             "value": "[parameters('COG-007_Effect')]"
           },
-          "modelFormat": "xAI",
+          "modelFormat": {
+            "value": "xAI"
+          },
           "allowedNames": {
             "value": "[parameters('COG-006_allowedNames')]"
           }

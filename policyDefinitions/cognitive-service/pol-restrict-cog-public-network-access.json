@@ -39,7 +39,7 @@
                 "notEquals": "Disabled"
               },
               {
-                "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",
+                "field": "Microsoft.CognitiveServices/accounts/networkAcls.defaultAction",
                 "notEquals": "Deny"
               }
             ]

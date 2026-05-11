@@ -1,9 +1,9 @@
 {
   "$schema": "../policyAssignment.schema.json",
   "policyAssignment": {
-    "name": "pa-d-cog-service",
-    "displayName": "Azure Cognitive Services Policies Dev",
-    "description": "Policy Assignment for Azure Cognitive Services - Dev",
+    "name": "pa-p-cog-service",
+    "displayName": "Azure Cognitive Services Policies Prod",
+    "description": "Policy Assignment for Azure Cognitive Services - Prod",
     "metadata": {
       "category": "Azure Cognitive Services"
     },
@@ -53,6 +53,6 @@
     "nonComplianceMessages": [],
     "roleDefinitionIds": []
   },
-  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
-  "managementGroupId": "CONTOSO-DEV"
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
 }

@@ -1,0 +1,15 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-pedns",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-cosmos",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"
+  ],
+  "testName": "CosmosDB",
+  "assignmentName": "pa-d-cosmos",
+  "testSubscription": "sub-d-lz-corp-01",
+  "testResourceGroup": "rg-ae-d-policy-test-cosmos-001",
+  "location": "australiaeast",
+  "disallowedLocation": "eastus",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

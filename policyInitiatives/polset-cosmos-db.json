@@ -259,7 +259,7 @@
           "ISO27001-2013_A.14.1.2"
         ]
       },
-            {
+      {
         "policyDefinitionReferenceId": "COSMOS-007",
         "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-allowed-locations",
         "parameters": {

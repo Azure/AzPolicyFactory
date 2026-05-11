@@ -33,6 +33,12 @@
       },
       "COSMOS-007_Effect": {
         "value": "Deny"
+      },
+      "COSMOS-007_listOfAllowedLocations": {
+        "value": [
+          "australiaeast",
+          "australiasoutheast"
+        ]
       }
     },
     "nonComplianceMessages": [],

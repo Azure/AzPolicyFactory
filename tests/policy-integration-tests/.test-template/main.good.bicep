@@ -13,4 +13,4 @@ var location = localConfig.location
 var namePrefix = globalConfig.namePrefix
 
 // define template specific variables
-var serviceShort = 'xxx3'
+var serviceShort = 'xxx2'

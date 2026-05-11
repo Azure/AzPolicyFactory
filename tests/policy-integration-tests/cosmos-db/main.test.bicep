@@ -84,3 +84,7 @@ resource pe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
 // outputs      //
 // ============ //
 //Specify the outputs that are required for the test
+output name string = cosmosDb.name
+output resourceId string = cosmosDb.id
+output privateEndpointResourceId string = pe.id
+output location string = cosmosDb.location

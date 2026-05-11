@@ -53,9 +53,9 @@ $tests += New-ARTPolicyStateTestConfig 'EH-004: Event Hub Namespace use CMK encr
 $tests += New-ARTPolicyStateTestConfig 'EH-005: Event Hub Namespace should use Private Endpoint' $script:token $eventHubNoPeResourceId $ehPolicyAssignmentId 'NonCompliant' 'EH-005'
 
 #DeployIfNotExists Policies
-$tests += New-ARTResourceExistenceTestConfig 'DS-022: Deploy Diagnostic Settings for Container Registry to Log Analytics workspace.' $script:token $diagnosticSettingsId 'exists' $script:GlobalConfig_diagnosticSettingsAPIVersion
+$tests += New-ARTResourceExistenceTestConfig 'DS-022: Deploy Diagnostic Settings for Event Hub to Log Analytics workspace.' $script:token $diagnosticSettingsId 'exists' $script:GlobalConfig_diagnosticSettingsAPIVersion
 $tests += New-ARTPolicyStateTestConfig 'DS-022: Diagnostic Settings Policy Must Be Compliant' $script:token $resourceId $diagSettingsPolicyAssignmentId 'Compliant' 'DS-022'
-$tests += New-ARTResourceExistenceTestConfig 'PEDNS-007: Private DNS Record for Azure Container Registry PE must exist' $script:token $privateEndpointPrivateDNSZoneGroupId 'exists' $script:GlobalConfig_privateDNSZoneGroupAPIVersion
+$tests += New-ARTResourceExistenceTestConfig 'PEDNS-007: Private DNS Record for Azure Event Hub PE must exist' $script:token $privateEndpointPrivateDNSZoneGroupId 'exists' $script:GlobalConfig_privateDNSZoneGroupAPIVersion
 $tests += New-ARTPolicyStateTestConfig 'PEDNS-007: Private DNS Record Policy Must Be Compliant' $script:token $privateEndpointResourceId $peDNSPolicyAssignmentId 'Compliant' 'PEDNS-007'
 
 #Deny policies (testing both positive and negative scenarios)

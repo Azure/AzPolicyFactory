@@ -1,0 +1,40 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-d-cog-service",
+    "displayName": "Azure Cognitive Services Policies Dev",
+    "description": "Policy Assignment for Azure Cognitive Services - Dev",
+    "metadata": {
+      "category": "Azure Cognitive Services"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cognitive-service",
+    "identity": "None",
+    "parameters": {
+      "COG-001_Effect": {
+        "value": "Deny"
+      },
+      "COG-002_Effect": {
+        "value": "Deny"
+      },
+      "COG-003_Effect": {
+        "value": "Deny"
+      },
+      "COG-004_Effect": {
+        "value": "Audit"
+      },
+      "COG-005_Effect": {
+        "value": "Deny"
+      },
+      "COG-005_allowedPublishers": {
+        "value": []
+      },
+      "COG-005_allowedAssetIds": {
+        "value": []
+      }
+    },
+    "nonComplianceMessages": [],
+    "roleDefinitionIds": []
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
+  "managementGroupId": "CONTOSO-DEV"
+}

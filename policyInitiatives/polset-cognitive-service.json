@@ -75,7 +75,7 @@
         ],
         "defaultValue": "Deny"
       },
-      "COG-005_allowedFormats": {
+      "COG-005_listOfAllowedFormats": {
         "type": "Array",
         "defaultValue": [],
         "metadata": {
@@ -96,7 +96,7 @@
         ],
         "defaultValue": "Deny"
       },
-      "COG-006_allowedNames": {
+      "COG-006_listOfAllowedNames": {
         "type": "Array",
         "defaultValue": [],
         "metadata": {
@@ -117,7 +117,7 @@
         ],
         "defaultValue": "Deny"
       },
-      "COG-007_allowedNames": {
+      "COG-007_listOfAllowedNames": {
         "type": "Array",
         "defaultValue": [],
         "metadata": {
@@ -215,8 +215,8 @@
           "effect": {
             "value": "[parameters('COG-005_Effect')]"
           },
-          "allowedFormats": {
-            "value": "[parameters('COG-005_allowedFormats')]"
+          "listOfAllowedFormats": {
+            "value": "[parameters('COG-005_listOfAllowedFormats')]"
           }
         },
         "groupNames": [
@@ -234,8 +234,8 @@
           "modelFormat": {
             "value": "OpenAI"
           },
-          "allowedNames": {
-            "value": "[parameters('COG-006_allowedNames')]"
+          "listOfAllowedNames": {
+            "value": "[parameters('COG-006_listOfAllowedNames')]"
           }
         },
         "groupNames": [
@@ -253,8 +253,8 @@
           "modelFormat": {
             "value": "xAI"
           },
-          "allowedNames": {
-            "value": "[parameters('COG-006_allowedNames')]"
+          "listOfAllowedNames": {
+            "value": "[parameters('COG-007_listOfAllowedNames')]"
           }
         },
         "groupNames": [

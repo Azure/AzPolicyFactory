@@ -25,7 +25,7 @@
       "COG-005_Effect": {
         "value": "Deny"
       },
-      "COG-005_allowedFormats": {
+      "COG-005_listOfAllowedFormats": {
         "value": [
           "xAI",
           "OpenAI"
@@ -34,7 +34,7 @@
       "COG-006_Effect": {
         "value": "Deny"
       },
-      "COG-006_allowedNames": {
+      "COG-006_listOfAllowedNames": {
         "value": [
           "gpt-4.1",
           "gpt-5.4",
@@ -44,7 +44,7 @@
       "COG-007_Effect": {
         "value": "Deny"
       },
-      "COG-007_allowedNames": {
+      "COG-007_listOfAllowedNames": {
         "value": [
           "grok-4-20-reasoning"
         ]

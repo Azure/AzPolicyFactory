@@ -180,6 +180,15 @@
                             "enabled": false
                           },
                           "timeGrain": null
+                        },
+                        {
+                          "category": "SLI",
+                          "enabled": "[parameters('metricsEnabled')]",
+                          "retentionPolicy": {
+                            "days": 0,
+                            "enabled": false
+                          },
+                          "timeGrain": null
                         }
                       ],
                       "logs": [

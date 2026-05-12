@@ -617,7 +617,7 @@
             "value": "[parameters('evaluationDelay')]"
           },
           "groupId": {
-            "value": "AzureBackup"
+            "value": "account"
           },
           "resourceLocation": {
             "value": "australiaeast"
@@ -626,7 +626,7 @@
             "value": "[concat(array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.cognitiveservices.azure.com')), array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.openai.azure.com')), array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.services.ai.azure.com')))]"
           },
           "privateLinkServiceResourceType": {
-            "value": "Microsoft.RecoveryServices/vaults"
+            "value": "Microsoft.CognitiveServices/accounts"
           }
         },
         "groupNames": [

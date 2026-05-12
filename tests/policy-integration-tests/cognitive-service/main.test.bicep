@@ -79,7 +79,7 @@ resource pe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
   }
 }
 
-resource storage 'Microsoft.Storage/storageAccounts@2026-04-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2025-08-01' = {
   name: 'sa${namePrefix}${serviceShort}'
   location: location
   tags: tags

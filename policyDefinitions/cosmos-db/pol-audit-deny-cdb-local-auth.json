@@ -47,8 +47,10 @@
                 ]
               },
               {
-                "field": "Microsoft.DocumentDB/databaseAccounts/capabilities",
-                "exists": false
+                "count":{
+                  "field":"Microsoft.DocumentDB/databaseAccounts/capabilities[*]"
+                },
+                "equals":0
               }
             ]
           }

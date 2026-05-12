@@ -16,7 +16,6 @@ var subName = localConfig.testSubscription
 var vnetResourceGroup = globalConfig.subscriptions[subName].networkResourceGroup
 var vnetName = globalConfig.subscriptions[subName].vNet
 var peSubnetName = globalConfig.subscriptions[subName].peSubnet
-var resourceSubnetName = globalConfig.subscriptions[subName].resourceSubnet
 
 var serviceShort = 'cog1' //use this to form the name of the resources deployed by this template. This is helpful to identify the resource in the portal and also useful if you want to have a policy that targets specific resources by name. For example, if you have a policy that audits whether storage accounts have secure transfer enabled, you can set serviceShort to 'st' and then in the policy definition, you can target resources with name starting with 'st' to only audit the storage accounts deployed by this test template.
 

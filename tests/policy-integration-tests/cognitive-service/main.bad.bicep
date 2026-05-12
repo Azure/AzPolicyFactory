@@ -2,12 +2,6 @@ metadata itemDisplayName = 'Test Template for xxx'
 metadata description = 'This template deploys the testing resource for xxx.'
 metadata summary = 'Deploys test xxx resources that should violate some policy assignments.'
 
-// ========== //
-// Parameters //
-// ========== //
-@description('Optional. Get current time stamp. This is used to generate unique name for Cognitive Service account. DO NOT provide a value.')
-param now string = utcNow()
-
 // ============ //
 // variables    //
 // ============ //
@@ -17,13 +11,12 @@ var localConfig = loadJsonContent('config.json')
 
 var location = localConfig.location
 var namePrefix = globalConfig.namePrefix
-var cognitiveServiceAccountNameSuffix = substring((uniqueString(now, location)), 0, 5)
 
 // define template specific variables
 var serviceShort = 'cog3'
 
-resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
-  name: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
+resource cognitiveService 'Microsoft.CognitiveServices/accounts@2025-12-01' = {
+  name: '${namePrefix}${serviceShort}01'
   location: location
   kind: 'AIServices'
   sku: {
@@ -37,12 +30,12 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
     publicNetworkAccess: 'Enabled' //this should violate the policy COG-002
     disableLocalAuth: false //this should violate the policy COG-001
     allowProjectManagement: true
-    customSubDomainName: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
+    customSubDomainName: '${namePrefix}${serviceShort}01'
     userOwnedStorage: [] //no user owned storage defined, this should violate the policy COG-004
   }
 }
 
-resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   name: 'gpt51'
   parent: cognitiveService
   sku: {
@@ -57,7 +50,7 @@ resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   }
 }
 
-resource grok3 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+resource grok3 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   name: 'grok3'
   parent: cognitiveService
   sku: {
@@ -71,7 +64,7 @@ resource grok3 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
     }
   }
 }
-resource deepseekr1 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+resource deepseekr1 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   name: 'deepseekr1'
   parent: cognitiveService
   properties: {

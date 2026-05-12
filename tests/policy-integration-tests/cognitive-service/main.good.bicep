@@ -2,12 +2,6 @@ metadata itemDisplayName = 'Test Template for xxxx'
 metadata description = 'This template deploys the testing resource for xxxx.'
 metadata summary = 'Deploys test xxxx resources that should comply with all policy assignments.'
 
-// ========== //
-// Parameters //
-// ========== //
-@description('Optional. Get current time stamp. This is used to generate unique name for Cognitive Service account. DO NOT provide a value.')
-param now string = utcNow()
-
 // ============ //
 // variables    //
 // ============ //
@@ -17,13 +11,12 @@ var localConfig = loadJsonContent('config.json')
 
 var location = localConfig.location
 var namePrefix = globalConfig.namePrefix
-var cognitiveServiceAccountNameSuffix = substring((uniqueString(now, location)), 0, 5)
 
 // define template specific variables
 var serviceShort = 'cog2'
 
-resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
-  name: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
+resource cognitiveService 'Microsoft.CognitiveServices/accounts@2025-12-01' = {
+  name: '${namePrefix}${serviceShort}01'
   location: location
   kind: 'AIServices'
   sku: {
@@ -47,7 +40,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
     ] //user owned storage defined, this should comply with the policy COG-004
   }
 }
-resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   name: 'gpt41'
   parent: cognitiveService
   sku: {
@@ -62,7 +55,7 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   }
 }
 
-resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   name: 'grok-4'
   parent: cognitiveService
   sku: {

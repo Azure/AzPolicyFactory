@@ -14,7 +14,7 @@ var namePrefix = globalConfig.namePrefix
 
 // define template specific variables
 var serviceShort = 'cos3'
-resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
+resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2023-03-15' = {
   kind: 'GlobalDocumentDB'
   name: '${namePrefix}${serviceShort}01'
   location: location
@@ -31,7 +31,7 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
         isZoneRedundant: false
       }
     ]
-    capabilities: []
+    //capabilities: []
     databaseAccountOfferType: 'Standard'
     disableLocalAuth: false // this should violate the policy COSMOS-001
     enableMultipleWriteLocations: false

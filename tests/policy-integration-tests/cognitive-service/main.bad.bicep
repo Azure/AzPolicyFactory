@@ -22,7 +22,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
   sku: {
     name: 'S0'
   }
-  identity: {} //no identity defined, this should violate the policy COG-003
+  //identity: {} //no identity defined, this should violate the policy COG-003
   properties: {
     networkAcls: {
       defaultAction: 'Allow'
@@ -38,6 +38,10 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
 resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   name: 'gpt51'
   parent: cognitiveService
+  sku: {
+    name: 'GlobalStandard'
+    capacity: 1
+  }
   properties: {
     model: {
       name: 'gpt-5.1' //this should violate the policy COG-006 since gpt-5.1 is not in the allowed list of models defined in the policy
@@ -46,12 +50,16 @@ resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   }
 }
 
-resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
-  name: 'grok4'
+resource grok3 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+  name: 'grok3'
   parent: cognitiveService
+  sku: {
+    name: 'GlobalStandard'
+    capacity: 1
+  }
   properties: {
     model: {
-      name: 'grok-4' //this should violate the policy COG-007 since grok-4 is not in the allowed list of models defined in the policy
+      name: 'grok-3' //this should violate the policy COG-007 since grok-3 is not in the allowed list of models defined in the policy
       format: 'xAI'
     }
   }

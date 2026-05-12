@@ -43,6 +43,10 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
 resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   name: 'gpt41'
   parent: cognitiveService
+  sku: {
+    name: 'GlobalStandard'
+    capacity: 1
+  }
   properties: {
     model: {
       name: 'gpt-4.1'
@@ -51,9 +55,13 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
   }
 }
 
-resource grok420reasoning 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
-  name: 'grok-4-20-reasoning'
+resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2026-03-01' = {
+  name: 'grok-4'
   parent: cognitiveService
+  sku: {
+    name: 'GlobalStandard'
+    capacity: 1
+  }
   properties: {
     model: {
       name: 'grok-4'

@@ -7,8 +7,7 @@
       "category": "Cosmos DB",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "5450f5bd-9c72-4390-a9c4-a7aba4edfdd2"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {
@@ -36,6 +35,22 @@
           {
             "field": "Microsoft.DocumentDB/databaseAccounts/disableLocalAuth",
             "notEquals": true
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.DocumentDB/databaseAccounts/capabilities[*].name",
+                "notin": [
+                  "EnableMongo",
+                  "EnableCassandra",
+                  "EnableGremlin"
+                ]
+              },
+              {
+                "field": "Microsoft.DocumentDB/databaseAccounts/capabilities",
+                "exists": false
+              }
+            ]
           }
         ]
       },

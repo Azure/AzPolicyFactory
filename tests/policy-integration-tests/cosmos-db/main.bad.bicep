@@ -31,6 +31,7 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
         isZoneRedundant: false
       }
     ]
+    capabilities: []
     databaseAccountOfferType: 'Standard'
     disableLocalAuth: false // this should violate the policy COSMOS-001
     enableMultipleWriteLocations: false

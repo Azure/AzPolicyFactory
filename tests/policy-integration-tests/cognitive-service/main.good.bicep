@@ -2,6 +2,12 @@ metadata itemDisplayName = 'Test Template for xxxx'
 metadata description = 'This template deploys the testing resource for xxxx.'
 metadata summary = 'Deploys test xxxx resources that should comply with all policy assignments.'
 
+// ========== //
+// Parameters //
+// ========== //
+@description('Optional. Get current time stamp. This is used to generate unique name for Cognitive Service account. DO NOT provide a value.')
+param now string = utcNow()
+
 // ============ //
 // variables    //
 // ============ //
@@ -11,12 +17,13 @@ var localConfig = loadJsonContent('config.json')
 
 var location = localConfig.location
 var namePrefix = globalConfig.namePrefix
+var cognitiveServiceAccountNameSuffix = substring((uniqueString(now, location)), 0, 5)
 
 // define template specific variables
 var serviceShort = 'cog2'
 
 resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
-  name: '${namePrefix}${serviceShort}01'
+  name: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
   location: location
   kind: 'AIServices'
   sku: {

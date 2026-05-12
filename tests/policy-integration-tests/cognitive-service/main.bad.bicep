@@ -2,6 +2,12 @@ metadata itemDisplayName = 'Test Template for xxx'
 metadata description = 'This template deploys the testing resource for xxx.'
 metadata summary = 'Deploys test xxx resources that should violate some policy assignments.'
 
+// ========== //
+// Parameters //
+// ========== //
+@description('Optional. Get current time stamp. This is used to generate unique name for Cognitive Service account. DO NOT provide a value.')
+param now string = utcNow()
+
 // ============ //
 // variables    //
 // ============ //
@@ -11,12 +17,13 @@ var localConfig = loadJsonContent('config.json')
 
 var location = localConfig.location
 var namePrefix = globalConfig.namePrefix
+var cognitiveServiceAccountNameSuffix = substring((uniqueString(now, location)), 0, 5)
 
 // define template specific variables
 var serviceShort = 'cog3'
 
 resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
-  name: '${namePrefix}${serviceShort}01'
+  name: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
   location: location
   kind: 'AIServices'
   sku: {
@@ -30,7 +37,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
     publicNetworkAccess: 'Enabled' //this should violate the policy COG-002
     disableLocalAuth: false //this should violate the policy COG-001
     allowProjectManagement: true
-    customSubDomainName: '${namePrefix}${serviceShort}01'
+    customSubDomainName: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
     userOwnedStorage: [] //no user owned storage defined, this should violate the policy COG-004
   }
 }

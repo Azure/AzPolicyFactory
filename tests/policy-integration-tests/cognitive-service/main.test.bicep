@@ -2,6 +2,12 @@ metadata itemDisplayName = 'Test Template for xxx'
 metadata description = 'This template deploys the testing resource for xxx.'
 metadata summary = 'Deploys test xxx resources.'
 
+// ========== //
+// Parameters //
+// ========== //
+@description('Optional. Get current time stamp. This is used to generate unique name for Cognitive Service account. DO NOT provide a value.')
+param now string = utcNow()
+
 // ============ //
 // variables    //
 // ============ //
@@ -16,7 +22,7 @@ var subName = localConfig.testSubscription
 var vnetResourceGroup = globalConfig.subscriptions[subName].networkResourceGroup
 var vnetName = globalConfig.subscriptions[subName].vNet
 var peSubnetName = globalConfig.subscriptions[subName].peSubnet
-
+var cognitiveServiceAccountNameSuffix = substring((uniqueString(now, location)), 0, 5)
 var serviceShort = 'cog1' //use this to form the name of the resources deployed by this template. This is helpful to identify the resource in the portal and also useful if you want to have a policy that targets specific resources by name. For example, if you have a policy that audits whether storage accounts have secure transfer enabled, you can set serviceShort to 'st' and then in the policy definition, you can target resources with name starting with 'st' to only audit the storage accounts deployed by this test template.
 
 // ============ //
@@ -30,7 +36,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' existing = {
 }
 
 resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
-  name: '${namePrefix}${serviceShort}01'
+  name: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
   location: location
   tags: tags
   kind: 'AIServices'
@@ -47,7 +53,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
     publicNetworkAccess: 'Disabled'
     disableLocalAuth: true
     allowProjectManagement: true
-    customSubDomainName: '${namePrefix}${serviceShort}01'
+    customSubDomainName: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
     userOwnedStorage: [
       {
         resourceId: storage.id
@@ -57,7 +63,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
 }
 
 resource pe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
-  name: 'pe-${namePrefix}${serviceShort}-cognitive'
+  name: 'pe-${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}-cognitive'
   location: location
   tags: tags
   properties: {
@@ -66,7 +72,7 @@ resource pe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
     }
     privateLinkServiceConnections: [
       {
-        name: 'pe-${namePrefix}${serviceShort}-cognitive'
+        name: 'pe-${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}-cognitive'
         properties: {
           privateLinkServiceId: cognitiveService.id
           groupIds: [

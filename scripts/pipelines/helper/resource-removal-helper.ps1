@@ -691,6 +691,58 @@ function invokeResourceRemoval {
       }
       break
     }
+    'Microsoft.Network/networkSecurityGroups' {
+      $subscriptionId = $ResourceId.Split('/')[2]
+      $networkSecurityGroup = Get-AzResource -ResourceId $ResourceId
+      $networkWatcherName = "NetworkWatcher_$($networkSecurityGroup.Location)"
+      $networkWatcherResourceGroupName = "NetworkWatcherRG"
+      $flowLogName = $networkSecurityGroup.Name + '-flowlog'
+
+      $flowLogResourceId = '/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/networkWatchers/{2}/flowLogs/{3}' -f `
+        $subscriptionId, `
+        $networkWatcherResourceGroupName, `
+        $networkWatcherName, `
+        $flowLogName
+
+      # Remove Flow Log associated with NSG
+      if ($PSCmdlet.ShouldProcess("Resource with ID [$flowLogResourceId]", 'Remove')) {
+        Write-Verbose ('[-] Removing resource [{0}] of type [Microsoft.Network/networkWatchers/flowLogs]' -f $flowLogName) -Verbose
+        $null = Remove-AzResource -ResourceId $flowLogResourceId -Force -ErrorAction 'Stop'
+      }
+
+      # Actual removal
+      # --------------
+      if ($PSCmdlet.ShouldProcess("Resource with ID [$ResourceId]", 'Remove')) {
+        $null = Remove-AzResource -ResourceId $ResourceId -Force -ErrorAction 'Stop'
+      }
+      break
+    }
+    'Microsoft.Network/virtualNetworks' {
+      $subscriptionId = $ResourceId.Split('/')[2]
+      $vnet = Get-AzResource -ResourceId $ResourceId
+      $networkWatcherName = "NetworkWatcher_$($vnet.Location)"
+      $networkWatcherResourceGroupName = "NetworkWatcherRG"
+      $flowLogName = $vnet.Name + '-flowlog'
+
+      $flowLogResourceId = '/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/networkWatchers/{2}/flowLogs/{3}' -f `
+        $subscriptionId, `
+        $networkWatcherResourceGroupName, `
+        $networkWatcherName, `
+        $flowLogName
+
+      # Remove Flow Log associated with VNet
+      if ($PSCmdlet.ShouldProcess("Resource with ID [$flowLogResourceId]", 'Remove')) {
+        Write-Verbose ('[-] Removing resource [{0}] of type [Microsoft.Network/networkWatchers/flowLogs]' -f $flowLogName) -Verbose
+        $null = Remove-AzResource -ResourceId $flowLogResourceId -Force -ErrorAction 'Stop'
+      }
+
+      # Actual removal
+      # --------------
+      if ($PSCmdlet.ShouldProcess("Resource with ID [$ResourceId]", 'Remove')) {
+        $null = Remove-AzResource -ResourceId $ResourceId -Force -ErrorAction 'Stop'
+      }
+      break
+    }
     ### CODE LOCATION: Add custom removal action here
     Default {
       if ($PSCmdlet.ShouldProcess("Resource with ID [$ResourceId]", 'Remove')) {

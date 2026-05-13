@@ -8,7 +8,7 @@
       "category": "Azure Cosmos DB"
     },
     "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cosmos-db",
-    "identity": "None",
+    "identity": "SystemAssigned",
     "parameters": {
       "COSMOS-001_Effect": {
         "value": "Modify"
@@ -42,7 +42,9 @@
       }
     },
     "nonComplianceMessages": [],
-    "roleDefinitionIds": []
+    "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/5bd9cd88-fe45-4216-938b-f97437e15450"
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
   "managementGroupId": "CONTOSO-DEV"

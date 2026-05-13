@@ -17,7 +17,7 @@ The following policies are in scope for testing:
 
 | Policy Assignment | Policy Reference ID | Policy Name | Policy Effect |
 | :---------------- | :---------------- | :------------ | :------------ |
-| `pa-d-cosmos` | `COSMOS-001` | Azure Cosmos DB accounts should have local authentication disabled | Deny |
+| `pa-d-cosmos` | `COSMOS-001` | Azure Cosmos DB accounts should have local authentication disabled | Modify |
 | `pa-d-cosmos` | `COSMOS-002` | Azure Cosmos DB accounts should have firewall rules | Deny |
 | `pa-d-cosmos` | `COSMOS-003` | Azure Cosmos DB should disable public network access | Deny |
 | `pa-d-cosmos` | `COSMOS-004` | Azure Cosmos DB accounts should use customer-managed keys to encrypt data at rest | Audit |

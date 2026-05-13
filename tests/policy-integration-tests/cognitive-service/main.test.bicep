@@ -1,6 +1,6 @@
-metadata itemDisplayName = 'Test Template for xxx'
-metadata description = 'This template deploys the testing resource for xxx.'
-metadata summary = 'Deploys test xxx resources.'
+metadata itemDisplayName = 'Test Template for Cognitive Services'
+metadata description = 'This template deploys the testing resource for Cognitive Services.'
+metadata summary = 'Deploys test Cognitive Services resources.'
 
 // ========== //
 // Parameters //
@@ -51,7 +51,6 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
       defaultAction: 'Deny'
     }
     publicNetworkAccess: 'Disabled'
-    disableLocalAuth: true
     allowProjectManagement: true
     customSubDomainName: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
     userOwnedStorage: [

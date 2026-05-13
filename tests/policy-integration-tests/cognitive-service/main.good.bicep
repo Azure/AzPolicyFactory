@@ -1,6 +1,6 @@
-metadata itemDisplayName = 'Test Template for xxxx'
-metadata description = 'This template deploys the testing resource for xxxx.'
-metadata summary = 'Deploys test xxxx resources that should comply with all policy assignments.'
+metadata itemDisplayName = 'Test Template for Cognitive Services'
+metadata description = 'This template deploys the testing resource for Cognitive Services.'
+metadata summary = 'Deploys test Cognitive Services resources that should comply with all policy assignments.'
 
 // ============ //
 // variables    //
@@ -30,7 +30,6 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2025-12-01' = {
       defaultAction: 'Deny'
     }
     publicNetworkAccess: 'Disabled' //this should comply with the policy COG-002
-    disableLocalAuth: true //this should comply with the policy COG-001
     allowProjectManagement: true
     customSubDomainName: '${namePrefix}${serviceShort}01'
     userOwnedStorage: [

@@ -48,7 +48,6 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
       }
     ]
     databaseAccountOfferType: 'Standard'
-    disableLocalAuth: true
     enableMultipleWriteLocations: false
     networkAclBypass: 'AzureServices'
     enablePartitionMerge: false

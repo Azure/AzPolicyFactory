@@ -1,6 +1,6 @@
-metadata itemDisplayName = 'Test Template for xxx'
-metadata description = 'This template deploys the testing resource for xxx.'
-metadata summary = 'Deploys test xxx resources that should violate some policy assignments.'
+metadata itemDisplayName = 'Test Template for Cosmos DB'
+metadata description = 'This template deploys the testing resource for Cosmos DB.'
+metadata summary = 'Deploys test Cosmos DB resources that should violate some policy assignments.'
 
 // ============ //
 // variables    //
@@ -33,7 +33,6 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2023-03-15' = {
     ]
     //capabilities: []
     databaseAccountOfferType: 'Standard'
-    disableLocalAuth: false // this should violate the policy COSMOS-001
     enableMultipleWriteLocations: false
     networkAclBypass: 'AzureServices'
     enablePartitionMerge: false

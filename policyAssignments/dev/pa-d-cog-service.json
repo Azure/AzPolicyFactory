@@ -8,7 +8,7 @@
       "category": "Azure Cognitive Services"
     },
     "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cognitive-service",
-    "identity": "None",
+    "identity": "SystemAssigned",
     "parameters": {
       "COG-001_Effect": {
         "value": "Deny"
@@ -51,7 +51,9 @@
       }
     },
     "nonComplianceMessages": [],
-    "roleDefinitionIds": []
+    "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
   "managementGroupId": "CONTOSO-DEV"

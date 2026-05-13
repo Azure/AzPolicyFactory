@@ -67,7 +67,7 @@ $violatingPolicies = @(
 $tests = @()
 
 #Modify / Append Policies
-$tests += New-ARTPropertyCountTestConfig 'COSMOS-001: Local authentication should be disabled' $script:token $resourceId 'properties.disableLocalAuth' 'equals' true
+$tests += New-ARTPropertyValueTestConfig 'COSMOS-001: Local authentication should be disabled' $script:token $resourceId 'boolean' 'properties.disableLocalAuth' 'equals' $true
 
 # Audit Policies
 $tests += New-ARTPolicyStateTestConfig 'COSMOS-004: Azure Cosmos DB accounts should use customer-managed keys to encrypt data at rest' $script:token $resourceId $cosmosPolicyAssignmentId 'NonCompliant' 'COSMOS-004'

@@ -64,6 +64,9 @@ $violatingPolicies = @(
 #define tests
 $tests = @()
 
+#Modify / Append Policies
+$tests += New-ARTPropertyValueTestConfig 'COG-001: Local authentication should be disabled' $script:token $resourceId 'boolean' 'properties.disableLocalAuth' 'equals' $true
+
 #DeployIfNotExists Policies
 $tests += New-ARTResourceExistenceTestConfig 'DS-013: Deploy Diagnostic Settings for Cognitive Service to Log Analytics workspace.' $script:token $diagnosticSettingsId 'exists' $script:GlobalConfig_diagnosticSettingsAPIVersion
 $tests += New-ARTPolicyStateTestConfig 'DS-013: Diagnostic Settings Policy Must Be Compliant' $script:token $resourceId $diagSettingsPolicyAssignmentId 'Compliant' 'DS-013'

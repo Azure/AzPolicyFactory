@@ -11,7 +11,7 @@
     "identity": "None",
     "parameters": {
       "COSMOS-001_Effect": {
-        "value": "Deny"
+        "value": "Modify"
       },
       "COSMOS-002_Effect": {
         "value": "Deny"

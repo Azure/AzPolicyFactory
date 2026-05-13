@@ -22,7 +22,7 @@ $initiateTestScriptPath = (resolve-path -RelativeBasePath $PSScriptRoot -path '.
 #region defining tests
 <#
 The following policy definitions are tested:.
-  - COSMOS-001: Azure Cosmos DB accounts should have local authentication disabled (Deny)
+  - COSMOS-001: Azure Cosmos DB accounts should have local authentication disabled (Modify)
   - COSMOS-002: Azure Cosmos DB accounts should have firewall rules (Deny)
   - COSMOS-003: Azure Cosmos DB should disable public network access (Deny)
   - COSMOS-004: Azure Cosmos DB accounts should use customer-managed keys to encrypt data at rest (Audit)
@@ -42,10 +42,6 @@ $cosmosPolicyAssignmentId = $script:LocalConfig_policyAssignmentIds | Where-Obje
 $privateEndpointResourceId = $script:bicepDeploymentOutputs.privateEndpointResourceId.value
 $privateEndpointPrivateDNSZoneGroupId = '{0}{1}' -f $privateEndpointResourceId, $script:GlobalConfig_privateEndpointPrivateDNSZoneGroupIdSuffix
 $violatingPolicies = @(
-  @{
-    policyAssignmentId          = $cosmosPolicyAssignmentId
-    policyDefinitionReferenceId = 'COSMOS-001'
-  }
   @{
     policyAssignmentId          = $cosmosPolicyAssignmentId
     policyDefinitionReferenceId = 'COSMOS-002'
@@ -70,7 +66,10 @@ $violatingPolicies = @(
 #define tests
 $tests = @()
 
-#region Audit Policies
+#Modify / Append Policies
+$tests += New-ARTPropertyCountTestConfig 'COSMOS-001: Local authentication should be disabled' $script:token $resourceId 'properties.disableLocalAuth' 'equals' true
+
+# Audit Policies
 $tests += New-ARTPolicyStateTestConfig 'COSMOS-004: Azure Cosmos DB accounts should use customer-managed keys to encrypt data at rest' $script:token $resourceId $cosmosPolicyAssignmentId 'NonCompliant' 'COSMOS-004'
 
 #DeployIfNotExists Policies

@@ -51,7 +51,16 @@
         ]
       }
     },
-    "nonComplianceMessages": [],
+    "nonComplianceMessages": [
+      {
+        "policyDefinitionReferenceId": "COG-006",
+        "message": "PolicyID: COG-006 Violation in polset-cognitive-service Initiative - 'Only approved OpenAI models are allowed to be deployed in Cognitive Services'"
+      },
+      {
+        "policyDefinitionReferenceId": "COG-007",
+        "message": "PolicyID: COG-007 Violation in polset-cognitive-service Initiative - 'Only approved xAI models are allowed to be deployed in Cognitive Services'"
+      }
+    ],
     "roleDefinitionIds": [
       "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
     ]

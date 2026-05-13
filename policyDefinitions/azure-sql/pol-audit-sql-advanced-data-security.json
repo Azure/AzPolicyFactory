@@ -4,7 +4,7 @@
     "displayName": "Azure Defender for SQL should be enabled for unprotected Azure SQL servers",
     "description": "Audit SQL servers without Advanced Data Security",
     "metadata": {
-      "category": "Application and Database security",
+      "category": "Azure SQL",
       "version": "2.0.1",
       "preview": false,
       "deprecated": false,

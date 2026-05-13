@@ -1,0 +1,51 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-p-cosmos",
+    "displayName": "Azure Cosmos DB Policies Prod",
+    "description": "Policy Assignment for Azure Cosmos DB - Prod",
+    "metadata": {
+      "category": "Azure Cosmos DB"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cosmos-db",
+    "identity": "SystemAssigned",
+    "parameters": {
+      "COSMOS-001_Effect": {
+        "value": "Modify"
+      },
+      "COSMOS-002_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-003_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-004_Effect": {
+        "value": "Audit"
+      },
+      "COSMOS-005_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-006_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-006_minimalTlsVersion": {
+        "value": "Tls12"
+      },
+      "COSMOS-007_Effect": {
+        "value": "Deny"
+      },
+      "COSMOS-007_listOfAllowedLocations": {
+        "value": [
+          "australiaeast",
+          "australiasoutheast"
+        ]
+      }
+    },
+    "nonComplianceMessages": [],
+    "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/5bd9cd88-fe45-4216-938b-f97437e15450"
+    ]
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
+}

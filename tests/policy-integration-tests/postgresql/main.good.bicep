@@ -110,7 +110,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-resource postgresql 'Microsoft.DBforPostgreSQL/flexibleServers@2026-01-01-preview' = {
+resource postgresql 'Microsoft.DBforPostgreSQL/flexibleServers@2025-12-01-preview' = {
   name: postgreSqlName
   location: location
   sku: {

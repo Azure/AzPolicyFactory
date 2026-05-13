@@ -4,7 +4,7 @@
     "displayName": "Disk encryption should be enabled on Azure Data Explorer",
     "description": "Enabling disk encryption helps protect and safeguard your data to meet your organizational security and compliance commitments.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Data Explorer",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

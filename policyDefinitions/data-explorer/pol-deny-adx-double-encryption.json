@@ -4,7 +4,7 @@
     "displayName": "Double encryption should be enabled on Azure Data Explorer",
     "description": "Enabling double encryption helps protect and safeguard your data to meet your organizational security and compliance commitments. When double encryption has been enabled, data in the storage account is encrypted twice, once at the service level and once at the infrastructure level, using two different encryption algorithms and two different keys.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Data Explorer",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

@@ -1,7 +1,7 @@
 {
   "name": "polset-monitor",
   "properties": {
-    "displayName": "CONTOSO - Azure Monitor Policy Initiative",
+    "displayName": "Azure Monitor Policy Initiative",
     "description": "This initiative includes policies that address the security controls for Azure Monitor.",
     "metadata": {
       "category": "Azure Monitor",

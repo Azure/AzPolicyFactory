@@ -1,0 +1,61 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-p-cog-service",
+    "displayName": "Azure Cognitive Services Policies Prod",
+    "description": "Policy Assignment for Azure Cognitive Services - Prod",
+    "metadata": {
+      "category": "Azure Cognitive Services"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-cognitive-service",
+    "identity": "SystemAssigned",
+    "parameters": {
+      "COG-001_Effect": {
+        "value": "Modify"
+      },
+      "COG-002_Effect": {
+        "value": "Deny"
+      },
+      "COG-003_Effect": {
+        "value": "Deny"
+      },
+      "COG-004_Effect": {
+        "value": "Audit"
+      },
+      "COG-005_Effect": {
+        "value": "Deny"
+      },
+      "COG-005_listOfAllowedFormats": {
+        "value": [
+          "xAI",
+          "OpenAI"
+        ]
+      },
+      "COG-006_Effect": {
+        "value": "Deny"
+      },
+      "COG-006_listOfAllowedNames": {
+        "value": [
+          "gpt-4.1",
+          "gpt-5.4",
+          "gpt-5.3-codex"
+        ]
+      },
+      "COG-007_Effect": {
+        "value": "Deny"
+      },
+      "COG-007_listOfAllowedNames": {
+        "value": [
+          "grok-4",
+          "grok-4-1-fast-reasoning"
+        ]
+      }
+    },
+    "nonComplianceMessages": [],
+    "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+    ]
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
+}

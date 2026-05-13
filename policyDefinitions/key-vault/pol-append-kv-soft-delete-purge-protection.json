@@ -4,7 +4,7 @@
     "displayName": "Automatically enable Key vault Soft-Delete and Purge Protection",
     "description": "This policy automatically enables Soft-Delete and Purge Protection for the Azure Key Vault if not already enabled.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Key Vault",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

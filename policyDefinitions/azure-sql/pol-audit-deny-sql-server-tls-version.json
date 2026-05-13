@@ -4,7 +4,7 @@
     "displayName": "Azure SQL Database should be running TLS version 1.2 or newer",
     "description": "Setting TLS version to 1.2 or newer improves security by ensuring your Azure SQL Database can only be accessed from clients using TLS 1.2 or newer. Using versions of TLS less than 1.2 is not recommended since they have well documented security vulnerabilities.",
     "metadata": {
-      "category": "Application and Database security",
+      "category": "Azure SQL",
       "version": "2.0.0",
       "preview": false,
       "deprecated": false,

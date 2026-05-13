@@ -40,7 +40,7 @@
   "privateEndpointAPIVersion": "2025-05-01", //API version for private endpoints
   "vnetFlowLogApiVersion": "2024-07-01", //API version for VNet flow logs
   "appServicesAPIVersion": "2025-03-01", //API version for App Services
-  "diagnosticSettingsIdSuffix": "/providers/microsoft.insights/diagnosticSettings/setByPolicyLAW", //suffix for the resource ID of the diagnostic settings created by the policy. This is used for testing of the diagnostic settings DINE policies
+  "diagnosticSettingsIdSuffix": "/providers/microsoft.insights/diagnosticSettings/setByPolicy", //suffix for the resource ID of the diagnostic settings created by the policy. This is used for testing of the diagnostic settings DINE policies
   "privateEndpointPrivateDNSZoneGroupIdSuffix": "/privateDnsZoneGroups/deployedByPolicy", //suffix for the resource ID of the private DNS zone group created by the policy for private endpoints. This is used for testing of the private endpoint DINE policies
   //Subscriptions and details about the each subscription used in the tests. This is needed to provide the necessary information for the tests to create and manage resources in the correct subscriptions and resource groups.
   "subscriptions": {

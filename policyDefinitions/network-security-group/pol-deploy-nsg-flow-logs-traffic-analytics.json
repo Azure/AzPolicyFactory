@@ -1,13 +1,13 @@
 {
   "name": "pol-deploy-nsg-flow-logs-traffic-analytics",
   "properties": {
-    "displayName": "Configure network security groups to enable traffic analytics",
+    "displayName": "[Deprecated] Configure network security groups to enable traffic analytics",
     "description": "Traffic analytics can be enabled for all network security groups hosted in a particular region with the settings provided during policy creation. If it already has Traffic analytics enabled, then policy does not overwrite its settings. Flow Logs are also enabled for the Network security groups that do not have it. Traffic analytics is a cloud-based solution that provides visibility into user and application activity in cloud networks.",
     "metadata": {
       "category": "Logging and monitoring",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": false,
+      "deprecated": true,
       "source_builtIn_name": "e920df7f-9a64-4066-9b58-52684c02a091"
     },
     "mode": "Indexed",

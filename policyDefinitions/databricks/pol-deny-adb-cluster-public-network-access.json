@@ -4,7 +4,7 @@
     "displayName": "Azure Databricks Clusters should disable public IP",
     "description": "Disabling public IP of clusters in Azure Databricks Workspaces improves security by ensuring that the clusters aren't exposed on the public internet. Learn more at: https://learn.microsoft.com/azure/databricks/security/secure-cluster-connectivity.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Databricks",
       "version": "1.0.1",
       "preview": false,
       "deprecated": false,

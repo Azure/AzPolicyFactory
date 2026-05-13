@@ -1,0 +1,56 @@
+{
+  "name": "pol-restrict-cog-model-formats",
+  "properties": {
+    "displayName": "Cognitive Services accounts should only allow permitted model formats",
+    "description": "This policy ensures that Cognitive Services accounts only allow model formats that are explicitly permitted.",
+    "metadata": {
+      "category": "Cognitive Services",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "mode": "All",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "listOfAllowedFormats": {
+        "type": "Array",
+        "metadata": {
+          "description": "The list of Open AI model formats that are allowed.",
+          "displayName": "Allowed model formats"
+        },
+        "defaultValue": []
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts/deployments"
+          },
+          {
+            "not": {
+              "field": "Microsoft.CognitiveServices/accounts/deployments/model.format",
+              "in": "[parameters('listOfAllowedFormats')]"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

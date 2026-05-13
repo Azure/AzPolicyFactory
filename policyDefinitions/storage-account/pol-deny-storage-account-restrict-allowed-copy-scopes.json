@@ -4,7 +4,7 @@
     "displayName": "Storage accounts should prevent permitted copy scopes from any storage accounts",
     "description": "Restrict copy operations from source storage accounts that are within the same Microsoft Entra tenant or that have a private link to the same virtual network as this storage account.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

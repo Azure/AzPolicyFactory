@@ -4,7 +4,7 @@
     "displayName": "Azure Cache for Redis should disable public network access",
     "description": "Disabling public network access improves security by ensuring that the Azure Cache for Redis isn't exposed on the public internet. You can limit exposure of your Azure Cache for Redis by creating private endpoints instead.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Redis Cache",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

@@ -4,7 +4,7 @@
     "displayName": "Machines should be configured to periodically check for missing system updates",
     "description": "To ensure periodic assessments for missing system updates are triggered automatically every 24 hours, the AssessmentMode property should be set to 'AutomaticByPlatform'. Learn more about AssessmentMode property for Windows: https://aka.ms/computevm-windowspatchassessmentmode, for Linux: https://aka.ms/computevm-linuxpatchassessmentmode.",
     "metadata": {
-      "category": "Threat and Vulnerability Management",
+      "category": "Compute",
       "version": "2.0.0",
       "preview": false,
       "deprecated": false,

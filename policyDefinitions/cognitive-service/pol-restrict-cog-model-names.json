@@ -1,0 +1,66 @@
+{
+  "name": "pol-restrict-cog-model-names",
+  "properties": {
+    "displayName": "Cognitive Services accounts should only allow permitted model names",
+    "description": "This policy ensures that Cognitive Services accounts only allow model names that are explicitly permitted.",
+    "metadata": {
+      "category": "Cognitive Services",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "mode": "All",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "modelFormat": {
+        "type": "string",
+        "metadata": {
+          "description": "The model format that is allowed.",
+          "displayName": "the format of the model"
+        }
+      },
+      "listOfAllowedNames": {
+        "type": "Array",
+        "metadata": {
+          "description": "The list of Open AI model names that are allowed.",
+          "displayName": "Allowed model names"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts/deployments"
+          },
+                    {
+            "field": "Microsoft.CognitiveServices/accounts/deployments/model.format",
+            "equals": "[parameters('modelFormat')]"
+          },
+          {
+            "not": {
+              "field": "Microsoft.CognitiveServices/accounts/deployments/model.name",
+              "in": "[parameters('listOfAllowedNames')]"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

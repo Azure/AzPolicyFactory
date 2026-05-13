@@ -4,7 +4,7 @@
     "displayName": "Azure Data Factory linked services should use Key Vault for storing secrets",
     "description": "To ensure secrets (such as connection strings) are managed securely, require users to provide secrets using an Azure Key Vault instead of specifying them inline in linked services.",
     "metadata": {
-      "category": "Data Protection",
+      "category": "Data Factory",
       "version": "1.0.0-preview",
       "preview": true,
       "deprecated": false,

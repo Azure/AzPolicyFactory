@@ -4,7 +4,7 @@
     "displayName": "Configure Azure Databricks workspace to use private DNS zones",
     "description": "Use private DNS zones to override the DNS resolution for a private endpoint. A private DNS zone links to your virtual network to resolve to Azure Databricks workspaces. Learn more at: https://aka.ms/adbpe.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Databricks",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false
@@ -36,7 +36,7 @@
         "type": "String",
         "metadata": {
           "displayName": "Effect",
-          "description": "Enable or disable the execution of the policy"
+          "description": "The desired effect of the policy."
         },
         "allowedValues": [
           "DeployIfNotExists",

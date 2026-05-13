@@ -4,7 +4,7 @@
     "displayName": "Function app slots should enable outbound non-RFC 1918 traffic to Azure Virtual Network",
     "description": "Application routing defines what traffic is routed from your app and into the virtual network.",
     "metadata": {
-      "category": "Network Security",
+      "category": "App Service",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

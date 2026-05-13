@@ -6,7 +6,7 @@
     "description": "Protect your subnet from potential threats by restricting access to it with a Network Security Group (NSG). NSGs contain a list of Access Control List (ACL) rules that allow or deny network traffic to your subnet.",
     "metadata": {
       "version": "1.0.0",
-      "category": "Network",
+      "category": "Virtual Network",
       "preview": false,
       "deprecated": false
     },

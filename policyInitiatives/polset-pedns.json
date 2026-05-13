@@ -179,9 +179,33 @@
         "defaultValue": "DeployIfNotExists"
       },
       "PEDNS-015_Effect": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "PEDNS-015 Effect: App Services slots",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "PEDNS-016_Effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "PEDNS-016 Effect: Cognitive Service Accounts",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "PEDNS-017_Effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "PEDNS-017 Effect: Cosmos DB SQL",
           "description": "Enable or disable the execution of the policy"
         },
         "allowedValues": [
@@ -576,6 +600,60 @@
           },
           "privateLinkServiceResourceType": {
             "value": "Microsoft.Web/sites"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-016",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-pe-dns-records-multiple-dns-zones-single-location",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('PEDNS-016_Effect')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
+          "groupId": {
+            "value": "account"
+          },
+          "resourceLocation": {
+            "value": "australiaeast"
+          },
+          "privateDnsZoneIds": {
+            "value": "[concat(array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.cognitiveservices.azure.com')), array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.openai.azure.com')), array(concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.services.ai.azure.com')))]"
+          },
+          "privateLinkServiceResourceType": {
+            "value": "Microsoft.CognitiveServices/accounts"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-017",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-pe-dns-records-single-dns-zone-single-location",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('PEDNS-017_Effect')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
+          "groupId": {
+            "value": "Sql"
+          },
+          "resourceLocation": {
+            "value": "australiaeast"
+          },
+          "privateDnsZoneId": {
+            "value": "[concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.documents.azure.com')]"
+          },
+          "privateLinkServiceResourceType": {
+            "value": "Microsoft.DocumentDB/databaseAccounts"
           }
         },
         "groupNames": [

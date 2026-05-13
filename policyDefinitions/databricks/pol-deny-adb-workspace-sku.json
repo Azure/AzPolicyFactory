@@ -4,7 +4,7 @@
     "displayName": "Azure Databricks workspaces should be Premium SKU that supports features like private link",
     "description": "Only allow Databricks workspace with Premium Sku that your organization can deploy to support features like Private Link, customer-managed key for encryption. Learn more at: https://aka.ms/adbpe.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Databricks",
       "version": "1.0.1",
       "preview": false,
       "deprecated": false,
@@ -16,7 +16,7 @@
         "type": "String",
         "metadata": {
           "displayName": "Effect",
-          "description": "Enable or disable the execution of the audit policy"
+          "description": "The desired effect of the policy."
         },
         "allowedValues": [
           "Audit",

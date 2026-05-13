@@ -4,7 +4,7 @@
     "displayName": "Deploy Advanced Threat Protection on storage accounts",
     "description": "This policy enables Advanced Threat Protection on storage accounts.",
     "metadata": {
-      "category": "Threat and Vulnerability Management",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

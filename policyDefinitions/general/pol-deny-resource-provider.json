@@ -4,7 +4,7 @@
     "displayName": "Deny Resource Provider",
     "description": "This policy enables you to restrict all resources from a specific resource provider from being created.",
     "metadata": {
-      "category": "Asset Management",
+      "category": "General",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

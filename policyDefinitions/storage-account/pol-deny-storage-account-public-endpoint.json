@@ -4,7 +4,7 @@
     "displayName": "Restrict Storage Account with public network access",
     "description": "This policy audits or denies creation of Storage Accounts that allows public network access. To be compliant with this policy, the minimum ARM API version for the 'Microsoft.storage/storageAccounts' must be 2021-06-01 or higher.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Storage Account",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

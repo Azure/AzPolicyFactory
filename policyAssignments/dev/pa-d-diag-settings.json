@@ -11,7 +11,7 @@
     },
     "parameters": {
       "profileName": {
-        "value": "setByPolicyLAW"
+        "value": "setByPolicy"
       },
       "evaluationDelay": {
         "value": "AfterProvisioning"
@@ -42,6 +42,12 @@
       },
       "DS-008_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "DS-008_LogsToEnable": {
+        "value": [
+          "AppSystemEvents",
+          "OTelResources"
+        ]
       },
       "DS-009_Effect": {
         "value": "DeployIfNotExists"
@@ -203,6 +209,9 @@
         "value": "DeployIfNotExists"
       },
       "DS-062_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "DS-063_Effect": {
         "value": "DeployIfNotExists"
       }
     },

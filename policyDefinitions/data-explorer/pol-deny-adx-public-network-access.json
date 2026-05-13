@@ -4,7 +4,7 @@
     "displayName": "Public network access on Azure Data Explorer should be disabled",
     "description": "Disabling the public network access property improves security by ensuring Azure Data Explorer can only be accessed from a private endpoint. This configuration denies all logins that match IP or virtual network based firewall rules.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Data Explorer",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

@@ -4,7 +4,7 @@
     "displayName": "RDP and SSH access from the Internet should be blocked",
     "description": "This policy denies any network security rule that allows RDP or SSH access from Internet.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Compute",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

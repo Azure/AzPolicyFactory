@@ -13,15 +13,14 @@
       "COSMOS-001_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "COSMOS-001 Effect: Restrict Cosmos DB Local Authentication",
-          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy."
+          "displayName": "COSMOS-001 Effect: Disable Cosmos DB Local Authentication",
+          "description": "Enable or disable the execution of the policy."
         },
         "allowedValues": [
-          "Audit",
-          "Deny",
+          "Modify",
           "Disabled"
         ],
-        "defaultValue": "Deny"
+        "defaultValue": "Modify"
       },
       "COSMOS-002_Effect": {
         "type": "String",
@@ -77,47 +76,99 @@
           "Disabled"
         ],
         "defaultValue": "Deny"
+      },
+      "COSMOS-006_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "COSMOS-006 Effect: Restrict Cosmos DB Minimum TLS Version",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "COSMOS-006_minimalTlsVersion": {
+        "type": "String",
+        "metadata": {
+          "displayName": "COSMOS-006: Minimum TLS Version",
+          "description": "Minimum version of TLS required for Cosmos DB"
+        },
+        "allowedValues": [
+          "Tls10",
+          "Tls11",
+          "Tls12"
+        ],
+        "defaultValue": "Tls12"
+      },
+      "COSMOS-007_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "COSMOS-007 Effect: Restrict Cosmos DB Locations",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "COSMOS-007_listOfAllowedLocations": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "COSMOS-007: Allowed locations",
+          "description": "The list of locations that can be specified when deploying Azure Cosmos DB resources.",
+          "strongType": "location"
+        },
+        "defaultValue": [
+          "australiaeast",
+          "australiasoutheast"
+        ]
       }
     },
     "policyDefinitionGroups": [
       {
-        "name": "ISO27001-2013_A.12.3.1",
-        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.3.1"
+        "name": "ISO27001-2013_A.9.2.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.9.2.3"
+      },
+      {
+        "name": "ISO27001-2013_A.10.1.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.10.1.1"
       },
       {
         "name": "ISO27001-2013_A.13.1.3",
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.13.1.3"
       },
       {
-        "name": "ISO27001-2013_A.17.1.1",
-        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.17.1.1"
+        "name": "ISO27001-2013_A.15.1.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.15.1.2"
       },
       {
-        "name": "ISO27001-2013_A.17.1.2",
-        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.17.1.2"
-      },
-      {
-        "name": "CB-AZ-011"
+        "name": "ISO27001-2013_A.18.1.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.18.1.1"
       }
     ],
     "policyDefinitions": [
       {
         "policyDefinitionReferenceId": "COSMOS-001",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-local-auth",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/dc2d41d1-4ab1-4666-a3e1-3d51c43e0049",
+        "definitionVersion": "1.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-001_Effect')]"
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.12.3.1",
-          "ISO27001-2013_A.17.1.1",
-          "ISO27001-2013_A.17.1.2"
+          "ISO27001-2013_A.9.2.3"
         ]
       },
       {
         "policyDefinitionReferenceId": "COSMOS-002",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-firewall-rule-exists",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/862e97cf-49fc-4a5c-9de4-40d4e2e7c8eb",
+        "definitionVersion": "2.1.*",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-002_Effect')]"
@@ -129,27 +180,28 @@
       },
       {
         "policyDefinitionReferenceId": "COSMOS-003",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-disable-public-network-access",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/797b37f7-06b8-444c-b1ad-fc62867f335a",
+        "definitionVersion": "1.0.*",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-003_Effect')]"
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.13.1.3",
-          "CB-AZ-011"
+          "ISO27001-2013_A.13.1.3"
         ]
       },
       {
         "policyDefinitionReferenceId": "COSMOS-004",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-encrypt-with-cmk",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1f905d99-2ab7-462c-a6b0-f709acca6c8f",
+        "definitionVersion": "1.1.*",
         "parameters": {
           "effect": {
             "value": "[parameters('COSMOS-004_Effect')]"
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.12.3.1"
+          "ISO27001-2013_A.10.1.1"
         ]
       },
       {
@@ -161,9 +213,38 @@
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.12.3.1",
-          "ISO27001-2013_A.17.1.1",
-          "ISO27001-2013_A.17.1.2"
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "COSMOS-006",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-minimum-tls-version",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('COSMOS-006_Effect')]"
+          },
+          "minimalTlsVersion": {
+            "value": "[parameters('COSMOS-006_minimalTlsVersion')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.10.1.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "COSMOS-007",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-audit-deny-cdb-allowed-locations",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('COSMOS-007_Effect')]"
+          },
+          "listOfAllowedLocations": {
+            "value": "[parameters('COSMOS-007_listOfAllowedLocations')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.18.1.1",
+          "ISO27001-2013_A.15.1.2"
         ]
       }
     ]

@@ -4,7 +4,7 @@
     "displayName": "Container registries should have SKUs that support Private Links",
     "description": "Azure Private Link lets you connect your virtual network to Azure services without a public IP address at the source or destination. The private link platform handles the connectivity between the consumer and services over the Azure backbone network. By mapping private endpoints to your container registries instead of the entire service, data leakage risks are reduced. Learn more at: https://aka.ms/acr/private-link.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Container Registry",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

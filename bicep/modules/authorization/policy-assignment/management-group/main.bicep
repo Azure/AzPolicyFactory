@@ -32,7 +32,7 @@ var identityVar = policyAssignment.?identity == 'SystemAssigned'
         }
       : null
 
-resource assignment 'Microsoft.Authorization/policyAssignments@2025-03-01' = {
+resource assignment 'Microsoft.Authorization/policyAssignments@2025-12-01-preview' = {
   name: policyAssignment.name
   location: location
   properties: {

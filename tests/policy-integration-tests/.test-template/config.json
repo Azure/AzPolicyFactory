@@ -5,12 +5,7 @@
   "assignmentName": "",
   "testSubscription": "",
   "testResourceGroup": "",
-  "testManagementGroup": "",
   "location": "",
   "tagsForResourceGroup": false,
-  "testAuditPoliciesFromDeployedResources": false,
-  "testAppendModifyPolicies": false,
-  "testDeployIfNotExistsPolicies": false,
-  "testDenyPolicies": true,
   "removeTestResourceGroup": true
 }

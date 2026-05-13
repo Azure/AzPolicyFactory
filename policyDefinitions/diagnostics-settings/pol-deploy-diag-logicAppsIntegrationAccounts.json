@@ -77,9 +77,23 @@
           ],
           "existenceCondition": {
             "allOf": [
-              {
-                "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
-                "equals": "True"
+{
+                "count": {
+                  "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs[*].categoryGroup",
+                        "equals": "allLogs"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+                        "equals": "[parameters('logsEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
               },
               {
                 "field": "Microsoft.Insights/diagnosticSettings/workspaceId",

@@ -4,7 +4,7 @@
     "displayName": "Network interfaces should disable IP forwarding",
     "description": "This policy audits or denies the network interfaces which enabled IP forwarding. The setting of IP forwarding disables Azure's check of the source and destination for a network interface. This should be reviewed by the network security team.",
     "metadata": {
-      "category": "Network Security",
+      "category": "Compute",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false,

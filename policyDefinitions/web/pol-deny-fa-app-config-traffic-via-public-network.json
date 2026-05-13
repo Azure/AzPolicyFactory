@@ -4,7 +4,7 @@
     "displayName": "App Service and Function apps should route configuration traffic over the virtual network",
     "description": "Configuration routing affects operations that happen before or during startup of your app. Virtual network routing handles how both app and configuration traffic are routed from your virtual network and out.",
     "metadata": {
-      "category": "Network Security",
+      "category": "App Service",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false

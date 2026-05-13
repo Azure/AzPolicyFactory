@@ -46,7 +46,8 @@
       },
       "COG-007_listOfAllowedNames": {
         "value": [
-          "grok-4"
+          "grok-4",
+          "grok-3"
         ]
       }
     },

@@ -34,10 +34,6 @@ $privateEndpointPrivateDNSZoneGroupId = '{0}{1}' -f $privateEndpointResourceId, 
 $violatingPolicies = @(
   @{
     policyAssignmentId          = $cogServicePolicyAssignmentId
-    policyDefinitionReferenceId = 'COG-001'
-  }
-  @{
-    policyAssignmentId          = $cogServicePolicyAssignmentId
     policyDefinitionReferenceId = 'COG-002'
   }
   @{

@@ -54,8 +54,8 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   }
 }
 
-resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
-  name: 'grok-4'
+resource grok 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
+  name: 'grok-3'
   parent: cognitiveService
   sku: {
     name: 'GlobalStandard'
@@ -63,7 +63,7 @@ resource grok4 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   }
   properties: {
     model: {
-      name: 'grok-4'
+      name: 'grok-3'
       format: 'xAI'
     }
   }

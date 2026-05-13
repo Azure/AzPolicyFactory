@@ -9,9 +9,9 @@ on:
         type: boolean
         default: false
   workflow_run:
-    workflows: [ "policy-definitions" ] # name of the triggering workflow
-    types: [ completed ]
-    branches: [ main ]
+    workflows: ["policy-definitions"] # name of the triggering workflow
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
@@ -29,7 +29,8 @@ jobs:
   job_call_initiation:
     name: Initiation
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name
+    if:
+      ${{ github.event.workflow_run.conclusion == 'success' || github.event_name
       == 'workflow_dispatch' }}
     steps:
       - name: "Checkout"

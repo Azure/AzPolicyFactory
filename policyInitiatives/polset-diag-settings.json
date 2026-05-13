@@ -16,7 +16,7 @@
           "displayName": "Profile name",
           "description": "The diagnostic settings profile name."
         },
-        "defaultValue": "setByPolicyLAW"
+        "defaultValue": "setByPolicy"
       },
       "evaluationDelay": {
         "type": "string",

@@ -419,3 +419,5 @@ FodyWeavers.xsd
 
 #Mac
 .DS_Store
+.github/workflows/package.json
+.github/workflows/package-lock.json

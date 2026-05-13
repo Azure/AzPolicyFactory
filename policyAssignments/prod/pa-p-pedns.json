@@ -71,7 +71,76 @@
     "roleDefinitionIds": [
       "/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7"
     ],
-    "nonComplianceMessages": []
+    "nonComplianceMessages": [
+      {
+        "policyDefinitionReferenceId": "PEDNS-001",
+        "message": "PolicyID: PEDNS-001 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Backup Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-002",
+        "message": "PolicyID: PEDNS-002 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Storage blob Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-003",
+        "message": "PolicyID: PEDNS-003 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Storage file Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-004",
+        "message": "PolicyID: PEDNS-004 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Storage dfs Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-005",
+        "message": "PolicyID: PEDNS-005 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Key Vault Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-006",
+        "message": "PolicyID: PEDNS-006 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure App Service Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-007",
+        "message": "PolicyID: PEDNS-007 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Event Hub Namespace Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-008",
+        "message": "PolicyID: PEDNS-008 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Databricks Browser Auth Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-009",
+        "message": "PolicyID: PEDNS-009 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Databricks UI API Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-010",
+        "message": "PolicyID: PEDNS-010 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Data Explorer Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-011",
+        "message": "PolicyID: PEDNS-011 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Monitor Private Link Scope Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-012",
+        "message": "PolicyID: PEDNS-012 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Container Registry Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-013",
+        "message": "PolicyID: PEDNS-013 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Health Data Services Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-014",
+        "message": "PolicyID: PEDNS-014 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Container App Managed Environment Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-015",
+        "message": "PolicyID: PEDNS-015 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for App Services slots Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-016",
+        "message": "PolicyID: PEDNS-016 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Cognitive Service Accounts Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-017",
+        "message": "PolicyID: PEDNS-017 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Cosmos DB SQL Private Endpoint must be configured'"
+      }
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
   "managementGroupId": "CONTOSO"

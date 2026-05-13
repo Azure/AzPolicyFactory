@@ -19,7 +19,7 @@ The following policies are in scope for testing:
 | `pa-d-cog-service` | `COG-001` | Cognitive Service accounts should have local authentication disabled | Deny |
 | `pa-d-cog-service` | `COG-002` | Cognitive Services accounts should restrict public network access | Deny |
 | `pa-d-cog-service` | `COG-003` | Cognitive Services accounts should use a managed identity | Deny |
-| `pa-d-cog-service` | `COG-004` | Cognitive Services accounts should use customer owned storage | Deny |
+| `pa-d-cog-service` | `COG-004` | Cognitive Services accounts should use customer owned storage | Audit |
 | `pa-d-cog-service` | `COG-005` | Cognitive Services Deployments allowed model formats | Deny |
 | `pa-d-cog-service` | `COG-006` | Cognitive Services Deployments should only use approved Models from OpenAI | Deny |
 | `pa-d-cog-service` | `COG-007` | Cognitive Services Deployments should only use approved Models from xAI | Deny |

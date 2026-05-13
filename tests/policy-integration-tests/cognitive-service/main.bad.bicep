@@ -30,7 +30,6 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2025-12-01' = {
     publicNetworkAccess: 'Enabled' //this should violate the policy COG-002
     allowProjectManagement: true
     customSubDomainName: '${namePrefix}${serviceShort}01'
-    userOwnedStorage: [] //no user owned storage defined, this should violate the policy COG-004
   }
 }
 
@@ -60,6 +59,7 @@ resource grok3 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
     model: {
       name: 'grok-3' //this should violate the policy COG-007 since grok-3 is not in the allowed list of models defined in the policy
       format: 'xAI'
+      version: '1'
     }
   }
 }

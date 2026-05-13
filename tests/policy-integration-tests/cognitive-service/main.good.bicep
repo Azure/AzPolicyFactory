@@ -44,7 +44,7 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   parent: cognitiveService
   sku: {
     name: 'GlobalStandard'
-    capacity: 1
+    capacity: 150
   }
   properties: {
     model: {
@@ -55,16 +55,17 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
 }
 
 resource grok 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
-  name: 'grok-3'
+  name: 'grok-4-1-fast-reasoning'
   parent: cognitiveService
   sku: {
     name: 'GlobalStandard'
-    capacity: 1
+    capacity: 4
   }
   properties: {
     model: {
-      name: 'grok-3'
+      name: 'grok-4-1-fast-reasoning'
       format: 'xAI'
+      version: '1'
     }
   }
 }

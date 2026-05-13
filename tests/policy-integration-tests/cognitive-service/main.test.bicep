@@ -53,11 +53,7 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2026-03-01' = {
     publicNetworkAccess: 'Disabled'
     allowProjectManagement: true
     customSubDomainName: '${namePrefix}${serviceShort}${cognitiveServiceAccountNameSuffix}01'
-    userOwnedStorage: [
-      {
-        resourceId: storage.id
-      }
-    ]
+    //userOwnedStorage: [] //This should violate the audit policy COG-004 since no user owned storage defined
   }
 }
 
@@ -83,56 +79,6 @@ resource pe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
   }
 }
 
-resource storage 'Microsoft.Storage/storageAccounts@2025-08-01' = {
-  name: 'sa${namePrefix}${serviceShort}'
-  location: location
-  tags: tags
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    networkAcls: {
-      defaultAction: 'Deny'
-    }
-    publicNetworkAccess: 'Disabled'
-    allowCrossTenantReplication: false
-    allowedCopyScope: 'AAD'
-    allowSharedKeyAccess: false
-    minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
-  }
-}
-
-resource storagePe 'Microsoft.Network/privateEndpoints@2025-05-01' = {
-  name: 'pe-sa${namePrefix}${serviceShort}-blob'
-  location: location
-  tags: tags
-  properties: {
-    subnet: {
-      id: vnet::peSubnet.id
-    }
-    privateLinkServiceConnections: [
-      {
-        name: 'pe-sa${namePrefix}${serviceShort}-blob'
-        properties: {
-          privateLinkServiceId: storage.id
-          groupIds: [
-            'blob'
-          ]
-        }
-      }
-    ]
-  }
-}
-resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(cognitiveService.id, storage.id, 'Storage Blob Data Contributor')
-  properties: {
-    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe' //Storage Blob Data Contributor
-    principalId: cognitiveService.identity.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
 // ============ //
 // outputs      //
 // ============ //

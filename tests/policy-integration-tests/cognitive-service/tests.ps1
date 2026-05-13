@@ -42,10 +42,6 @@ $violatingPolicies = @(
   }
   @{
     policyAssignmentId          = $cogServicePolicyAssignmentId
-    policyDefinitionReferenceId = 'COG-004'
-  }
-  @{
-    policyAssignmentId          = $cogServicePolicyAssignmentId
     policyDefinitionReferenceId = 'COG-005'
   }
   @{
@@ -62,6 +58,9 @@ $tests = @()
 
 #Modify / Append Policies
 $tests += New-ARTPropertyValueTestConfig 'COG-001: Local authentication should be disabled' $script:token $resourceId 'boolean' 'properties.disableLocalAuth' 'equals' $true
+
+# Audit Policies
+$tests += New-ARTPolicyStateTestConfig 'COG-004: Azure Cognitive Services accounts should use customer-owned storage' $script:token $resourceId $cogServicePolicyAssignmentId 'NonCompliant' 'COG-004'
 
 #DeployIfNotExists Policies
 $tests += New-ARTResourceExistenceTestConfig 'DS-013: Deploy Diagnostic Settings for Cognitive Service to Log Analytics workspace.' $script:token $diagnosticSettingsId 'exists' $script:GlobalConfig_diagnosticSettingsAPIVersion

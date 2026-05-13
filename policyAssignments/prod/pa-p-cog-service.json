@@ -20,7 +20,7 @@
         "value": "Deny"
       },
       "COG-004_Effect": {
-        "value": "Deny"
+        "value": "Audit"
       },
       "COG-005_Effect": {
         "value": "Deny"
@@ -47,7 +47,7 @@
       "COG-007_listOfAllowedNames": {
         "value": [
           "grok-4",
-          "grok-3"
+          "grok-4-1-fast-reasoning"
         ]
       }
     },

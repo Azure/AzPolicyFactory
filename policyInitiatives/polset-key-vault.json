@@ -170,6 +170,7 @@
       {
         "policyDefinitionReferenceId": "KV-005",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0a075868-4c26-42ef-914c-5bc007359560",
+        "definitionVersion": "2.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('KV-005_Effect')]"
@@ -185,6 +186,7 @@
       {
         "policyDefinitionReferenceId": "KV-006",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/152b15f7-8e1f-4c1f-ab71-8c010ba5dbc0",
+        "definitionVersion": "1.0.*",
         "parameters": {
           "effect": {
             "value": "[parameters('KV-006_Effect')]"
@@ -197,6 +199,7 @@
       {
         "policyDefinitionReferenceId": "KV-007",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/98728c90-32c7-4049-8429-847dc0f4fe37",
+        "definitionVersion": "1.0.*",
         "parameters": {
           "effect": {
             "value": "[parameters('KV-007_Effect')]"

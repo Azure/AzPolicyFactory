@@ -1,0 +1,32 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-p-search",
+    "displayName": "Azure Search Services Policies Prod",
+    "description": "Policy Assignment for Azure Search Services - Prod",
+    "metadata": {
+      "category": "Azure Search Services"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-search",
+    "identity": "SystemAssigned",
+    "parameters": {
+      "SRCH-001_Effect": {
+        "value": "Deny"
+      },
+      "SRCH-002_Effect": {
+        "value": "Modify"
+      },
+      "SRCH-003_Effect": {
+        "value": "Deny"
+      }
+
+    },
+    "nonComplianceMessages": [
+    ],
+    "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/7ca78c08-252a-4471-8644-bb5ff32d4ba0"
+    ]
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
+}

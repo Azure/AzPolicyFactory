@@ -1,0 +1,108 @@
+{
+  "name": "polset-search",
+  "properties": {
+    "displayName": "Azure Search Services Policy Initiative",
+    "description": "This policy initiative defines the foundation security requirements for Azure Search Services",
+    "metadata": {
+      "category": "Search",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "SRCH-001_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "SRCH-001 Effect: Azure AI Search service should use a SKU that supports private link",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "SRCH-002_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "SRCH-002 Effect: Configure Azure AI Search services to disable local authentication",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Modify",
+          "Disabled"
+        ],
+        "defaultValue": "Modify"
+      },
+      "SRCH-003_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "SRCH-003 Effect: Azure AI Search services should restrict public network access",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyDefinitionGroups": [
+      {
+        "name": "ISO27001-2013_A.9.2.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.9.2.3"
+      },
+      {
+        "name": "ISO27001-2013_A.13.1.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.13.1.1"
+      },
+      {
+        "name": "ISO27001-2013_A.13.1.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.13.1.3"
+      }
+    ],
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "SRCH-001",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a049bf77-880b-470f-ba6d-9f21c530cf83",
+        "definitionVersion": "1.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('SRCH-001_Effect')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "SRCH-002",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/4eb216f2-9dba-4979-86e6-5d7e63ce3b75",
+        "definitionVersion": "2.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('SRCH-002_Effect')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "SRCH-003",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ee980b6d-0eca-4501-8d54-f6290fd512c3",
+        "definitionVersion": "1.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('SRCH-003_Effect')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.3"
+        ]
+      }
+    ]
+  }
+}

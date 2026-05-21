@@ -1,0 +1,22 @@
+{
+  "$schema": "../policyExemption.schema.json",
+  "policyExemption": {
+    "name": "pex-d-sbx-sub-cosmos-003",
+    "displayName": "Exempt Sandbox Subscription from Cosmos DB Public Network Access Restriction",
+    "description": "This is a test exemption for the sub-d-sandbox-01 subscription.",
+    "metadata": {
+      "requestedBy": "Eric Cartman",
+      "approvedBy": "Bart Simpson",
+      "approvedOn": "2026-05-21",
+      "ticketRef": "INC234567"
+    },
+    "policyAssignmentId": "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/microsoft.authorization/policyassignments/pa-d-cosmos",
+    "exemptionCategory": "Waiver",
+    "assignmentScopeValidation": "Default",
+    "policyDefinitionReferenceIds": [
+      "COSMOS-003"
+    ],
+    "expiresOn": "2026-12-31T23:59:59Z"
+  },
+  "subscriptionId": "dc2d72b7-a48d-45e8-91cc-81193ecc659b"
+}

@@ -19,7 +19,7 @@ resource searchService 'Microsoft.Search/searchServices@2026-03-01-preview' = {
   name: '${namePrefix}${serviceShort}01'
   location: location
   sku: {
-    name: 'Basic' //This should violate policy SRCH-001: Azure AI Search service should use a SKU that supports private link, since Basic SKU does not support private link
+    name: 'free' //This should violate policy SRCH-001: Azure AI Search service should use a SKU that supports private link, since free SKU does not support private link
   }
   identity: {
     type: 'SystemAssigned'

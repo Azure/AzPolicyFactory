@@ -33,7 +33,7 @@ resource searchService 'Microsoft.Search/searchServices@2026-03-01-preview' = {
   location: location
   tags: tags
   sku: {
-    name: 'Standard'
+    name: 'standard'
   }
   properties: {
     hostingMode: 'Default'

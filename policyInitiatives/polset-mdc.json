@@ -1,0 +1,417 @@
+{
+  "name": "polset-mdc",
+  "properties": {
+    "displayName": "Microsoft Defender for Cloud Policy Initiative",
+    "description": "This initiative includes policies that address the security controls for Microsoft Defender for Cloud.",
+    "metadata": {
+      "category": "Defender for Cloud",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Location",
+          "description": "Location of deployment."
+        },
+        "defaultValue": "australiaeast"
+      },
+      "MDC-001_effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-001 Effect: Enable Defender CSPM plan",
+          "description": "MDC-001 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "MDC-001_isSensitiveDataDiscoveryEnabled":{
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Sensitive Data Discovery Enabled",
+          "description": "MDC-001: Enable or disable the Sensitive Data Discovery add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isContainerRegistriesVulnerabilityAssessmentsEnabled":{
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Container Registries Vulnerability Assessments Enabled",
+          "description": "MDC-001: Enable or disable the Container Registries Vulnerability Assessments add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isAgentlessDiscoveryForKubernetesEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Agentless Discovery for Kubernetes Enabled",
+          "description": "MDC-001: Enable or disable the Agentless Discovery for Kubernetes add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isAgentlessVmScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Agentless VM Scanning Enabled",
+          "description": "MDC-001: Enable or disable the Agentless VM Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isEntraPermissionsManagementEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Permissions Management Enabled",
+          "description": "MDC-001: Enable or disable the Permissions Management add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isApiPostureEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: API Security Posture Management Enabled",
+          "description": "MDC-001: Enable or disable the API Security Posture Management add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-001_isAgentlessServerlessPostureEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-001: Serverless Protection Enabled",
+          "description": "MDC-001: Enable or disable the Serverless Protection add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-002_effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-002 Effect: Enable Defender for Servers",
+          "description": "MDC-002 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "MDC-002_subPlan": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-002: Defender for Servers plans",
+          "description": "MDC-002: Select a Defender for Servers plan"
+        },
+        "allowedValues": [
+          "P1",
+          "P2"
+        ],
+        "defaultValue": "P2"
+      },
+       "MDC-002_isAgentlessVmScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-002: Agentless VM Scanning Enabled",
+          "description": "MDC-002: Enable or disable the Agentless VM Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "MDC-002_isMdeDesignatedSubscriptionEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-002: MDE Designated Subscription Enabled",
+          "description": "MDC-002: Enable or disable the MDE Designated Subscription add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "MDC-002_isFileIntegrityMonitoringEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-002: File Integrity Monitoring Enabled",
+          "description": "MDC-002: Enable or disable the File Integrity Monitoring add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "MDC-002_fileIntegrityMonitoringDefaultWorkspaceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-002: File Integrity Monitoring Default Workspace ID",
+          "description": "MDC-002: Conditional: Default Workspace ID for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2.",
+          "strongType": "omsWorkspace",
+          "assignPermissions": true
+        },
+        "defaultValue": ""
+      },
+      "MDC-002_fileIntegrityMonitoringRules": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "MDC-002: File Integrity Monitoring Rules",
+          "description": "MDC-002: Conditional: Rules for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2. Rules are provided as an array of rule objects. Serialised by string() into the single escaped JSON string the FIM 'Rules' property stores. Each deployment fully REPLACES the rule set."
+        },
+        "defaultValue": [
+          {
+            "RuleName": "Sample Rule",
+            "RuleDescription": "This is a sample File Integrity Monitoring rule.",
+            "ChangeType": "CDMR",
+            "IsEnabled": true,
+            "MonitoredEntities": {
+              "WindowsFiles": [
+                {
+                  "Path": "C:\\Windows\\System32\\drivers\\etc\\hosts",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "LinuxFiles": [
+                {
+                  "Path": "/etc/passwd",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "Registries": [
+                {
+                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "policyDefinitionGroups": [
+      {
+        "name": "ISO27001-2013_A.12.2.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.2.1"
+      },
+      {
+        "name": "ISO27001-2013_A.12.4.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.4.1"
+      },
+      {
+        "name": "ISO27001-2013_A.12.4.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.4.3"
+      },
+      {
+        "name": "ISO27001-2013_A.12.5.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.5.1"
+      },
+      {
+        "name": "ISO27001-2013_A.12.6.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.6.1"
+      },
+      {
+        "name": "ISO27001-2013_A.14.2.4",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.2.4"
+      },
+      {
+        "name": "ISO27001-2013_A.16.1.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.16.1.2"
+      },
+      {
+        "name": "ISO27001-2013_A.16.1.4",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.16.1.4"
+      },
+      {
+        "name": "ISO27001-2013_A.16.1.7",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.16.1.7"
+      },
+      {
+        "name": "ISO27001-2013_A.18.2.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.18.2.2"
+      },
+      {
+        "name": "ISO27001-2013_A.18.2.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.18.2.3"
+      }
+    ],
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "MDC-001",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-cspm",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-001_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "isSensitiveDataDiscoveryEnabled": {
+            "value": "[parameters('MDC-001_isSensitiveDataDiscoveryEnabled')]"
+          },
+          "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+            "value": "[parameters('MDC-001_isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+          },
+          "isAgentlessDiscoveryForKubernetesEnabled": {
+            "value": "[parameters('MDC-001_isAgentlessDiscoveryForKubernetesEnabled')]"
+          },
+          "isAgentlessVmScanningEnabled": {
+            "value": "[parameters('MDC-001_isAgentlessVmScanningEnabled')]"
+          },
+          "isEntraPermissionsManagementEnabled": {
+            "value": "[parameters('MDC-001_isEntraPermissionsManagementEnabled')]"
+          },
+          "isApiPostureEnabled": {
+            "value": "[parameters('MDC-001_isApiPostureEnabled')]"
+          },
+          "isAgentlessServerlessPostureEnabled": {
+            "value": "[parameters('MDC-001_isAgentlessServerlessPostureEnabled')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.18.2.2",
+          "ISO27001-2013_A.18.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-002",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-servers",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-002_effect')]"
+          },
+          "allowedCountryCodes": {
+            "value": "[parameters('MDC-002_allowedCountryCodes')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2013_A.12.5.1",
+          "ISO27001-2013_A.14.2.4",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-003",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-azure-automation-actions",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-003_effect')]"
+          },
+          "allowedAutomationAccounts": {
+            "value": "[parameters('MDC-003_allowedAutomationAccounts')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-004",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-event-hub-actions",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-004_effect')]"
+          },
+          "allowedEventHubNamespaces": {
+            "value": "[parameters('MDC-004_allowedEventHubNamespaces')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-005",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-function-app-actions",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-005_effect')]"
+          },
+          "allowedFunctionApps": {
+            "value": "[parameters('MDC-005_allowedFunctionApps')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-006",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-logic-app-actions",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-006_effect')]"
+          },
+          "allowedLogicApps": {
+            "value": "[parameters('MDC-006_allowedLogicApps')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-007",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-webhooks",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-007_effect')]"
+          },
+          "allowedURIs": {
+            "value": "[parameters('MDC-007_allowedURIs')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-008",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-http-webhooks",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-008_effect')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.10.1.1"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "name": "pol-deploy-defender-containers",
+  "properties": {
+    "displayName": "Configure Microsoft Defender for Containers plan",
+    "mode": "All",
+    "description": "Configure Microsoft Defender for Containers plan with required add-on features.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "location": {
+        "type": "string",
+        "defaultValue": "australiaeast",
+        "metadata": {
+          "displayName": "Location for deployment",
+          "description": "Location where the policy will deploy the Defender CSPM plan"
+        }
+      },
+      "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Registries Vulnerability Assessments Enabled",
+          "description": "Controls the container registries vulnerability assessments extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAgentlessDiscoveryForKubernetesEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Agentless Discovery For Kubernetes Enabled",
+          "description": "Controls the agentless discovery for Kubernetes extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAgentlessVmScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Agentless VM Scanning Enabled",
+          "description": "Controls the agentless VM scanning extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isContainerSensorEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Sensor Enabled",
+          "description": "Controls the container sensor extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isSecurityGatingEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Security Gating Enabled",
+          "description": "Controls the container Security Gating"
+        },
+        "allowedValues": [
+          "True",
+          "False"
+        ],
+        "defaultValue": "True"
+      },
+      "isContainerIntegrityContributionEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Integrity Contribution (Security Findings) Enabled",
+          "description": "Controls the containers integrity contribution extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/pricings",
+          "name": "Containers",
+          "deploymentScope": "subscription",
+          "existenceScope": "subscription",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Security/pricings/pricingTier",
+                "equals": "Standard"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "anyOf": [
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ContainerRegistriesVulnerabilityAssessments"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+                          }
+                        ]
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessDiscoveryForKubernetes"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
+                          }
+                        ]
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessVmScanning"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isAgentlessVmScanningEnabled')]"
+                          }
+                        ]
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ContainerSensor"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isContainerSensorEnabled')]"
+                          },
+                          {
+                            "value": "[coalesce(tryGet(current('Microsoft.Security/pricings/extensions[*].additionalExtensionProperties'), 'SecurityGatingEnabled'), '')]",
+                            "equals": "[parameters('isSecurityGatingEnabled')]"
+                          }
+                        ]
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ContainerIntegrityContribution"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isContainerIntegrityContributionEnabled')]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "equals": 5
+              }
+            ]
+          },
+          "deployment": {
+            "location": "[parameters('location')]",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+                  "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+                },
+                "isAgentlessDiscoveryForKubernetesEnabled": {
+                  "value": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
+                },
+                "isAgentlessVmScanningEnabled": {
+                  "value": "[parameters('isAgentlessVmScanningEnabled')]"
+                },
+                "isContainerSensorEnabled": {
+                  "value": "[parameters('isContainerSensorEnabled')]"
+                },
+                "isSecurityGatingEnabled": {
+                  "value": "[parameters('isSecurityGatingEnabled')]"
+                },
+                "isContainerIntegrityContributionEnabled": {
+                  "value": "[parameters('isContainerIntegrityContributionEnabled')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+                    "type": "String"
+                  },
+                  "isAgentlessDiscoveryForKubernetesEnabled": {
+                    "type": "String"
+                  },
+                  "isAgentlessVmScanningEnabled": {
+                    "type": "String"
+                  },
+                  "isContainerSensorEnabled": {
+                    "type": "String"
+                  },
+                  "isSecurityGatingEnabled": {
+                    "type": "String"
+                  },
+                  "isContainerIntegrityContributionEnabled": {
+                    "type": "String"
+                  }
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Security/pricings",
+                    "apiVersion": "2025-10-01-preview",
+                    "name": "Containers",
+                    "properties": {
+                      "pricingTier": "Standard",
+                      "extensions": [
+                        {
+                          "name": "ContainerRegistriesVulnerabilityAssessments",
+                          "isEnabled": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+                        },
+                        {
+                          "name": "AgentlessDiscoveryForKubernetes",
+                          "isEnabled": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
+                        },
+                        {
+                          "name": "AgentlessVmScanning",
+                          "isEnabled": "[parameters('isAgentlessVmScanningEnabled')]"
+                        },
+                        {
+                          "name": "ContainerSensor",
+                          "isEnabled": "[parameters('isContainerSensorEnabled')]",
+                          "additionalExtensionProperties": {
+                            "SecurityGatingEnabled": "[parameters('isSecurityGatingEnabled')]"
+                          }
+                        },
+                        {
+                          "name": "ContainerIntegrityContribution",
+                          "isEnabled": "[parameters('isContainerIntegrityContributionEnabled')]"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

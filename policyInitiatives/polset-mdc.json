@@ -10,14 +10,6 @@
       "deprecated": false
     },
     "parameters": {
-      "location": {
-        "type": "string",
-        "metadata": {
-          "displayName": "Location",
-          "description": "Location of deployment."
-        },
-        "defaultValue": "australiaeast"
-      },
       "MDC-001_effect": {
         "type": "string",
         "metadata": {
@@ -29,90 +21,6 @@
           "Disabled"
         ],
         "defaultValue": "DeployIfNotExists"
-      },
-      "MDC-001_isSensitiveDataDiscoveryEnabled":{
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Sensitive Data Discovery Enabled",
-          "description": "MDC-001: Enable or disable the Sensitive Data Discovery add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isContainerRegistriesVulnerabilityAssessmentsEnabled":{
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Container Registries Vulnerability Assessments Enabled",
-          "description": "MDC-001: Enable or disable the Container Registries Vulnerability Assessments add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isAgentlessDiscoveryForKubernetesEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Agentless Discovery for Kubernetes Enabled",
-          "description": "MDC-001: Enable or disable the Agentless Discovery for Kubernetes add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isAgentlessVmScanningEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Agentless VM Scanning Enabled",
-          "description": "MDC-001: Enable or disable the Agentless VM Scanning add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isEntraPermissionsManagementEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Permissions Management Enabled",
-          "description": "MDC-001: Enable or disable the Permissions Management add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isApiPostureEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: API Security Posture Management Enabled",
-          "description": "MDC-001: Enable or disable the API Security Posture Management add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-001_isAgentlessServerlessPostureEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-001: Serverless Protection Enabled",
-          "description": "MDC-001: Enable or disable the Serverless Protection add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
       },
       "MDC-002_effect": {
         "type": "string",
@@ -138,11 +46,31 @@
         ],
         "defaultValue": "P2"
       },
-       "MDC-002_isAgentlessVmScanningEnabled": {
+      "MDC-003_effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-003 Effect: Enable Defender for Containers",
+          "description": "MDC-003 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Location",
+          "description": "Location of deployment."
+        },
+        "defaultValue": "australiaeast"
+      },
+      "isSensitiveDataDiscoveryEnabled":{
         "type": "String",
         "metadata": {
-          "displayName": "MDC-002: Agentless VM Scanning Enabled",
-          "description": "MDC-002: Enable or disable the Agentless VM Scanning add-on feature"
+          "displayName": "Sensitive Data Discovery Enabled",
+          "description": "Enable or disable the Sensitive Data Discovery add-on feature"
         },
         "allowedValues": [
           "true",
@@ -150,11 +78,84 @@
         ],
         "defaultValue": "true"
       },
-      "MDC-002_isMdeDesignatedSubscriptionEnabled": {
+      "isContainerRegistriesVulnerabilityAssessmentsEnabled":{
         "type": "String",
         "metadata": {
-          "displayName": "MDC-002: MDE Designated Subscription Enabled",
-          "description": "MDC-002: Enable or disable the MDE Designated Subscription add-on feature"
+          "displayName": "Container Registries Vulnerability Assessments Enabled",
+          "description": "Enable or disable the Container Registries Vulnerability Assessments add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAgentlessDiscoveryForKubernetesEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Agentless Discovery for Kubernetes Enabled",
+          "description": "Enable or disable the Agentless Discovery for Kubernetes add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAgentlessVmScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Agentless VM Scanning Enabled",
+          "description": "Enable or disable the Agentless VM Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isEntraPermissionsManagementEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Permissions Management Enabled",
+          "description": "Enable or disable the Permissions Management add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isApiPostureEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "API Security Posture Management Enabled",
+          "description": "Enable or disable the API Security Posture Management add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAgentlessServerlessPostureEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Serverless Protection Enabled",
+          "description": "Enable or disable the Serverless Protection add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+
+      "isMdeDesignatedSubscriptionEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDE Designated Subscription Enabled",
+          "description": "Enable or disable the MDE Designated Subscription add-on feature"
         },
         "allowedValues": [
           "true",
@@ -162,11 +163,11 @@
         ],
         "defaultValue": "false"
       },
-      "MDC-002_isFileIntegrityMonitoringEnabled": {
+      "isFileIntegrityMonitoringEnabled": {
         "type": "String",
         "metadata": {
-          "displayName": "MDC-002: File Integrity Monitoring Enabled",
-          "description": "MDC-002: Enable or disable the File Integrity Monitoring add-on feature"
+          "displayName": "File Integrity Monitoring Enabled",
+          "description": "Enable or disable the File Integrity Monitoring add-on feature"
         },
         "allowedValues": [
           "true",
@@ -174,21 +175,21 @@
         ],
         "defaultValue": "false"
       },
-      "MDC-002_fileIntegrityMonitoringDefaultWorkspaceId": {
+      "fileIntegrityMonitoringDefaultWorkspaceId": {
         "type": "String",
         "metadata": {
-          "displayName": "MDC-002: File Integrity Monitoring Default Workspace ID",
-          "description": "MDC-002: Conditional: Default Workspace ID for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2.",
+          "displayName": "File Integrity Monitoring Default Workspace ID",
+          "description": "Conditional: Default Workspace ID for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2.",
           "strongType": "omsWorkspace",
           "assignPermissions": true
         },
         "defaultValue": ""
       },
-      "MDC-002_fileIntegrityMonitoringRules": {
+      "fileIntegrityMonitoringRules": {
         "type": "Array",
         "metadata": {
-          "displayName": "MDC-002: File Integrity Monitoring Rules",
-          "description": "MDC-002: Conditional: Rules for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2. Rules are provided as an array of rule objects. Serialised by string() into the single escaped JSON string the FIM 'Rules' property stores. Each deployment fully REPLACES the rule set."
+          "displayName": "File Integrity Monitoring Rules",
+          "description": "Conditional: Rules for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2. Rules are provided as an array of rule objects. Serialised by string() into the single escaped JSON string the FIM 'Rules' property stores. Each deployment fully REPLACES the rule set."
         },
         "defaultValue": [
           {
@@ -217,6 +218,42 @@
             }
           }
         ]
+      },
+      "isContainerSensorEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Sensor Enabled",
+          "description": "Controls the container sensor extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isSecurityGatingEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Security Gating Enabled",
+          "description": "Controls the container Security Gating"
+        },
+        "allowedValues": [
+          "True",
+          "False"
+        ],
+        "defaultValue": "True"
+      },
+      "isContainerIntegrityContributionEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Container Integrity Contribution (Security Findings) Enabled",
+          "description": "Controls the containers integrity contribution extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
       }
     },
     "policyDefinitionGroups": [
@@ -229,16 +266,16 @@
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.4.1"
       },
       {
-        "name": "ISO27001-2013_A.12.4.3",
-        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.4.3"
-      },
-      {
         "name": "ISO27001-2013_A.12.5.1",
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.5.1"
       },
       {
         "name": "ISO27001-2013_A.12.6.1",
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.6.1"
+      },
+      {
+        "name": "ISO27001-2013_A.14.2.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.2.2"
       },
       {
         "name": "ISO27001-2013_A.14.2.4",
@@ -277,25 +314,25 @@
             "value": "[parameters('location')]"
           },
           "isSensitiveDataDiscoveryEnabled": {
-            "value": "[parameters('MDC-001_isSensitiveDataDiscoveryEnabled')]"
+            "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
           },
           "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
-            "value": "[parameters('MDC-001_isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+            "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
           },
           "isAgentlessDiscoveryForKubernetesEnabled": {
-            "value": "[parameters('MDC-001_isAgentlessDiscoveryForKubernetesEnabled')]"
+            "value": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
           },
           "isAgentlessVmScanningEnabled": {
-            "value": "[parameters('MDC-001_isAgentlessVmScanningEnabled')]"
+            "value": "[parameters('isAgentlessVmScanningEnabled')]"
           },
           "isEntraPermissionsManagementEnabled": {
-            "value": "[parameters('MDC-001_isEntraPermissionsManagementEnabled')]"
+            "value": "[parameters('isEntraPermissionsManagementEnabled')]"
           },
           "isApiPostureEnabled": {
-            "value": "[parameters('MDC-001_isApiPostureEnabled')]"
+            "value": "[parameters('isApiPostureEnabled')]"
           },
           "isAgentlessServerlessPostureEnabled": {
-            "value": "[parameters('MDC-001_isAgentlessServerlessPostureEnabled')]"
+            "value": "[parameters('isAgentlessServerlessPostureEnabled')]"
           }
         },
         "groupNames": [
@@ -310,8 +347,26 @@
           "effect": {
             "value": "[parameters('MDC-002_effect')]"
           },
-          "allowedCountryCodes": {
-            "value": "[parameters('MDC-002_allowedCountryCodes')]"
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subPlan": {
+            "value": "[parameters('MDC-002_subPlan')]"
+          },
+          "isAgentlessVmScanningEnabled": {
+            "value": "[parameters('isAgentlessVmScanningEnabled')]"
+          },
+          "isMdeDesignatedSubscriptionEnabled": {
+            "value": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+          },
+          "isFileIntegrityMonitoringEnabled": {
+            "value": "[parameters('isFileIntegrityMonitoringEnabled')]"
+          },
+          "fileIntegrityMonitoringDefaultWorkspaceId": {
+            "value": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]"
+          },
+          "fileIntegrityMonitoringRules": {
+            "value": "[parameters('fileIntegrityMonitoringRules')]"
           }
         },
         "groupNames": [
@@ -327,89 +382,42 @@
       },
       {
         "policyDefinitionReferenceId": "MDC-003",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-azure-automation-actions",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-containers",
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-003_effect')]"
           },
-          "allowedAutomationAccounts": {
-            "value": "[parameters('MDC-003_allowedAutomationAccounts')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.13.2.2"
-        ]
-      },
-      {
-        "policyDefinitionReferenceId": "MDC-004",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-event-hub-actions",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('MDC-004_effect')]"
+          "location": {
+            "value": "[parameters('location')]"
           },
-          "allowedEventHubNamespaces": {
-            "value": "[parameters('MDC-004_allowedEventHubNamespaces')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.13.2.2"
-        ]
-      },
-      {
-        "policyDefinitionReferenceId": "MDC-005",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-function-app-actions",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('MDC-005_effect')]"
+          "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+            "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
           },
-          "allowedFunctionApps": {
-            "value": "[parameters('MDC-005_allowedFunctionApps')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.13.2.2"
-        ]
-      },
-      {
-        "policyDefinitionReferenceId": "MDC-006",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-logic-app-actions",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('MDC-006_effect')]"
+          "isAgentlessDiscoveryForKubernetesEnabled": {
+            "value": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
           },
-          "allowedLogicApps": {
-            "value": "[parameters('MDC-006_allowedLogicApps')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.13.2.2"
-        ]
-      },
-      {
-        "policyDefinitionReferenceId": "MDC-007",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-unauthorized-webhooks",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('MDC-007_effect')]"
+          "isAgentlessVmScanningEnabled": {
+            "value": "[parameters('isAgentlessVmScanningEnabled')]"
           },
-          "allowedURIs": {
-            "value": "[parameters('MDC-007_allowedURIs')]"
+          "isContainerSensorEnabled": {
+            "value": "[parameters('isContainerSensorEnabled')]"
+          },
+          "isSecurityGatingEnabled": {
+            "value": "[parameters('isSecurityGatingEnabled')]"
+          },
+          "isContainerIntegrityContributionEnabled": {
+            "value": "[parameters('isContainerIntegrityContributionEnabled')]"
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.13.2.2"
-        ]
-      },
-      {
-        "policyDefinitionReferenceId": "MDC-008",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-ag-deny-http-webhooks",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('MDC-008_effect')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.10.1.1"
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2013_A.14.2.2",
+          "ISO27001-2013_A.14.2.4",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
         ]
       }
     ]

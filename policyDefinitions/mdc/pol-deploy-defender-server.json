@@ -1,10 +1,10 @@
 {
-  "name": "pol-deploy-defender-servers",
+  "name": "pol-deploy-defender-server",
   "properties": {
-    "displayName": "Configure Microsoft Defender for Servers plan",
+    "displayName": "Configure Microsoft Defender for Server plan",
     "policyType": "BuiltIn",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Servers plan with required add-on features.",
+    "description": "Configure Microsoft Defender for Server d plan with required add-on features.",
     "metadata": {
       "version": "1.0.0",
       "category": "Defender for Cloud",
@@ -30,14 +30,14 @@
         "defaultValue": "australiaeast",
         "metadata": {
           "displayName": "Location for deployment",
-          "description": "Location where the policy will deploy the Defender for Servers plan"
+          "description": "Location where the policy will deploy the Defender plan"
         }
       },
       "subPlan": {
         "type": "String",
         "metadata": {
-          "displayName": "Defender for Servers plans",
-          "description": "Select a Defender for Servers plan"
+          "displayName": "Defender for Server plans",
+          "description": "Select a Defender for Server plan"
         },
         "allowedValues": [
           "P1",
@@ -227,7 +227,7 @@
                 }
               },
               "template": {
-                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "subPlan": {

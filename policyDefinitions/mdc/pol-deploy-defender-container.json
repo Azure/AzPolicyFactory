@@ -1,9 +1,9 @@
 {
-  "name": "pol-deploy-defender-containers",
+  "name": "pol-deploy-defender-container",
   "properties": {
-    "displayName": "Configure Microsoft Defender for Containers plan",
+    "displayName": "Configure Microsoft Defender for Container plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Containers plan with required add-on features.",
+    "description": "Configure Microsoft Defender for Container plan with required add-on features.",
     "metadata": {
       "version": "1.0.0",
       "category": "Defender for Cloud",
@@ -28,7 +28,7 @@
         "defaultValue": "australiaeast",
         "metadata": {
           "displayName": "Location for deployment",
-          "description": "Location where the policy will deploy the Defender CSPM plan"
+          "description": "Location where the policy will deploy the Defender plan"
         }
       },
       "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
@@ -226,7 +226,7 @@
                 }
               },
               "template": {
-                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "isContainerRegistriesVulnerabilityAssessmentsEnabled": {

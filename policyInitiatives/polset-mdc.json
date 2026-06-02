@@ -37,7 +37,7 @@
       "MDC-002_subPlan": {
         "type": "String",
         "metadata": {
-          "displayName": "MDC-002: Defender for Servers plans",
+          "displayName": "MDC-002: Defender for Servers plan",
           "description": "MDC-002: Select a Defender for Servers plan"
         },
         "allowedValues": [
@@ -57,6 +57,54 @@
           "Disabled"
         ],
         "defaultValue": "DeployIfNotExists"
+      },
+      "MDC-004_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-004 Effect: Enable Defender for Key Vault",
+          "description": "MDC-004 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-004_subPlan": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-004: Defender for Key Vault plan",
+          "description": "MDC-004: Select a Defender for Key Vault plan"
+        },
+        "allowedValues": [
+          "PerTransaction",
+          "PerKeyVault"
+        ],
+        "defaultValue": "PerTransaction"
+      },
+      "MDC-005_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-005 Effect: Enable Defender for Azure Resource Manager",
+          "description": "MDC-005 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-005_subPlan": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-005: Defender for Azure Resource Manager plan",
+          "description": "MDC-005: Select a Defender for Azure Resource Manager plan"
+        },
+        "allowedValues": [
+          "PerTransaction",
+          "PerKeyVault"
+        ],
+        "defaultValue": "PerTransaction"
       },
       "location": {
         "type": "string",
@@ -342,7 +390,7 @@
       },
       {
         "policyDefinitionReferenceId": "MDC-002",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-servers",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-server",
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-002_effect')]"
@@ -382,7 +430,7 @@
       },
       {
         "policyDefinitionReferenceId": "MDC-003",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-containers",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-container",
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-003_effect')]"
@@ -418,6 +466,52 @@
           "ISO27001-2013_A.16.1.2",
           "ISO27001-2013_A.16.1.4",
           "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-004",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-keyvault",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-004_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subPlan": {
+            "value": "[parameters('MDC-004_subPlan')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7",
+          "ISO27001-2013_A.18.2.2",
+          "ISO27001-2013_A.18.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-005",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-arm",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-005_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subPlan": {
+            "value": "[parameters('MDC-005_subPlan')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7",
+          "ISO27001-2013_A.18.2.2",
+          "ISO27001-2013_A.18.2.3"
         ]
       }
     ]

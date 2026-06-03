@@ -1,0 +1,237 @@
+{
+  "properties": {
+    "displayName": "Configure Microsoft Defender for Storage plan",
+    "mode": "All",
+    "description": "Configure Microsoft Defender for Storage plan with required add-on features.",
+    "version": "1.5.0",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "location": {
+        "type": "string",
+        "defaultValue": "australiaeast",
+        "metadata": {
+          "displayName": "Location for deployment",
+          "description": "Location where the policy will deploy the Defender plan"
+        }
+      },
+      "isOnUploadMalwareScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Malware Scanning Enabled",
+          "description": "Enable or disable the Malware Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "capGBPerMonthPerStorageAccount": {
+        "type": "Integer",
+        "metadata": {
+          "displayName": "Cap GB Per Month Per Storage Account",
+          "description": "Limit the GB scanned per month for each storage account within the subscription.\nValue must be an integer, 10GB or higher\nSet to -1 for unlimited scanning"
+        },
+        "defaultValue": 10000
+      },
+      "blobScanResultsOptions": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Store scan results as blob index tags",
+          "description": "Store every scan result as blob index tags. Each blob scan adds two index tags to the blob; one for the scan result and one for the scan time. Additional charges apply."
+        },
+        "allowedValues": [
+          "None",
+          "BlobIndexTags"
+        ],
+        "defaultValue": "None"
+      },
+      "automatedResponse": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Soft delete malicious blobs",
+          "description": "When enabled, blobs detected as malicious will be soft deleted. Soft deleted blobs are recoverable. If soft delete isn't already enabled on the storage account, Defender for Storage will attempt to enable it automatically — but only during the initial activation of the automatic response feature."
+        },
+        "allowedValues": [
+          "None",
+          "BlobSoftDelete"
+        ],
+        "defaultValue": "None"
+      },
+      "isSensitiveDataDiscoveryEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Sensitive Data Threat Detection Enabled",
+          "description": "Enable or disable the Sensitive Data Threat Detection add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/pricings",
+          "name": "StorageAccounts",
+          "deploymentScope": "subscription",
+          "existenceScope": "subscription",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Security/pricings/pricingTier",
+                "equals": "Standard"
+              },
+              {
+                "field": "Microsoft.Security/pricings/subPlan",
+                "equals": "DefenderForStorageV2"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "OnUploadMalwareScanning"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isOnUploadMalwareScanningEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "SensitiveDataDiscovery"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              }
+            ]
+          },
+          "deployment": {
+            "location": "[parameters('location')]",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "isOnUploadMalwareScanningEnabled": {
+                  "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
+                },
+                "capGBPerMonthPerStorageAccount": {
+                  "value": "[parameters('capGBPerMonthPerStorageAccount')]"
+                },
+                "blobScanResultsOptions": {
+                  "value": "[parameters('blobScanResultsOptions')]"
+                },
+                "automatedResponse": {
+                  "value": "[parameters('automatedResponse')]"
+                },
+                "isSensitiveDataDiscoveryEnabled": {
+                  "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "isOnUploadMalwareScanningEnabled": {
+                    "type": "String"
+                  },
+                  "blobScanResultsOptions": {
+                    "type": "String"
+                  },
+                  "automatedResponse": {
+                    "type": "String"
+                  },
+                  "capGBPerMonthPerStorageAccount": {
+                    "type": "int"
+                  },
+                  "isSensitiveDataDiscoveryEnabled": {
+                    "type": "String"
+                  }
+                },
+                "variables": {
+                  "enabledMalwareScanningExtension": {
+                    "name": "OnUploadMalwareScanning",
+                    "isEnabled": "true",
+                    "additionalExtensionProperties": {
+                      "CapGBPerMonthPerStorageAccount": "[parameters('capGBPerMonthPerStorageAccount')]",
+                      "BlobScanResultsOptions": "[parameters('blobScanResultsOptions')]",
+                      "AutomatedResponse": "[parameters('automatedResponse')]"
+                    }
+                  },
+                  "disabledMalwareScanningExtension": {
+                    "name": "OnUploadMalwareScanning",
+                    "isEnabled": "false"
+                  },
+                  "malwareScanningExtension": "[if(equals(parameters('isOnUploadMalwareScanningEnabled'),'true'), variables('enabledMalwareScanningExtension'), variables('disabledMalwareScanningExtension'))]"
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Security/pricings",
+                    "apiVersion": "2025-10-01-preview",
+                    "name": "StorageAccounts",
+                    "properties": {
+                      "subPlan": "DefenderForStorageV2",
+                      "pricingTier": "Standard",
+                      "extensions": [
+                        "[variables('malwareScanningExtension')]",
+                        {
+                          "name": "SensitiveDataDiscovery",
+                          "isEnabled": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "outputs": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

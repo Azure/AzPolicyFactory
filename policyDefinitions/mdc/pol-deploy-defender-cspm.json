@@ -2,7 +2,6 @@
   "name": "pol-deploy-defender-cspm",
   "properties": {
     "displayName": "Configure Microsoft Defender CSPM plan",
-    "policyType": "BuiltIn",
     "mode": "All",
     "description": "Configure Microsoft Defender Cloud Security Posture Management (CSPM) plan with required add-on features.",
     "metadata": {
@@ -11,7 +10,6 @@
       "preview": false,
       "deprecated": false
     },
-    "version": "1.0.0",
     "parameters": {
       "effect": {
         "type": "string",

@@ -162,6 +162,54 @@
         ],
         "defaultValue": "None"
       },
+      "MDC-007_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-007 Effect: Enable Defender for Azure SQL Database",
+          "description": "MDC-007 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-008_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-008 Effect: Enable Defender for SQL servers on machines",
+          "description": "MDC-008 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-009_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-009 Effect: Enable Defender for Open Source relational database",
+          "description": "MDC-009 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-010_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-010 Effect: Enable Defender for Azure Cosmos DB",
+          "description": "MDC-010 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
       "location": {
         "type": "string",
         "metadata": {
@@ -594,6 +642,82 @@
           },
           "isSensitiveDataDiscoveryEnabled": {
             "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-007",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-sql-db",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-007_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-008",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-sql-vm",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-008_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-009",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-oss-db",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-009_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-010",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-cosmos-db",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-010_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
           }
         },
         "groupNames": [

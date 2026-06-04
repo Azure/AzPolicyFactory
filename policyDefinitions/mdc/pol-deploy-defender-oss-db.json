@@ -10,7 +10,6 @@
       "preview": false,
       "deprecated": false
     },
-    "version": "1.0.1",
     "parameters": {
       "effect": {
         "type": "string",

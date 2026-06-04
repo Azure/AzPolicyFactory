@@ -32,7 +32,7 @@
         }
       },
       "subPlan": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Defender for Azure Resource Manager plans",
           "description": "Select a Defender for Azure Resource Manager plan"
@@ -85,7 +85,7 @@
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "subPlan": {
-                    "type": "String"
+                    "type": "string"
                   }
                 },
                 "variables": {},

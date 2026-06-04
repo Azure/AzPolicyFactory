@@ -210,6 +210,30 @@
           "Disabled"
         ]
       },
+      "MDC-011_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-011 Effect: Enable Defender for Azure App Service",
+          "description": "MDC-011 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-012_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-012 Effect: Enable Defender for Azure AI Service",
+          "description": "MDC-012 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
       "location": {
         "type": "string",
         "metadata": {
@@ -400,6 +424,42 @@
         "metadata": {
           "displayName": "Container Integrity Contribution (Security Findings) Enabled",
           "description": "Controls the containers integrity contribution extension"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAIPromptEvidenceEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Prompt Evidence Enabled",
+          "description": "Controls the AI prompt evidence feature, which exposes the prompts passed between the user and the model for deeper analysis of AI-related alerts. The prompt snippets will include only segments of the user prompt or model response that were deemed suspicious and relevant for security classifications. While sensitive data or secrets are redacted, customer conversations may be deemed sensitive in nature. The evidence will be available through the Defender portal as part of each alert."
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAIPromptSharingWithPurviewEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Data Security Enabled",
+          "description": "Controls the AI data security feature, allowing Microsoft Purview to access, process, and store prompts and responses, including metadata for security and compliance purposes such as sensitive information type (SIT) classification, reporting in Microsoft Purview Data Security Posture Management for AI, Audit, Insider Risk Management, Communication Compliance, and eDiscovery"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAIModelScannerEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Model Security Enabled",
+          "description": "Controls the AI model scanner feature, gives you a clear, unified view of all your models registered in Azure Machine Learning Registries."
         },
         "allowedValues": [
           "true",
@@ -718,6 +778,53 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-011",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-app-service",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-011_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-012",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-ai-service",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-012_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "isAIPromptEvidenceEnabled": {
+            "value": "[parameters('isAIPromptEvidenceEnabled')]"
+          },
+          "isAIPromptSharingWithPurviewEnabled": {
+            "value": "[parameters('isAIPromptSharingWithPurviewEnabled')]"
+          },
+          "isAIModelScannerEnabled": {
+            "value": "[parameters('isAIModelScannerEnabled')]"
           }
         },
         "groupNames": [

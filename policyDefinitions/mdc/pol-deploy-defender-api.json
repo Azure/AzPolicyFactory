@@ -1,9 +1,8 @@
 {
-  "name": "pol-deploy-defender-sql-db",
   "properties": {
-    "displayName": "Configure Microsoft Defender for Azure SQL database plan",
+    "displayName": "Configure Microsoft Defender for APIs Plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Azure SQL database plan.",
+    "description": "Configure Microsoft Defender for APIs plan.",
     "metadata": {
       "version": "1.0.0",
       "category": "Defender for Cloud",
@@ -13,7 +12,7 @@
     "parameters": {
       "effect": {
         "type": "string",
-        "defaultValue": "DeployIfNotExists",
+        "defaultValue": "Disabled",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -30,6 +29,21 @@
           "displayName": "Location for deployment",
           "description": "Location where the policy will deploy the Defender plan"
         }
+      },
+      "subPlan": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Defender for API plans",
+          "description": "Select a Defender for API plan"
+        },
+        "allowedValues": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ],
+        "defaultValue": "P1"
       }
     },
     "policyRule": {
@@ -45,7 +59,7 @@
         "effect": "[parameters('effect')]",
         "details": {
           "type": "Microsoft.Security/pricings",
-          "name": "SqlServers",
+          "name": "Api",
           "deploymentScope": "subscription",
           "existenceScope": "subscription",
           "roleDefinitionIds": [
@@ -59,19 +73,28 @@
             "location": "[parameters('location')]",
             "properties": {
               "mode": "incremental",
-              "parameters": {},
+              "parameters": {
+                "subPlan": {
+                  "value": "[parameters('subPlan')]"
+                }
+              },
               "template": {
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
-                "parameters": {},
+                "parameters": {
+                  "subPlan": {
+                    "type": "string"
+                  }
+                },
                 "variables": {},
                 "resources": [
                   {
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
-                    "name": "SqlServers",
+                    "name": "Api",
                     "properties": {
-                      "pricingTier": "Standard"
+                      "pricingTier": "Standard",
+                      "subPlan": "[parameters('subPlan')]"
                     }
                   }
                 ],

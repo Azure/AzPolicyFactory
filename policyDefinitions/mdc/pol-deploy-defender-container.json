@@ -32,7 +32,7 @@
         }
       },
       "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Container Registries Vulnerability Assessments Enabled",
           "description": "Controls the container registries vulnerability assessments extension"
@@ -44,7 +44,7 @@
         "defaultValue": "true"
       },
       "isAgentlessDiscoveryForKubernetesEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Agentless Discovery For Kubernetes Enabled",
           "description": "Controls the agentless discovery for Kubernetes extension"
@@ -56,7 +56,7 @@
         "defaultValue": "true"
       },
       "isAgentlessVmScanningEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Agentless VM Scanning Enabled",
           "description": "Controls the agentless VM scanning extension"
@@ -68,7 +68,7 @@
         "defaultValue": "true"
       },
       "isContainerSensorEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Container Sensor Enabled",
           "description": "Controls the container sensor extension"
@@ -80,7 +80,7 @@
         "defaultValue": "true"
       },
       "isSecurityGatingEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Container Security Gating Enabled",
           "description": "Controls the container Security Gating"
@@ -92,7 +92,7 @@
         "defaultValue": "True"
       },
       "isContainerIntegrityContributionEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Container Integrity Contribution (Security Findings) Enabled",
           "description": "Controls the containers integrity contribution extension"
@@ -230,22 +230,22 @@
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessDiscoveryForKubernetesEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessVmScanningEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isContainerSensorEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isSecurityGatingEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isContainerIntegrityContributionEnabled": {
-                    "type": "String"
+                    "type": "string"
                   }
                 },
                 "resources": [

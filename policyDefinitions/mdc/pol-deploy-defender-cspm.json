@@ -32,7 +32,7 @@
         }
       },
       "isSensitiveDataDiscoveryEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Sensitive Data Discovery Enabled",
           "description": "Enable or disable the Sensitive Data Discovery add-on feature"
@@ -44,7 +44,7 @@
         "defaultValue": "true"
       },
       "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Container Registries Vulnerability Assessments Enabled",
           "description": "Enable or disable the Container Registries Vulnerability Assessments add-on feature"
@@ -56,7 +56,7 @@
         "defaultValue": "true"
       },
       "isAgentlessDiscoveryForKubernetesEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Agentless Discovery for Kubernetes Enabled",
           "description": "Enable or disable the Agentless Discovery for Kubernetes add-on feature"
@@ -68,7 +68,7 @@
         "defaultValue": "true"
       },
       "isAgentlessVmScanningEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Agentless VM Scanning Enabled",
           "description": "Enable or disable the Agentless VM Scanning add-on feature"
@@ -80,7 +80,7 @@
         "defaultValue": "true"
       },
       "isEntraPermissionsManagementEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Permissions Management Enabled",
           "description": "Enable or disable the Permissions Management add-on feature"
@@ -92,7 +92,7 @@
         "defaultValue": "true"
       },
       "isApiPostureEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "API Security Posture Management Enabled",
           "description": "Enable or disable the API Security Posture Management add-on feature"
@@ -104,7 +104,7 @@
         "defaultValue": "true"
       },
       "isAgentlessServerlessPostureEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Serverless Protection Enabled",
           "description": "Enable or disable the Serverless Protection add-on feature"
@@ -297,25 +297,25 @@
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "isSensitiveDataDiscoveryEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessDiscoveryForKubernetesEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessVmScanningEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isEntraPermissionsManagementEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isApiPostureEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessServerlessPostureEnabled": {
-                    "type": "String"
+                    "type": "string"
                   }
                 },
                 "resources": [

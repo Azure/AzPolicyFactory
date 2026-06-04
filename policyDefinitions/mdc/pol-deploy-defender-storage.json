@@ -12,7 +12,7 @@
     },
     "parameters": {
       "effect": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Effect",
           "description": "Enable or disable the execution of the policy"
@@ -32,7 +32,7 @@
         }
       },
       "isOnUploadMalwareScanningEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Malware Scanning Enabled",
           "description": "Enable or disable the Malware Scanning add-on feature"
@@ -52,7 +52,7 @@
         "defaultValue": 10000
       },
       "blobScanResultsOptions": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Store scan results as blob index tags",
           "description": "Store every scan result as blob index tags. Each blob scan adds two index tags to the blob; one for the scan result and one for the scan time. Additional charges apply."
@@ -64,7 +64,7 @@
         "defaultValue": "None"
       },
       "automatedResponse": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Soft delete malicious blobs",
           "description": "When enabled, blobs detected as malicious will be soft deleted. Soft deleted blobs are recoverable. If soft delete isn't already enabled on the storage account, Defender for Storage will attempt to enable it automatically — but only during the initial activation of the automatic response feature."
@@ -76,7 +76,7 @@
         "defaultValue": "None"
       },
       "isSensitiveDataDiscoveryEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Sensitive Data Threat Detection Enabled",
           "description": "Enable or disable the Sensitive Data Threat Detection add-on feature"
@@ -177,19 +177,19 @@
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "isOnUploadMalwareScanningEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "blobScanResultsOptions": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "automatedResponse": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "capGBPerMonthPerStorageAccount": {
                     "type": "int"
                   },
                   "isSensitiveDataDiscoveryEnabled": {
-                    "type": "String"
+                    "type": "string"
                   }
                 },
                 "variables": {

@@ -32,7 +32,7 @@
         }
       },
       "subPlan": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Defender for Server plans",
           "description": "Select a Defender for Server plan"
@@ -44,7 +44,7 @@
         "defaultValue": "P2"
       },
        "isAgentlessVmScanningEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "Agentless VM Scanning Enabled",
           "description": "Enable or disable the Agentless VM Scanning add-on feature"
@@ -56,7 +56,7 @@
         "defaultValue": "true"
       },
       "isMdeDesignatedSubscriptionEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "MDE Designated Subscription Enabled",
           "description": "Enable or disable the MDE Designated Subscription add-on feature"
@@ -68,7 +68,7 @@
         "defaultValue": "false"
       },
       "isFileIntegrityMonitoringEnabled": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "File Integrity Monitoring Enabled",
           "description": "Enable or disable the File Integrity Monitoring add-on feature"
@@ -80,7 +80,7 @@
         "defaultValue": "false"
       },
       "fileIntegrityMonitoringDefaultWorkspaceId": {
-        "type": "String",
+        "type": "string",
         "metadata": {
           "displayName": "File Integrity Monitoring Default Workspace ID",
           "description": "Conditional: Default Workspace ID for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2.",
@@ -229,16 +229,16 @@
                 "contentVersion": "1.0.0.0",
                 "parameters": {
                   "subPlan": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isAgentlessVmScanningEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isMdeDesignatedSubscriptionEnabled": {
-                    "type": "String"
+                    "type": "string"
                   },
                   "isFileIntegrityMonitoringEnabled": {
-                    "type": "String"
+                    "type": "string"
                   }
                 },
                 "variables": {

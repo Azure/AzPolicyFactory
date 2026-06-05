@@ -2,7 +2,6 @@
   "name": "pol-deploy-defender-ai",
   "properties": {
     "displayName": "Configure Microsoft Defender for AI Services",
-    "policyType": "BuiltIn",
     "mode": "All",
     "description": "Configure Microsoft Defender for AI Services with required add-on features.",
     "metadata": {

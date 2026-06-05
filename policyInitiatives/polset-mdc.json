@@ -833,7 +833,7 @@
       },
       {
         "policyDefinitionReferenceId": "MDC-012",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-ai-service",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-ai",
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-012_effect')]"
@@ -861,7 +861,7 @@
       },
       {
         "policyDefinitionReferenceId": "MDC-013",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-api-service",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-api",
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-013_effect')]"

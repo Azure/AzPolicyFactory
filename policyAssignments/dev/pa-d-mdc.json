@@ -20,7 +20,7 @@
         "value": "P2"
       },
       "MDC-003_Effect": {
-        "value": ""
+        "value": "DeployIfNotExists"
       },
       "MDC-004_Effect": {
         "value": "DeployIfNotExists"
@@ -63,6 +63,9 @@
       },
       "location": {
         "value": "australiaeast"
+      },
+      "evaluationDelay": {
+        "value": "AfterProvisioning"
       },
       "isSensitiveDataDiscoveryEnabled": {
         "value": "true"

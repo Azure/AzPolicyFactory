@@ -31,6 +31,14 @@
           "description": "Location where the policy will deploy the Defender plan"
         }
       },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
       "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
         "type": "string",
         "metadata": {
@@ -113,6 +121,7 @@
         "effect": "[parameters('effect')]",
         "details": {
           "type": "Microsoft.Security/pricings",
+          "evaluationDelay": "[parameters('evaluationDelay')]",
           "name": "Containers",
           "deploymentScope": "subscription",
           "existenceScope": "subscription",
@@ -248,6 +257,7 @@
                     "type": "string"
                   }
                 },
+                "variables": {},
                 "resources": [
                   {
                     "type": "Microsoft.Security/pricings",
@@ -282,7 +292,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "outputs": {}
               }
             }
           }

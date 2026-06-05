@@ -225,6 +225,14 @@
         },
         "defaultValue": "australiaeast"
       },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
       "isSensitiveDataDiscoveryEnabled":{
         "type": "String",
         "metadata": {
@@ -552,6 +560,9 @@
           "location": {
             "value": "[parameters('location')]"
           },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
           "isSensitiveDataDiscoveryEnabled": {
             "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
           },
@@ -588,6 +599,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           },
           "subPlan": {
             "value": "[parameters('MDC-002_subPlan')]"
@@ -628,6 +642,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           },
           "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
             "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
@@ -692,6 +709,9 @@
           "location": {
             "value": "[parameters('location')]"
           },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
           "subPlan": {
             "value": "[parameters('MDC-005_subPlan')]"
           }
@@ -714,6 +734,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           },
           "isOnUploadMalwareScanningEnabled": {
             "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
@@ -748,6 +771,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           }
         },
         "groupNames": [
@@ -767,6 +793,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           }
         },
         "groupNames": [
@@ -786,6 +815,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           }
         },
         "groupNames": [
@@ -805,6 +837,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           }
         },
         "groupNames": [
@@ -824,6 +859,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           }
         },
         "groupNames": [
@@ -843,6 +881,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           },
           "isAIPromptEvidenceEnabled": {
             "value": "[parameters('isAIPromptEvidenceEnabled')]"
@@ -871,6 +912,9 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
           },
           "subPlan": {
             "value": "[parameters('MDC-013_subPlan')]"

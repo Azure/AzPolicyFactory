@@ -4,7 +4,6 @@
     "displayName": "Configure Microsoft Defender for Storage plan",
     "mode": "All",
     "description": "Configure Microsoft Defender for Storage plan with required add-on features.",
-    "version": "1.5.0",
     "metadata": {
       "version": "1.0.0",
       "category": "Defender for Cloud",

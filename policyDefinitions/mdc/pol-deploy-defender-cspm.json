@@ -142,127 +142,115 @@
                 "count": {
                   "field": "Microsoft.Security/pricings/extensions[*]",
                   "where": {
-                    "allOf": [
+                    "anyOf": [
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "SensitiveDataDiscovery"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "SensitiveDataDiscovery"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                          }
+                        ]
                       },
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ContainerRegistriesVulnerabilityAssessments"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+                          }
+                        ]
                       }
                     ]
                   }
                 },
-                "equals": 1
+                "equals": 2
               },
               {
                 "count": {
                   "field": "Microsoft.Security/pricings/extensions[*]",
                   "where": {
-                    "allOf": [
+                    "anyOf": [
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "ContainerRegistriesVulnerabilityAssessments"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessDiscoveryForKubernetes"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
+                          }
+                        ]
                       },
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessVmScanning"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isAgentlessVmScanningEnabled')]"
+                          }
+                        ]
                       }
                     ]
                   }
                 },
-                "equals": 1
+                "equals": 2
               },
               {
                 "count": {
                   "field": "Microsoft.Security/pricings/extensions[*]",
                   "where": {
-                    "allOf": [
+                    "anyOf": [
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "AgentlessDiscoveryForKubernetes"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "EntraPermissionsManagement"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isEntraPermissionsManagementEnabled')]"
+                          }
+                        ]
                       },
                       {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isAgentlessDiscoveryForKubernetesEnabled')]"
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ApiPosture"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isApiPostureEnabled')]"
+                          }
+                        ]
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessServerlessPosture"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isAgentlessServerlessPostureEnabled')]"
+                          }
+                        ]
                       }
                     ]
                   }
                 },
-                "equals": 1
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "AgentlessVmScanning"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isAgentlessVmScanningEnabled')]"
-                      }
-                    ]
-                  }
-                },
-                "equals": 1
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "EntraPermissionsManagement"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isEntraPermissionsManagementEnabled')]"
-                      }
-                    ]
-                  }
-                },
-                "equals": 1
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "ApiPosture"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isApiPostureEnabled')]"
-                      }
-                    ]
-                  }
-                },
-                "equals": 1
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "AgentlessServerlessPosture"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isAgentlessServerlessPostureEnabled')]"
-                      }
-                    ]
-                  }
-                },
-                "equals": 1
+                "equals": 3
               }
             ]
           },

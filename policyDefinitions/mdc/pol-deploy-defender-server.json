@@ -223,6 +223,12 @@
                 },
                 "isFileIntegrityMonitoringEnabled": {
                   "value": "[parameters('isFileIntegrityMonitoringEnabled')]"
+                },
+                "fileIntegrityMonitoringDefaultWorkspaceId": {
+                  "value": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]"
+                },
+                "fileIntegrityMonitoringRules": {
+                  "value": "[parameters('fileIntegrityMonitoringRules')]"
                 }
               },
               "template": {

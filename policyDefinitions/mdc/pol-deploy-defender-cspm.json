@@ -23,14 +23,6 @@
           "Disabled"
         ]
       },
-      "location": {
-        "type": "string",
-        "defaultValue": "australiaeast",
-        "metadata": {
-          "displayName": "Location for deployment",
-          "description": "Location where the policy will deploy the Defender plan"
-        }
-      },
       "evaluationDelay": {
         "type": "string",
         "metadata": {
@@ -275,13 +267,10 @@
             ]
           },
           "deployment": {
-            "location": "[parameters('location')]",
+            "location": "australiaeast",
             "properties": {
               "mode": "incremental",
               "parameters": {
-                "location": {
-                  "value": "[parameters('location')]"
-                },
                 "isSensitiveDataDiscoveryEnabled": {
                   "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
                 },

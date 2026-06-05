@@ -23,14 +23,6 @@
           "Disabled"
         ]
       },
-      "location": {
-        "type": "string",
-        "defaultValue": "australiaeast",
-        "metadata": {
-          "displayName": "Location for deployment",
-          "description": "Location where the policy will deploy the Defender plan"
-        }
-      },
       "evaluationDelay": {
         "type": "string",
         "metadata": {
@@ -81,7 +73,7 @@
             ]
           },
           "deployment": {
-            "location": "[parameters('location')]",
+            "location": "australiaeast",
             "properties": {
               "mode": "incremental",
               "parameters": {
@@ -93,9 +85,6 @@
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
-                "location": {
-                  "value": "[parameters('location')]"
-                },
                   "subPlan": {
                     "type": "string"
                   }

@@ -61,9 +61,6 @@
       "MDC-013_subPlan": {
         "value": "P1"
       },
-      "location": {
-        "value": "australiaeast"
-      },
       "evaluationDelay": {
         "value": "AfterProvisioning"
       },

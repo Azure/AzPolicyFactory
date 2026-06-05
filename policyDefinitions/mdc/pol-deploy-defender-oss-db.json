@@ -53,7 +53,7 @@
         "effect": "[parameters('effect')]",
         "details": {
           "type": "Microsoft.Security/pricings",
-
+          "evaluationDelay": "[parameters('evaluationDelay')]",
           "name": "OpenSourceRelationalDatabases",
           "deploymentScope": "subscription",
           "existenceScope": "subscription",

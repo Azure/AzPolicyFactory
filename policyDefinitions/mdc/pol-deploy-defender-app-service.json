@@ -1,4 +1,5 @@
 {
+  "name": "pol-deploy-defender-app-service",
   "properties": {
     "displayName": "Configure Microsoft Defender for App Service plan",
     "mode": "All",

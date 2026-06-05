@@ -1,4 +1,5 @@
 {
+  "name": "pol-deploy-defender-api",
   "properties": {
     "displayName": "Configure Microsoft Defender for APIs Plan",
     "mode": "All",

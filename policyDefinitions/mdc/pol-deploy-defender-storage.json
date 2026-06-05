@@ -1,4 +1,5 @@
 {
+  "name": "pol-deploy-defender-storage",
   "properties": {
     "displayName": "Configure Microsoft Defender for Storage plan",
     "mode": "All",

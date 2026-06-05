@@ -166,6 +166,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "location": {
+                  "value": "[parameters('location')]"
+                },
                 "isOnUploadMalwareScanningEnabled": {
                   "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
                 },

@@ -215,6 +215,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "location": {
+                  "value": "[parameters('location')]"
+                },
                 "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
                   "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
                 },

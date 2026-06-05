@@ -279,6 +279,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "location": {
+                  "value": "[parameters('location')]"
+                },
                 "isSensitiveDataDiscoveryEnabled": {
                   "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
                 },

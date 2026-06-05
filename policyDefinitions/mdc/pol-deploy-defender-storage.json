@@ -66,7 +66,7 @@
       "automatedResponse": {
         "type": "string",
         "metadata": {
-          "displayName": "Soft delete malicious blobs",
+          "displayName": "Soft delete malicious storage blobs",
           "description": "When enabled, blobs detected as malicious will be soft deleted. Soft deleted blobs are recoverable. If soft delete isn't already enabled on the storage account, Defender for Storage will attempt to enable it automatically — but only during the initial activation of the automatic response feature."
         },
         "allowedValues": [

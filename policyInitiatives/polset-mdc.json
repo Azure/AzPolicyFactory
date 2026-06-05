@@ -101,10 +101,10 @@
           "description": "MDC-005: Select a Defender for Azure Resource Manager plan"
         },
         "allowedValues": [
-          "PerTransaction",
-          "PerKeyVault"
+          "PerApiCall",
+          "PerSubscription"
         ],
-        "defaultValue": "PerTransaction"
+        "defaultValue": "PerApiCall"
       },
       "MDC-006_effect": {
         "type": "string",
@@ -117,50 +117,6 @@
           "DeployIfNotExists",
           "Disabled"
         ]
-      },
-      "MDC-006_isOnUploadMalwareScanningEnabled": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-006: Malware Scanning Enabled",
-          "description": "MDC-006: Enable or disable the Malware Scanning add-on feature"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "true"
-      },
-      "MDC-006_capGBPerMonthPerStorageAccount": {
-        "type": "Integer",
-        "metadata": {
-          "displayName": "MDC-006: Cap GB Per Month Per Storage Account",
-          "description": "MDC-006: Limit the GB scanned per month for each storage account within the subscription.\nValue must be an integer, 10GB or higher\nSet to -1 for unlimited scanning"
-        },
-        "defaultValue": 10000
-      },
-      "MDC-006_blobScanResultsOptions": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-006: Store scan results as blob index tags",
-          "description": "MDC-006: Store every scan result as blob index tags. Each blob scan adds two index tags to the blob; one for the scan result and one for the scan time. Additional charges apply."
-        },
-        "allowedValues": [
-          "None",
-          "BlobIndexTags"
-        ],
-        "defaultValue": "None"
-      },
-      "MDC-006_automatedResponse": {
-        "type": "String",
-        "metadata": {
-          "displayName": "MDC-006: Soft delete malicious blobs",
-          "description": "MDC-006: When enabled, blobs detected as malicious will be soft deleted. Soft deleted blobs are recoverable. If soft delete isn't already enabled on the storage account, Defender for Storage will attempt to enable it automatically — but only during the initial activation of the automatic response feature."
-        },
-        "allowedValues": [
-          "None",
-          "BlobSoftDelete"
-        ],
-        "defaultValue": "None"
       },
       "MDC-007_effect": {
         "type": "string",
@@ -233,6 +189,33 @@
           "DeployIfNotExists",
           "Disabled"
         ]
+      },
+      "MDC-013_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-013 Effect: Enable Defender for APIs",
+          "description": "MDC-013 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-013_subPlan": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-013: Defender for API plans",
+          "description": "MDC-013: Select a Defender for API plan"
+        },
+        "allowedValues": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ],
+        "defaultValue": "P1"
       },
       "location": {
         "type": "string",
@@ -466,6 +449,50 @@
           "false"
         ],
         "defaultValue": "true"
+      },
+      "isOnUploadMalwareScanningEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Malware Scanning Enabled",
+          "description": "Enable or disable the Malware Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "capGBPerMonthPerStorageAccount": {
+        "type": "Integer",
+        "metadata": {
+          "displayName": "Cap GB Per Month Per Storage Account",
+          "description": "Limit the GB scanned per month for each storage account within the subscription.\nValue must be an integer, 10GB or higher\nSet to -1 for unlimited scanning"
+        },
+        "defaultValue": -1
+      },
+      "blobScanResultsOptions": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Store scan results as blob index tags",
+          "description": "Store every scan result as blob index tags. Each blob scan adds two index tags to the blob; one for the scan result and one for the scan time. Additional charges apply."
+        },
+        "allowedValues": [
+          "None",
+          "BlobIndexTags"
+        ],
+        "defaultValue": "None"
+      },
+      "automatedResponse": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Soft delete malicious storage blobs",
+          "description": "When enabled, blobs detected as malicious will be soft deleted. Soft deleted blobs are recoverable. If soft delete isn't already enabled on the storage account, Defender for Storage will attempt to enable it automatically — but only during the initial activation of the automatic response feature."
+        },
+        "allowedValues": [
+          "None",
+          "BlobSoftDelete"
+        ],
+        "defaultValue": "None"
       }
     },
     "policyDefinitionGroups": [
@@ -689,16 +716,16 @@
             "value": "[parameters('location')]"
           },
           "isOnUploadMalwareScanningEnabled": {
-            "value": "[parameters('MDC-006_isOnUploadMalwareScanningEnabled')]"
+            "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
           },
           "capGBPerMonthPerStorageAccount": {
-            "value": "[parameters('MDC-006_capGBPerMonthPerStorageAccount')]"
+            "value": "[parameters('capGBPerMonthPerStorageAccount')]"
           },
           "automatedResponse": {
-            "value": "[parameters('MDC-006_automatedResponse')]"
+            "value": "[parameters('automatedResponse')]"
           },
           "blobScanResultsOptions": {
-            "value": "[parameters('MDC-006_blobScanResultsOptions')]"
+            "value": "[parameters('blobScanResultsOptions')]"
           },
           "isSensitiveDataDiscoveryEnabled": {
             "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
@@ -833,6 +860,23 @@
           "ISO27001-2013_A.16.1.2",
           "ISO27001-2013_A.16.1.4",
           "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-013",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-api-service",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-013_effect')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subPlan": {
+            "value": "[parameters('MDC-013_subPlan')]"
+          }
+        },
+        "groupNames": [
         ]
       }
     ]

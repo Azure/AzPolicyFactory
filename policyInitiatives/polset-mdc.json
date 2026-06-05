@@ -666,9 +666,6 @@
           "effect": {
             "value": "[parameters('MDC-004_effect')]"
           },
-          "location": {
-            "value": "[parameters('location')]"
-          },
           "subPlan": {
             "value": "[parameters('MDC-004_subPlan')]"
           }
@@ -688,9 +685,6 @@
         "parameters": {
           "effect": {
             "value": "[parameters('MDC-005_effect')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
@@ -880,6 +874,11 @@
           }
         },
         "groupNames": [
+          "ISO27001-2013_A.12.2.1",
+          "ISO27001-2013_A.12.6.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.4",
+          "ISO27001-2013_A.16.1.7"
         ]
       }
     ]

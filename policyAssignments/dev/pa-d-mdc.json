@@ -8,7 +8,7 @@
       "category": "Defender for Cloud"
     },
     "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-mdc",
-    "identity": "None",
+    "identity": "SystemAssigned",
     "parameters": {
       "MDC-001_Effect": {
         "value": "DeployIfNotExists"
@@ -152,7 +152,11 @@
       }
     },
     "nonComplianceMessages": [],
-    "roleDefinitionIds": []
+    "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+      "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd",
+      "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
   "managementGroupId": "CONTOSO-DEV"

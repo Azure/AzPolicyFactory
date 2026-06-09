@@ -116,7 +116,7 @@
               ],
               "Registries": [
                 {
-                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\"
+                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
                 }
               ]
             }
@@ -310,8 +310,8 @@
                         { "Path": "/usr/sbin", "IncludeSubPaths": true }
                       ],
                       "Registries": [
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\OID*" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID*" },
+                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\OID" },
+                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID" },
                         { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows" },
                         { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows" },
                         { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders" },

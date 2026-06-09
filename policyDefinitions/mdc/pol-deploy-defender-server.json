@@ -246,6 +246,12 @@
                   },
                   "isFileIntegrityMonitoringEnabled": {
                     "type": "string"
+                  },
+                  "fileIntegrityMonitoringDefaultWorkspaceId": {
+                    "type": "string"
+                  },
+                  "fileIntegrityMonitoringRules": {
+                    "type": "array"
                   }
                 },
                 "variables": {

@@ -299,7 +299,7 @@
                         {
                           "name": "FileIntegrityMonitoring",
                           "isEnabled": "[variables('isFileIntegrityMonitoringEnabled')]",
-                          "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), json(variables('FIMAdditionalExtensionProperties')))]"
+                          "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), variables('FIMAdditionalExtensionProperties'))]"
 
                         }
                       ]

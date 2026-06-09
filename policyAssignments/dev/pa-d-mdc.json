@@ -116,7 +116,7 @@
               ],
               "Registries": [
                 {
-                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\"
+                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
                 }
               ]
             }

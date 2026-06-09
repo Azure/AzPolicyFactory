@@ -281,18 +281,18 @@
                     "IsEnabled": true,
                     "MonitoredEntities": {
                       "WindowsFiles": [
-                        { "Path": "C:\\autoexec.bat", "IncludeSubPaths": false },
-                        { "Path": "C:\\boot.ini", "IncludeSubPaths": false },
-                        { "Path": "C:\\config.sys", "IncludeSubPaths": false },
-                        { "Path": "C:\\Windows\\system.ini", "IncludeSubPaths": false },
-                        { "Path": "C:\\Windows\\win.ini", "IncludeSubPaths": false },
-                        { "Path": "C:\\Windows\\regedit.exe", "IncludeSubPaths": false },
-                        { "Path": "C:\\Windows\\System32\\userinit.exe", "IncludeSubPaths": false },
-                        { "Path": "C:\\Windows\\explorer.exe", "IncludeSubPaths": false }
+                        { "Path": "\\Windows\\system.ini", "IncludeSubPaths": false },
+                        { "Path": "\\Windows\\win.ini", "IncludeSubPaths": false },
+                        { "Path": "\\Windows\\regedit.exe", "IncludeSubPaths": false },
+                        { "Path": "\\Windows\\explorer.exe", "IncludeSubPaths": false },
+                        { "Path": "\\Windows\\System32\\userinit.exe", "IncludeSubPaths": false },
+                        { "Path": "autoexec.bat", "IncludeSubPaths": false },
+                        { "Path": "boot.ini", "IncludeSubPaths": false },
+                        { "Path": "config.sys", "IncludeSubPaths": false }
                       ],
                       "LinuxFiles": [
-                        { "Path": "/bin/passwd", "IncludeSubPaths": false },
                         { "Path": "/bin", "IncludeSubPaths": true },
+                        { "Path": "/bin/passwd", "IncludeSubPaths": false },
                         { "Path": "/boot", "IncludeSubPaths": true },
                         { "Path": "/etc/*.conf", "IncludeSubPaths": false },
                         { "Path": "/etc/cron.daily", "IncludeSubPaths": true },
@@ -310,10 +310,10 @@
                         { "Path": "/usr/sbin", "IncludeSubPaths": true }
                       ],
                       "Registries": [
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\OID" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID" },
+                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\OID*" },
+                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID*" },
                         { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows" },
+                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\NT\\CurrentVersion\\Windows" },
                         { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders" },
                         { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders" },
                         { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders" },

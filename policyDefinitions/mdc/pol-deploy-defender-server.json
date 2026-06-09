@@ -116,7 +116,16 @@
               ],
               "Registries": [
                 {
-                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\loadappinit_dlls",
+                  "IncludeSubPaths": false
+                },
+                {
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\appinit_dlls",
+                  "IncludeSubPaths": false
+                },
+                {
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\iconservicelib",
+                  "IncludeSubPaths": false
                 }
               ]
             }

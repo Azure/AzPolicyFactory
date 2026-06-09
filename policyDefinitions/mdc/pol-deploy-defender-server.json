@@ -284,55 +284,26 @@
                   "FIMDefaultRule": {
                     "RuleId": "[guid('FIMDefaultRule')]",
                     "RuleName": "Recommended to monitor",
-                    "RuleDescription": "Default File Integrity Monitoring rule with the items recommended by Microsoft Defender for Cloud.",
-                    "IsCustomRule": "false",
+                    "RuleDescription": "Recommended critical entities for monitoring",
+                    "IsCustomRule": false,
                     "ChangeType": "CDMR",
                     "IsEnabled": true,
                     "MonitoredEntities": {
                       "WindowsFiles": [
-                        { "Path": "\\Windows\\system.ini", "IncludeSubPaths": false },
-                        { "Path": "\\Windows\\win.ini", "IncludeSubPaths": false },
-                        { "Path": "\\Windows\\regedit.exe", "IncludeSubPaths": false },
-                        { "Path": "\\Windows\\explorer.exe", "IncludeSubPaths": false },
-                        { "Path": "\\Windows\\System32\\userinit.exe", "IncludeSubPaths": false },
-                        { "Path": "autoexec.bat", "IncludeSubPaths": false },
-                        { "Path": "boot.ini", "IncludeSubPaths": false },
-                        { "Path": "config.sys", "IncludeSubPaths": false }
+                        { "Path": "\\Windows\\regedit.exe" },
+                        { "Path": "\\Windows\\explorer.exe" },
+                        { "Path": "\\Windows\\System32\\userinit.exe" }
                       ],
                       "LinuxFiles": [
-                        { "Path": "/bin", "IncludeSubPaths": true },
-                        { "Path": "/bin/passwd", "IncludeSubPaths": false },
-                        { "Path": "/boot", "IncludeSubPaths": true },
-                        { "Path": "/etc/*.conf", "IncludeSubPaths": false },
-                        { "Path": "/etc/cron.daily", "IncludeSubPaths": true },
-                        { "Path": "/etc/cron.hourly", "IncludeSubPaths": true },
-                        { "Path": "/etc/cron.monthly", "IncludeSubPaths": true },
-                        { "Path": "/etc/cron.weekly", "IncludeSubPaths": true },
-                        { "Path": "/etc/crontab", "IncludeSubPaths": false },
-                        { "Path": "/etc/init.d", "IncludeSubPaths": true },
-                        { "Path": "/opt/bin", "IncludeSubPaths": true },
-                        { "Path": "/opt/sbin", "IncludeSubPaths": true },
-                        { "Path": "/sbin", "IncludeSubPaths": true },
-                        { "Path": "/usr/bin", "IncludeSubPaths": true },
-                        { "Path": "/usr/local/bin", "IncludeSubPaths": true },
-                        { "Path": "/usr/local/sbin", "IncludeSubPaths": true },
-                        { "Path": "/usr/sbin", "IncludeSubPaths": true }
+                        { "Path": "/bin/login" },
+                        { "Path": "/bin/passwd" }
                       ],
                       "Registries": [
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\OID*" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID*" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\NT\\CurrentVersion\\Windows" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce" },
-                        { "Path": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\RunOnce" },
-                        { "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunServicesOnce" },
-                        { "Path": "HKLM\\SECURITY\\POLICY\\SECRETS" }
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunServicesOnce\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Cryptography\\OID\\" },
+                        { "Path": "hklm\\SECURITY\\POLICY\\SECRETS\\" }
                       ]
                     }
                   },

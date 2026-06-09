@@ -275,7 +275,7 @@
                   "FIMRulesString": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'true'), string(variables('FIMRules')), '[]')]",
                   "FIMAdditionalExtensionProperties": {
                     "FIMDetectionType": "Both",
-                    "DefaultWorkspaceId": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]",
+                    "DefinedWorkspaceId": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]",
                     "Rules": "[variables('FIMRulesString')]"
                   }
                 },

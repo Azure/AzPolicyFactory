@@ -92,7 +92,7 @@
         "value": "true"
       },
       "fileIntegrityMonitoringDefaultWorkspaceId": {
-        "value": "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourcegroups/rg-ae-d-monitor/providers/microsoft.operationalinsights/workspaces/law-ae-d-mgmt-01"
+        "value": "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.OperationalInsights/workspaces/law-ae-d-mgmt-01"
       },
       "fileIntegrityMonitoringRules": {
         "value": [

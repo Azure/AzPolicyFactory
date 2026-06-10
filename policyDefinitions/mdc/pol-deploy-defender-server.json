@@ -1,0 +1,353 @@
+{
+  "name": "pol-deploy-defender-server",
+  "properties": {
+    "displayName": "Configure Microsoft Defender for Server plan",
+    "mode": "All",
+    "description": "Configure Microsoft Defender for Server plan with required add-on features.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
+      "subPlan": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Defender for Server plans",
+          "description": "Select a Defender for Server plan"
+        },
+        "allowedValues": [
+          "P1",
+          "P2"
+        ],
+        "defaultValue": "P2"
+      },
+       "isAgentlessVmScanningEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Agentless VM Scanning Enabled",
+          "description": "Enable or disable the Agentless VM Scanning add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isMdeDesignatedSubscriptionEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDE Designated Subscription Enabled",
+          "description": "Enable or disable the MDE Designated Subscription add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "isFileIntegrityMonitoringEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "File Integrity Monitoring Enabled",
+          "description": "Enable or disable the File Integrity Monitoring add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "fileIntegrityMonitoringDefaultWorkspaceId": {
+        "type": "string",
+        "metadata": {
+          "displayName": "File Integrity Monitoring Default Workspace ID",
+          "description": "Conditional: Default Workspace ID for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2.",
+          "strongType": "omsWorkspace",
+          "assignPermissions": true
+        },
+        "defaultValue": ""
+      },
+      "fileIntegrityMonitoringRules": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "File Integrity Monitoring Rules",
+          "description": "Conditional: Rules for the File Integrity Monitoring add-on feature. Required if File Integrity Monitoring is enabled and subPlan is P2. Rules are provided as an array of rule objects. Serialised by string() into the single escaped JSON string the FIM 'Rules' property stores. Each deployment fully REPLACES the rule set."
+        },
+        "defaultValue": [
+          {
+            "RuleName": "Sample Rule",
+            "RuleDescription": "This is a sample File Integrity Monitoring rule.",
+            "ChangeType": "CDMR",
+            "IsEnabled": true,
+            "MonitoredEntities": {
+              "WindowsFiles": [
+                {
+                  "Path": "C:\\Windows\\System32\\drivers\\etc\\hosts",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "LinuxFiles": [
+                {
+                  "Path": "/etc/passwd",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "Registries": [
+                {
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\loadappinit_dlls",
+                  "IncludeSubPaths": false
+                },
+                {
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\appinit_dlls",
+                  "IncludeSubPaths": false
+                },
+                {
+                  "Path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\iconservicelib",
+                  "IncludeSubPaths": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/pricings",
+          "evaluationDelay": "[parameters('evaluationDelay')]",
+          "name": "VirtualMachines",
+          "deploymentScope": "subscription",
+          "existenceScope": "subscription",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+            "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Security/pricings/pricingTier",
+                "equals": "Standard"
+              },
+              {
+                "field": "Microsoft.Security/pricings/subPlan",
+                "equals": "[parameters('subPlan')]"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "AgentlessVmScanning"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isAgentlessVmScanningEnabled'), 'false')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "MdeDesignatedSubscription"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "FileIntegrityMonitoring"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isFileIntegrityMonitoringEnabled'), 'false')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              }
+            ]
+          },
+          "deployment": {
+            "location": "australiaeast",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "subPlan": {
+                  "value": "[parameters('subPlan')]"
+                },
+                "isAgentlessVmScanningEnabled": {
+                  "value": "[parameters('isAgentlessVmScanningEnabled')]"
+                },
+                "isMdeDesignatedSubscriptionEnabled": {
+                  "value": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                },
+                "isFileIntegrityMonitoringEnabled": {
+                  "value": "[parameters('isFileIntegrityMonitoringEnabled')]"
+                },
+                "fileIntegrityMonitoringDefaultWorkspaceId": {
+                  "value": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]"
+                },
+                "fileIntegrityMonitoringRules": {
+                  "value": "[parameters('fileIntegrityMonitoringRules')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "subPlan": {
+                    "type": "string"
+                  },
+                  "isAgentlessVmScanningEnabled": {
+                    "type": "string"
+                  },
+                  "isMdeDesignatedSubscriptionEnabled": {
+                    "type": "string"
+                  },
+                  "isFileIntegrityMonitoringEnabled": {
+                    "type": "string"
+                  },
+                  "fileIntegrityMonitoringDefaultWorkspaceId": {
+                    "type": "string"
+                  },
+                  "fileIntegrityMonitoringRules": {
+                    "type": "array"
+                  }
+                },
+                "variables": {
+                  "isAgentlessVmScanningEnabled": "[if(equals(parameters('subPlan'), 'P2'), parameters('isAgentlessVmScanningEnabled'), 'false')]",
+                  "isFileIntegrityMonitoringEnabled": "[if(equals(parameters('subPlan'), 'P2'), parameters('isFileIntegrityMonitoringEnabled'), 'false')]",
+                  "copy": [
+                    {
+                      "name": "FIMRules",
+                      "count": "[length(parameters('fileIntegrityMonitoringRules'))]",
+                      "input": {
+                        "RuleId": "[guid(parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].RuleName)]",
+                        "RuleName": "[parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].RuleName]",
+                        "RuleDescription": "[if(contains(parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')], 'RuleDescription'), parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].RuleDescription, '')]",
+                        "IsCustomRule": "true",
+                        "ChangeType": "[if(contains(parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')], 'ChangeType'), parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].ChangeType, 'CDMR')]",
+                        "IsEnabled": "[if(contains(parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')], 'IsEnabled'), parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].IsEnabled, bool('true'))]",
+                        "MonitoredEntities": "[parameters('fileIntegrityMonitoringRules')[copyIndex('FIMRules')].MonitoredEntities]"
+                      }
+                    }
+                  ],
+                  "FIMDefaultRule": {
+                    "RuleId": "[guid('FIMDefaultRule')]",
+                    "RuleName": "Recommended to monitor",
+                    "RuleDescription": "Recommended critical entities for monitoring",
+                    "IsCustomRule": false,
+                    "ChangeType": "CDMR",
+                    "IsEnabled": true,
+                    "MonitoredEntities": {
+                      "WindowsFiles": [
+                        { "Path": "\\Windows\\regedit.exe" },
+                        { "Path": "\\Windows\\explorer.exe" },
+                        { "Path": "\\Windows\\System32\\userinit.exe" }
+                      ],
+                      "LinuxFiles": [
+                        { "Path": "/bin/login" },
+                        { "Path": "/bin/passwd" }
+                      ],
+                      "Registries": [
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunServicesOnce\\" },
+                        { "Path": "hklm\\SOFTWARE\\Microsoft\\Cryptography\\OID\\" },
+                        { "Path": "hklm\\SECURITY\\POLICY\\SECRETS\\" }
+                      ]
+                    }
+                  },
+                  "FIMAllRules": "[concat(array(variables('FIMDefaultRule')), variables('FIMRules'))]",
+                  "FIMRulesString": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'true'), string(variables('FIMAllRules')), string(array(variables('FIMDefaultRule'))))]",
+                  "FIMAdditionalExtensionProperties": {
+                    "FIMDetectionType": "Both",
+                    "DefinedWorkspaceId": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]",
+                    "Rules": "[variables('FIMRulesString')]"
+                  }
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Security/pricings",
+                    "apiVersion": "2025-10-01-preview",
+                    "name": "VirtualMachines",
+                    "properties": {
+                      "pricingTier": "Standard",
+                      "subPlan": "[parameters('subPlan')]",
+                      "extensions": [
+                        {
+                          "name": "AgentlessVmScanning",
+                          "isEnabled": "[variables('isAgentlessVmScanningEnabled')]"
+                        },
+                        {
+                          "name": "MdeDesignatedSubscription",
+                          "isEnabled": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                        },
+                        {
+                          "name": "FileIntegrityMonitoring",
+                          "isEnabled": "[variables('isFileIntegrityMonitoringEnabled')]",
+                          "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), variables('FIMAdditionalExtensionProperties'))]"
+
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "outputs": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

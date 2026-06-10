@@ -1,0 +1,211 @@
+{
+  "name": "pol-deploy-defender-ai",
+  "properties": {
+    "displayName": "Configure Microsoft Defender for AI Services",
+    "mode": "All",
+    "description": "Configure Microsoft Defender for AI Services with required add-on features.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
+      "isAIPromptEvidenceEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Prompt Evidence Enabled",
+          "description": "Controls the AI prompt evidence feature, which exposes the prompts passed between the user and the model for deeper analysis of AI-related alerts. The prompt snippets will include only segments of the user prompt or model response that were deemed suspicious and relevant for security classifications. While sensitive data or secrets are redacted, customer conversations may be deemed sensitive in nature. The evidence will be available through the Defender portal as part of each alert."
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAIPromptSharingWithPurviewEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Data Security Enabled",
+          "description": "Controls the AI data security feature, allowing Microsoft Purview to access, process, and store prompts and responses, including metadata for security and compliance purposes such as sensitive information type (SIT) classification, reporting in Microsoft Purview Data Security Posture Management for AI, Audit, Insider Risk Management, Communication Compliance, and eDiscovery"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
+      "isAIModelScannerEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AI Model Security Enabled",
+          "description": "Controls the AI model scanner feature, gives you a clear, unified view of all your models registered in Azure Machine Learning Registries."
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/pricings",
+          "evaluationDelay": "[parameters('evaluationDelay')]",
+          "name": "AI",
+          "deploymentScope": "subscription",
+          "existenceScope": "subscription",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Security/pricings/pricingTier",
+                "equals": "Standard"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "AIPromptEvidence"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isAIPromptEvidenceEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "AIPromptSharingWithPurview"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isAIPromptSharingWithPurviewEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "AIModelScanner"
+                      },
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                        "equals": "[parameters('isAIModelScannerEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              }
+            ]
+          },
+          "deployment": {
+            "location": "australiaeast",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "isAIPromptEvidenceEnabled": {
+                  "value": "[parameters('isAIPromptEvidenceEnabled')]"
+                },
+                "isAIPromptSharingWithPurviewEnabled": {
+                  "value": "[parameters('isAIPromptSharingWithPurviewEnabled')]"
+                },
+                "isAIModelScannerEnabled": {
+                  "value": "[parameters('isAIModelScannerEnabled')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "isAIPromptEvidenceEnabled": {
+                    "type": "string"
+                  },
+                  "isAIPromptSharingWithPurviewEnabled": {
+                    "type": "string"
+                  },
+                  "isAIModelScannerEnabled": {
+                    "type": "string"
+                  }
+                },
+                "variables": {},
+                "resources": [
+                  {
+                    "type": "Microsoft.Security/pricings",
+                    "apiVersion": "2025-10-01-preview",
+                    "name": "AI",
+                    "properties": {
+                      "pricingTier": "Standard",
+                      "extensions": [
+                        {
+                          "name": "AIPromptEvidence",
+                          "isEnabled": "[parameters('isAIPromptEvidenceEnabled')]"
+                        },
+                        {
+                          "name": "AIPromptSharingWithPurview",
+                          "isEnabled": "[parameters('isAIPromptSharingWithPurviewEnabled')]"
+                        },
+                        {
+                          "name": "AIModelScanner",
+                          "isEnabled": "[parameters('isAIModelScannerEnabled')]"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "outputs": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-p-mdc",
+    "displayName": "Microsoft Defender for Cloud Policies Prod",
+    "description": "Policy Assignment for Microsoft Defender for Cloud - Prod",
+    "metadata": {
+      "category": "Defender for Cloud"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-mdc",
+    "identity": "SystemAssigned",
+    "parameters": {
+      "MDC-001_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-002_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-002_subPlan": {
+        "value": "P2"
+      },
+      "MDC-003_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-004_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-004_subPlan": {
+        "value": "PerTransaction"
+      },
+      "MDC-005_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-005_subPlan": {
+        "value": "PerApiCall"
+      },
+      "MDC-006_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-007_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-008_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-009_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-010_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-011_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-012_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-013_Effect": {
+        "value": "Disabled"
+      },
+      "MDC-013_subPlan": {
+        "value": "P1"
+      },
+      "evaluationDelay": {
+        "value": "AfterProvisioning"
+      },
+      "isSensitiveDataDiscoveryEnabled": {
+        "value": "true"
+      },
+      "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
+        "value": "true"
+      },
+      "isAgentlessDiscoveryForKubernetesEnabled": {
+        "value": "true"
+      },
+      "isAgentlessVmScanningEnabled": {
+        "value": "true"
+      },
+      "isEntraPermissionsManagementEnabled": {
+        "value": "true"
+      },
+      "isApiPostureEnabled": {
+        "value": "true"
+      },
+      "isAgentlessServerlessPostureEnabled": {
+        "value": "true"
+      },
+      "isMdeDesignatedSubscriptionEnabled": {
+        "value": "true"
+      },
+      "isFileIntegrityMonitoringEnabled": {
+        "value": "true"
+      },
+      "fileIntegrityMonitoringDefaultWorkspaceId": {
+        "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.OperationalInsights/workspaces/law-ae-p-mgmt-01"
+      },
+      "fileIntegrityMonitoringRules": {
+        "value": [
+          {
+            "RuleName": "Sample Rule",
+            "RuleDescription": "This is a sample File Integrity Monitoring rule.",
+            "ChangeType": "CDMR",
+            "IsEnabled": true,
+            "MonitoredEntities": {
+              "WindowsFiles": [
+                {
+                  "Path": "C:\\Windows\\System32\\drivers\\etc\\hosts",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "LinuxFiles": [
+                {
+                  "Path": "/etc/passwd",
+                  "IncludeSubPaths": false
+                }
+              ],
+              "Registries": [
+                {
+                  "Path": "hklm\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "isContainerSensorEnabled": {
+        "value": "true"
+      },
+      "isSecurityGatingEnabled": {
+        "value": "true"
+      },
+      "isContainerIntegrityContributionEnabled": {
+        "value": "true"
+      },
+      "isAIPromptEvidenceEnabled": {
+        "value": "true"
+      },
+      "isAIPromptSharingWithPurviewEnabled": {
+        "value": "true"
+      },
+      "isAIModelScannerEnabled": {
+        "value": "true"
+      },
+      "isOnUploadMalwareScanningEnabled": {
+        "value": "true"
+      },
+      "capGBPerMonthPerStorageAccount": {
+        "value": -1
+      },
+      "blobScanResultsOptions": {
+        "value": "None"
+      },
+      "automatedResponse": {
+        "value": "None"
+      }
+    },
+    "nonComplianceMessages": [],
+    "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+      "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd",
+      "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+    ]
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
+  "managementGroupId": "CONTOSO"
+}

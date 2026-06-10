@@ -1,0 +1,105 @@
+{
+  "name": "pol-deploy-defender-server-va",
+  "properties": {
+    "displayName": "Configure Microsoft Defender for Server vulnerability assessment provider",
+    "mode": "All",
+    "description": "Configure the vulnerability assessment provider for machines in Microsoft Defender for Servers Plan 2. Enabling this setting causes Defender for Cloud to propagate findings from the Microsoft Defender vulnerability management (MdeTvm) solution to all supported machines.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
+      "selectedProvider": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Selected Vulnerability Assessment provider",
+          "description": "Select the vulnerability assessment solution to provision to machines."
+        },
+        "allowedValues": [
+          "MdeTvm"
+        ],
+        "defaultValue": "MdeTvm"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/serverVulnerabilityAssessmentsSettings",
+          "evaluationDelay": "[parameters('evaluationDelay')]",
+          "name": "AzureServersSetting",
+          "deploymentScope": "subscription",
+          "existenceScope": "subscription",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
+          ],
+          "existenceCondition": {
+            "field": "Microsoft.Security/serverVulnerabilityAssessmentsSettings/AzureServersSetting.selectedProvider",
+            "equals": "[parameters('selectedProvider')]"
+          },
+          "deployment": {
+            "location": "australiaeast",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "selectedProvider": {
+                  "value": "[parameters('selectedProvider')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "selectedProvider": {
+                    "type": "string"
+                  }
+                },
+                "variables": {
+                  "settingsKind": "AzureServersSetting"
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Security/serverVulnerabilityAssessmentsSettings",
+                    "apiVersion": "2023-05-01",
+                    "name": "[variables('settingsKind')]",
+                    "kind": "[variables('settingsKind')]",
+                    "properties": {
+                      "selectedProvider": "[parameters('selectedProvider')]"
+                    }
+                  }
+                ],
+                "outputs": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

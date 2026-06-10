@@ -102,10 +102,6 @@
                       {
                         "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
                         "equals": "[parameters('isAIPromptEvidenceEnabled')]"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isAIModelScannerEnabled')]"
                       }
                     ]
                   }
@@ -124,6 +120,20 @@
                       {
                         "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
                         "equals": "[parameters('isAIPromptSharingWithPurviewEnabled')]"
+                      }
+                    ]
+                  }
+                },
+                "equals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/pricings/extensions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/pricings/extensions[*].name",
+                        "equals": "AIModelScanner"
                       },
                       {
                         "field": "Microsoft.Security/pricings/extensions[*].isEnabled",

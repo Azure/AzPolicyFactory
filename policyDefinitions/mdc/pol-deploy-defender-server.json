@@ -317,7 +317,6 @@
                 },
                 "resources": [
                   {
-                    "comments": "First PUT: set base plan and non-FIM extensions, with FIM explicitly disabled. Lets the base plan settle before FIM enablement to avoid the 'Another update operation is in progress' conflict.",
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
                     "name": "VirtualMachines",
@@ -335,55 +334,11 @@
                         },
                         {
                           "name": "FileIntegrityMonitoring",
-                          "isEnabled": "false"
+                          "isEnabled": "[variables('isFileIntegrityMonitoringEnabled')]",
+                          "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), variables('FIMAdditionalExtensionProperties'))]"
+
                         }
                       ]
-                    }
-                  },
-                  {
-                    "comments": "Second PUT (serialized): enable FIM on its own once the base plan is stable. Only runs when FIM should be enabled; dependsOn forces it to wait for the first PUT to complete.",
-                    "condition": "[equals(variables('isFileIntegrityMonitoringEnabled'), 'true')]",
-                    "type": "Microsoft.Resources/deployments",
-                    "apiVersion": "2022-09-01",
-                    "name": "deploy-defender-server-fim",
-                    "dependsOn": [
-                      "[subscriptionResourceId('Microsoft.Security/pricings', 'VirtualMachines')]"
-                    ],
-                    "properties": {
-                      "mode": "Incremental",
-                      "expressionEvaluationOptions": {
-                        "scope": "outer"
-                      },
-                      "template": {
-                        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-                        "contentVersion": "1.0.0.0",
-                        "resources": [
-                          {
-                            "type": "Microsoft.Security/pricings",
-                            "apiVersion": "2025-10-01-preview",
-                            "name": "VirtualMachines",
-                            "properties": {
-                              "pricingTier": "Standard",
-                              "subPlan": "[parameters('subPlan')]",
-                              "extensions": [
-                                {
-                                  "name": "AgentlessVmScanning",
-                                  "isEnabled": "[variables('isAgentlessVmScanningEnabled')]"
-                                },
-                                {
-                                  "name": "MdeDesignatedSubscription",
-                                  "isEnabled": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
-                                },
-                                {
-                                  "name": "FileIntegrityMonitoring",
-                                  "isEnabled": "true",
-                                  "additionalExtensionProperties": "[variables('FIMAdditionalExtensionProperties')]"
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
                     }
                   }
                 ],

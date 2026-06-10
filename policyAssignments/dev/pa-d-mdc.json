@@ -56,7 +56,7 @@
         "value": "DeployIfNotExists"
       },
       "MDC-013_Effect": {
-        "value": "DeployIfNotExists"
+        "value": "Disabled"
       },
       "MDC-013_subPlan": {
         "value": "P1"

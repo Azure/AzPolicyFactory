@@ -86,7 +86,7 @@
         "value": "true"
       },
       "isMdeDesignatedSubscriptionEnabled": {
-        "value": "true"
+        "value": "false"
       },
       "isFileIntegrityMonitoringEnabled": {
         "value": "true"

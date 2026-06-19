@@ -33,6 +33,9 @@
         "defaultValue": [
           "microsoft.authorization",
           "microsoft.resources",
+          "microsoft.consumption",
+          "microsoft.policyInsights",
+          "microsoft.security",
           "microsoft.advisor"
         ]
       }

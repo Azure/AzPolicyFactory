@@ -29,7 +29,12 @@
         "metadata": {
           "description": "The resource providers that are allowed to be deployed.",
           "displayName": "Allowed Resource Providers"
-        }
+        },
+        "defaultValue": [
+          "microsoft.authorization",
+          "microsoft.resources",
+          "microsoft.advisor"
+        ]
       }
     },
     "policyRule": {

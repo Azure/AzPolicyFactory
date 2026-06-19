@@ -37,9 +37,10 @@
         "not": {
           "count": {
             "value": "[parameters('allowedResourceProviders')]",
+            "name": "rp",
             "where": {
               "value": "[field('type')]",
-              "like": "[concat(current('allowedResourceProviders'), '/*')]"
+              "like": "[concat(current('rp'), '/*')]"
             }
           },
           "greater": 0

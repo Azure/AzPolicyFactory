@@ -27,7 +27,7 @@
       "allowedResourceProviders": {
         "type": "array",
         "metadata": {
-          "description": "The resource providers that are allowed to be deployed.",
+          "description": "The resource providers that are allowed to be deployed. Make sure all the resource providers from the default value are included when you specify this parameter.",
           "displayName": "Allowed Resource Providers"
         },
         "defaultValue": [
@@ -36,7 +36,9 @@
           "microsoft.consumption",
           "microsoft.policyInsights",
           "microsoft.security",
-          "microsoft.advisor"
+          "microsoft.advisor",
+          "microsoft.subscriptions",
+          "microsoft.support"
         ]
       }
     },

@@ -186,7 +186,7 @@
           "DeployIfNotExists",
           "Disabled"
         ],
-        "defaultValue": "DeployIfNotExists"
+        "defaultValue": "Disabled"
       },
       "STG-011_EvaluationDelay": {
         "type": "string",

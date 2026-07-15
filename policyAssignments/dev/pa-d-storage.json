@@ -54,7 +54,7 @@
         "value": "TLS1_2"
       },
       "STG-011_Effect": {
-        "value": "DeployIfNotExists"
+        "value": "Disabled"
       },
       "STG-011_EvaluationDelay": {
         "value": "AfterProvisioning"

@@ -1,20 +1,19 @@
 {
   "$schema": "../policyExemption.schema.json",
   "policyExemption": {
-    "name": "pex-d-sbx-sub-stg-006",
-    "displayName": "Exempt Sandbox Subscription from Storage accounts should prevent cross tenant object replication",
+    "name": "pex-d-sbx-sub-stg",
+    "displayName": "Exempt Sandbox Subscription from Storage Account Policies",
     "description": "This is a test exemption for the sub-d-sandbox-01 subscription.",
     "metadata": {
       "requestedBy": "Eric Cartman",
       "approvedBy": "Bart Simpson",
-      "approvedOn": "2026-07-15",
+      "approvedOn": "2026-06-24",
       "ticketRef": "INC234567"
     },
     "policyAssignmentId": "/providers/Microsoft.Management/managementGroups/CONTOSO-dev/providers/microsoft.authorization/policyassignments/pa-d-storage",
     "exemptionCategory": "Waiver",
     "assignmentScopeValidation": "Default",
     "policyDefinitionReferenceIds": [
-      "STG-006"
     ],
     "expiresOn": "2026-12-31T23:59:59Z"
   },

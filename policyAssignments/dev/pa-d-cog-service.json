@@ -28,7 +28,9 @@
       "COG-005_listOfAllowedFormats": {
         "value": [
           "xAI",
-          "OpenAI"
+          "OpenAI",
+          "Anthropic",
+          "Fireworks"
         ]
       },
       "COG-006_Effect": {
@@ -37,8 +39,10 @@
       "COG-006_listOfAllowedNames": {
         "value": [
           "gpt-4.1",
-          "gpt-5.4",
-          "gpt-5.3-codex"
+          "gpt-5-mini",
+          "gpt-5-4",
+          "gpt-5-5",
+          "gpt-5-3-codex"
         ]
       },
       "COG-007_Effect": {
@@ -48,6 +52,23 @@
         "value": [
           "grok-4",
           "grok-4-1-fast-reasoning"
+        ]
+      },
+      "COG-008_Effect": {
+        "value": "Deny"
+      },
+      "COG-008_listOfAllowedNames": {
+        "value": [
+          "claude-opus-4-8",
+          "claude-opus-5"
+        ]
+      },
+      "COG-009_Effect": {
+        "value": "Deny"
+      },
+      "COG-009_listOfAllowedNames": {
+        "value": [
+          "FW-Kimi-K3"
         ]
       }
     },

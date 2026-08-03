@@ -48,7 +48,7 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
   }
   properties: {
     model: {
-      name: 'gpt-4.1'
+      name: 'gpt-5.4'
       format: 'OpenAI'
     }
   }

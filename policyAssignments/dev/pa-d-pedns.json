@@ -64,6 +64,12 @@
       "PEDNS-018_Effect": {
         "value": "DeployIfNotExists"
       },
+      "PEDNS-019_Effect": {
+        "value": "DeployIfNotExists"
+      },
+      "PEDNS-020_Effect": {
+        "value": "DeployIfNotExists"
+      },
       "evaluationDelay": {
         "value": "AfterProvisioning"
       },
@@ -146,6 +152,14 @@
       {
         "policyDefinitionReferenceId": "PEDNS-018",
         "message": "PolicyID: PEDNS-018 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Azure Search Services Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-019",
+        "message": "PolicyID: PEDNS-019 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Cosmos DB SQL Private Endpoint must be configured'"
+      },
+      {
+        "policyDefinitionReferenceId": "PEDNS-020",
+        "message": "PolicyID: PEDNS-020 Violation in polset-pedns Initiative - 'The Private Endpoint Private DNS Zone group for Foundry Tools Private Endpoint must be configured'"
       }
     ]
   },

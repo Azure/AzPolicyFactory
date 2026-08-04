@@ -737,7 +737,7 @@
             "value": "[concat(parameters('privateDnsZoneResourceGroup'), '/providers/Microsoft.Network/privateDnsZones/', 'privatelink.documents.azure.com')]"
           },
           "privateLinkServiceResourceType": {
-            "value": "Microsoft.AzureCosmosDB/databaseAccounts"
+            "value": "Microsoft.DocumentDB/databaseAccounts"
           }
         },
         "groupNames": [

@@ -14,7 +14,7 @@ var namePrefix = globalConfig.namePrefix
 
 // define template specific variables
 var serviceShort = 'cos2'
-resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
+resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2026-04-01-preview' = {
   kind: 'GlobalDocumentDB'
   name: '${namePrefix}${serviceShort}01'
   location: location

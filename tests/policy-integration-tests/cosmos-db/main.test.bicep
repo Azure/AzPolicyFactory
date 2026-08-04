@@ -29,7 +29,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' existing = {
   resource peSubnet 'subnets' existing = { name: peSubnetName }
 }
 
-resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2025-11-01-preview' = {
+resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts@2026-04-01-preview' = {
   kind: 'GlobalDocumentDB'
   name: '${namePrefix}${serviceShort}01'
   location: location

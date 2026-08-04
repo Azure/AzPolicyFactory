@@ -37,7 +37,16 @@
       "COSMOS-007_listOfAllowedLocations": {
         "value": [
           "australiaeast",
-          "australiasoutheast"
+          "australiasoutheast",
+          "westus",
+          "westus2",
+          "westus3",
+          "westcentralus",
+          "southcentralus",
+          "northcentralus",
+          "eastus",
+          "eastus2",
+          "centralus"
         ]
       }
     },

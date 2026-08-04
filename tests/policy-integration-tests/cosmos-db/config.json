@@ -11,7 +11,7 @@
   "testSubscription": "sub-d-lz-corp-01",
   "testResourceGroup": "rg-ae-d-policy-test-cosmos-001",
   "location": "australiaeast",
-  "disallowedLocation": "eastus",
+  "disallowedLocation": "westeurope",
   "tagsForResourceGroup": false,
   "removeTestResourceGroup": true
 }

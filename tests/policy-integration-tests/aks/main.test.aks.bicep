@@ -76,7 +76,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
           'CriticalAddonsOnly=true:NoSchedule'
         ]
         enableNodePublicIP: false
-        enableEncryptionAtHost: true //this should comply with AKSC-005: Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host
+        enableEncryptionAtHost: false //this should violate with AKSC-005: Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host
         kubeletDiskType: 'OS'
         orchestratorVersion: '1.32.3'
         vnetSubnetID: subnetResourceId

@@ -14,7 +14,7 @@
     "parameters": {
       "effect": {
         "type": "String",
-        "defaultValue": "Deny",
+        "defaultValue": "Audit",
         "allowedValues": [
           "Audit",
           "Deny",
@@ -40,7 +40,7 @@
                 "anyOf": [
                   {
                     "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
-                    "exists": "False"
+                    "exists": "false"
                   },
                   {
                     "not":{

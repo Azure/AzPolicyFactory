@@ -103,7 +103,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-02-preview' = {
         ]
         count: 1
         enableAutoScaling: true
-        enableEncryptionAtHost: false //this should violate AKSC-005: Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host
+        //enableEncryptionAtHost: false //this should violate AKSC-005: Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host
 
         maxCount: 3
         maxPods: 30

@@ -19,7 +19,7 @@ The following policies are in scope for testing:
 | `pa-d-aks-control` | `AKSC-002` | Azure Kubernetes Clusters should use Azure CNI Overlay | Deny |
 | `pa-d-aks-control` | `AKSC-003` | Azure Kubernetes Service Private Clusters should be enabled | Deny |
 | `pa-d-aks-control` | `AKSC-004` | Azure Kubernetes Service clusters should have Defender profile enabled | Deny |
-| `pa-d-aks-control` | `AKSC-005` | Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host | Deny |
+| `pa-d-aks-control` | `AKSC-005` | Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host | Audit |
 | `pa-d-aks-control` | `AKSC-006` | Azure Kubernetes Service Clusters should have local authentication methods disabled | Deny |
 | `pa-d-aks-control` | `AKSC-007` | Role-Based Access Control (RBAC) should be used on Kubernetes Services | Deny |
 | `pa-d-aks-control` | `AKSC-008` | Azure Kubernetes Clusters should enable Container Storage Interface(CSI) | Deny |

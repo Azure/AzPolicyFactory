@@ -23,7 +23,7 @@
         "value": "Deny"
       },
       "AKSC-005_Effect": {
-        "value": "Deny"
+        "value": "Audit"
       },
       "AKSC-006_Effect": {
         "value": "Deny"

@@ -73,7 +73,7 @@
           "Deny",
           "Disabled"
         ],
-        "defaultValue": "Deny"
+        "defaultValue": "Audit"
       },
       "AKSC-006_Effect": {
         "type": "string",

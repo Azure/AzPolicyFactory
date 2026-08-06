@@ -26,7 +26,6 @@ The following policy definitions are tested:.
 #>
 $resourceId = $script:bicepDeploymentOutputs.resourceId.value
 $diagSettingsPolicyAssignmentId = $script:LocalConfig_policyAssignmentIds | Where-Object { $_ -imatch "$script:LocalConfig_diagSettingsAssignmentName`$" }
-$peDNSPolicyAssignmentId = $script:LocalConfig_policyAssignmentIds | Where-Object { $_ -imatch "$script:LocalConfig_peDNSAssignmentName`$" }
 $diagnosticSettingsId = "{0}{1}" -f $resourceId, $script:GlobalConfig_diagnosticSettingsIdSuffix
 $aksControlPolicyAssignmentId = $script:LocalConfig_policyAssignmentIds | Where-Object { $_ -imatch "$script:LocalConfig_aksControlAssignmentName`$" }
 $violatingPolicies = @(
@@ -45,10 +44,6 @@ $violatingPolicies = @(
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
     policyDefinitionReferenceId = 'AKSC-004'
-  }
-  @{
-    policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKSC-005'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
@@ -86,6 +81,9 @@ $tests = @()
 #DeployIfNotExists Policies
 $tests += New-ARTResourceExistenceTestConfig 'DS-004: Deploy Diagnostic Settings for Cognitive Service to Log Analytics workspace.' $script:token $diagnosticSettingsId 'exists' $script:GlobalConfig_diagnosticSettingsAPIVersion
 $tests += New-ARTPolicyStateTestConfig 'DS-004: Diagnostic Settings Policy Must Be Compliant' $script:token $resourceId $diagSettingsPolicyAssignmentId 'Compliant' 'DS-004'
+
+# Audit Policies
+$tests += New-ARTPolicyStateTestConfig 'AKSC-005: Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host' $script:token $resourceId $aksControlPolicyAssignmentId 'NonCompliant' 'AKSC-005'
 
 #Deny policies (testing both positive and negative scenarios)
 $tests += New-ARTWhatIfDeploymentTestConfig 'Policy abiding deployment should succeed' $script:token $script:whatIfComplyBicepTemplatePath $script:bicepDeploymentResult.bicepDeploymentTarget 'Succeeded' -maxRetry $script:GlobalConfig_whatIfMaxRetry

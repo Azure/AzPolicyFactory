@@ -19,18 +19,18 @@
             "strongType": "resourceTypes"
           }
         },
-        "policyEffect": {
+        "effect": {
           "type": "String",
           "metadata": {
             "displayName": "Policy Effect",
             "description": "The desired effect of the policy."
           },
-          "allowedValues": [
-            "deny",
-            "audit",
-            "disabled"
-          ],
-          "defaultValue": "deny"
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
         }
       },
       "policyRule": {
@@ -47,7 +47,7 @@
           ]
         },
         "then": {
-          "effect": "[parameters('policyEffect')]"
+          "effect": "[parameters('effect')]"
         }
       }
     }

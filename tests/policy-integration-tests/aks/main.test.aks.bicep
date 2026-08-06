@@ -160,7 +160,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
         }
       }
     }
-    kubernetesVersion: '1.37'
+    kubernetesVersion: '1.36'
     publicNetworkAccess: 'Disabled'
     supportPlan: 'KubernetesOfficial'
     identityProfile: {

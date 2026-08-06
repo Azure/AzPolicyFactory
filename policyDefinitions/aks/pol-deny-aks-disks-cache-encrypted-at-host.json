@@ -5,12 +5,12 @@
     "description": "To enhance data security, the data stored on the virtual machine (VM) host of your Azure Kubernetes Service nodes VMs should be encrypted at rest. This is a common requirement in many regulatory and industry compliance standards.",
     "metadata": {
       "category": "Azure Kubernetes Service",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "preview": false,
       "deprecated": false,
       "source_builtIn_name": "41425d9f-d1a5-499a-9932-f8ed8453932c"
     },
-    "mode": "Indexed",
+    "mode": "All",
     "parameters": {
       "effect": {
         "type": "String",
@@ -28,32 +28,52 @@
     },
     "policyRule": {
       "if": {
-        "allOf": [
+        "anyOf": [
           {
-            "field": "type",
-            "equals": "Microsoft.ContainerService/managedClusters"
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.ContainerService/managedClusters"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*]",
+                  "where": {
+                    "anyOf": [
+                      {
+                        "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
+                        "exists": "false"
+                      },
+                      {
+                        "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
+                        "equals": "false"
+                      }
+                    ]
+                  }
+                },
+                "greater": 0
+              }
+            ]
           },
           {
-            "count": {
-              "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*]",
-              "where": {
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.ContainerService/managedClusters/agentPools"
+              },
+              {
                 "anyOf": [
                   {
-                    "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
-                    "exists": "False"
+                    "field": "Microsoft.ContainerService/managedClusters/agentPools/enableEncryptionAtHost",
+                    "exists": "false"
                   },
                   {
-                    "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
-                    "equals": ""
-                  },
-                  {
-                    "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
+                    "field": "Microsoft.ContainerService/managedClusters/agentPools/enableEncryptionAtHost",
                     "equals": "false"
                   }
                 ]
               }
-            },
-            "greater": 0
+            ]
           }
         ]
       },

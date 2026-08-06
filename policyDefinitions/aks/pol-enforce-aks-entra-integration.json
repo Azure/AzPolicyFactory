@@ -34,8 +34,18 @@
             "equals": "Microsoft.ContainerService/managedClusters"
           },
           {
-            "field": "Microsoft.ContainerService/managedClusters/aadProfile",
-            "exists": false
+            "anyOf": [
+              {
+                "field": "Microsoft.ContainerService/managedClusters/aadProfile",
+                "exists": "false"
+              },
+              {
+                "not":{
+                  "field": "Microsoft.ContainerService/managedClusters/aadProfile.enableAzureRBAC",
+                  "equals": "true"
+                }
+              }
+            ]
           }
         ]
       },

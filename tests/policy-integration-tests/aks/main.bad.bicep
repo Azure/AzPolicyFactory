@@ -84,15 +84,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-02-preview' = {
     name: 'Base'
     tier: 'Standard'
   }
-  //identity: {} //this should violate AKSC-011: Azure Kubernetes Service Clusters should use managed identities
   properties: {
-    /*
-    aadProfile: {
-      adminGroupObjectIDs: [
-        'af9b6889-c2d1-4871-8f77-73c4b3ad265d' // Azure Dev Admins group
-      ]
-    }
-    */ //this should violate AKSC-010: Azure Kubernetes Service Clusters should enable Microsoft Entra ID integration
+    aadProfile: {}
+    //this should violate AKSC-010: Azure Kubernetes Service Clusters should enable Microsoft Entra ID integration
 
     addonProfiles: {
       azurepolicy: {
@@ -154,10 +148,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-02-preview' = {
         }
       }
     }
-    /*
-    servicePrincipalProfile: {}
-    identityProfile: {}
-    */
+
+    servicePrincipalProfile: {} //this should violate AKSC-011: Azure Kubernetes Service Clusters should use managed identities
+    identityProfile: {} //this should violate AKSC-011: Azure Kubernetes Service Clusters should use managed identities
   }
 }
 

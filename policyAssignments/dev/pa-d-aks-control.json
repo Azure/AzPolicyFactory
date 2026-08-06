@@ -60,7 +60,7 @@
     "nonComplianceMessages": [
             {
         "policyDefinitionReferenceId": "AKSC-012",
-        "message": "Azure Kubernetes Service Clusters must not be created using a preview ARM API version."
+        "message": "PolicyID: AKSC-012 Violation in polset-aks-control Initiative - 'Azure Kubernetes Service Clusters must not be created using a preview ARM API version.'"
       }
     ],
     "notScopes": [

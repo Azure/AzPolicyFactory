@@ -89,6 +89,17 @@ resource privateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   location: 'global'
 }
 
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2025-07-01' = {
+  name: 'loganalytics'
+  location: location
+  properties: {
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
+  }
+}
+
 resource dnsVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2024-06-01' = {
   name: 'pDnsLink-${virtualNetworkName}-${privateDnsZoneName}'
   location: 'global'
@@ -215,3 +226,6 @@ output kubeletIdentityClientId string = kubeletIdentity.properties.clientId
 
 @description('The principal ID of the created Kubelet Managed Identity.')
 output kubeletIdentityPrincipalId string = kubeletIdentity.properties.principalId
+
+@description('The resource ID of the created Log Analytics Workspace.')
+output logAnalyticsWorkspaceResourceId string = logAnalyticsWorkspace.id

@@ -10,6 +10,9 @@ param aksName string
 @description('Required. The Private DNS Zone Resource Id.')
 param privateDnsZoneResourceId string
 
+@description('Required. The Log Analytics Workspace Resource Id.')
+param logAnalyticsWorkspaceResourceId string
+
 @description('Required. The Managed Identity Resource Id.')
 param managedIdentityResourceId string
 
@@ -151,6 +154,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
     }
     securityProfile: {
       defender: {
+        logAnalyticsWorkspaceResourceId: logAnalyticsWorkspaceResourceId
         securityMonitoring: {
           enabled: true //this should comply with AKSC-004: Azure Kubernetes Service clusters should have Defender profile enabled
         }

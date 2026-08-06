@@ -45,6 +45,7 @@ module aks 'main.test.aks.bicep' = {
     kubeletIdentityClientId: nestedDependencies.outputs.kubeletIdentityClientId
     kubeletIdentityPrincipalId: nestedDependencies.outputs.kubeletIdentityPrincipalId
     managedIdentityResourceId: nestedDependencies.outputs.managedIdentityResourceId
+    logAnalyticsWorkspaceResourceId: nestedDependencies.outputs.logAnalyticsWorkspaceResourceId
   }
 }
 

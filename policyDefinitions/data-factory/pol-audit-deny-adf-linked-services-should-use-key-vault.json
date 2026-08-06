@@ -5,10 +5,9 @@
     "description": "To ensure secrets (such as connection strings) are managed securely, require users to provide secrets using an Azure Key Vault instead of specifying them inline in linked services.",
     "metadata": {
       "category": "Data Factory",
-      "version": "1.0.0-preview",
-      "preview": true,
-      "deprecated": false,
-      "source_builtIn_name": "127ef6d7-242f-43b3-9eef-947faf1725d0"
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
     },
     "mode": "All",
     "parameters": {

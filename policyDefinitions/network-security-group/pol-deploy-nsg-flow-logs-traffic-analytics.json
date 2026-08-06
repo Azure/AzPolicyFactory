@@ -7,8 +7,7 @@
       "category": "Logging and monitoring",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": true,
-      "source_builtIn_name": "e920df7f-9a64-4066-9b58-52684c02a091"
+      "deprecated": true
     },
     "mode": "Indexed",
     "parameters": {

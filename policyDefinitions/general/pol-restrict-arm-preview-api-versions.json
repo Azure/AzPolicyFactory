@@ -5,7 +5,10 @@
       "description": "This policy controls which Azure services can be deployed using ARM preview APIs.",
       "mode": "All",
       "metadata": {
-        "category": "General"
+        "category": "General",
+        "version": "1.0.1",
+        "preview": false,
+        "deprecated": false
       },
       "parameters": {
         "resourceType": {

@@ -223,6 +223,10 @@
       {
         "name": "ISO27001-2013_A.14.2.5",
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.2.5"
+      },
+      {
+        "name": "ISO27001-2013_A.14.2.9",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.2.9"
       }
     ],
     "policyDefinitions": [
@@ -379,7 +383,7 @@
           }
         },
         "groupNames": [
-          "ISO27001-2013_A.9.4.1"
+          "ISO27001-2013_A.14.2.9"
         ]
       }
     ]

@@ -212,6 +212,22 @@
                         {
                           "category": "csi-snapshot-controller",
                           "enabled": "[parameters('logsEnabled')]"
+                        },
+                        {
+                          "category": "fleet-member-agent",
+                          "enabled": "[parameters('logsEnabled')]"
+                        },
+                        {
+                          "category": "fleet-member-net-controller-manager",
+                          "enabled": "[parameters('logsEnabled')]"
+                        },
+                        {
+                          "category": "fleet-mcs-controller-manager",
+                          "enabled": "[parameters('logsEnabled')]"
+                        },
+                        {
+                          "category": "karpenter-events",
+                          "enabled": "[parameters('logsEnabled')]"
                         }
                       ]
                     }

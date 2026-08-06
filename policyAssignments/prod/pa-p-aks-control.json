@@ -32,7 +32,7 @@
         "value": "Deny"
       },
       "AKSC-008_Effect": {
-        "value": "Audit"
+        "value": "Deny"
       },
       "AKSC-008_enableDiskCSI": {
         "value": "true"

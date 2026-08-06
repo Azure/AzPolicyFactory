@@ -32,48 +32,53 @@ $aksControlPolicyAssignmentId = $script:LocalConfig_policyAssignmentIds | Where-
 $violatingPolicies = @(
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-001'
+    policyDefinitionReferenceId = 'AKSC-001'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-002'
+    policyDefinitionReferenceId = 'AKSC-002'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-003'
+    policyDefinitionReferenceId = 'AKSC-003'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-004'
+    policyDefinitionReferenceId = 'AKSC-004'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-005'
+    policyDefinitionReferenceId = 'AKSC-005'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-006'
+    policyDefinitionReferenceId = 'AKSC-006'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-007'
+    policyDefinitionReferenceId = 'AKSC-007'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-008'
+    policyDefinitionReferenceId = 'AKSC-008'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-009'
+    policyDefinitionReferenceId = 'AKSC-009'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-010'
+    policyDefinitionReferenceId = 'AKSC-010'
   }
   @{
     policyAssignmentId          = $aksControlPolicyAssignmentId
-    policyDefinitionReferenceId = 'AKS-011'
+    policyDefinitionReferenceId = 'AKSC-011'
+  },
+  @{
+    policyAssignmentId          = $aksControlPolicyAssignmentId
+    policyDefinitionReferenceId = 'AKSC-012'
   }
+
 )
 #define tests
 $tests = @()

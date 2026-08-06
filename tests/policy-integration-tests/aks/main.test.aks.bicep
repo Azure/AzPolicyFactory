@@ -68,11 +68,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
         type: 'VirtualMachineScaleSets'
         mode: 'System'
         maxPods: 110
-        availabilityZones: [
-          '1'
-          '2'
-          '3'
-        ]
+        availabilityZones: []
         nodeTaints: [
           'CriticalAddonsOnly=true:NoSchedule'
         ]

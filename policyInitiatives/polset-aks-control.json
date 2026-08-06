@@ -255,11 +255,11 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSC-03",
+        "policyDefinitionReferenceId": "AKSC-003",
         "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deny-aks-private-cluster",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSC-03_Effect')]"
+            "value": "[parameters('AKSC-003_Effect')]"
           }
         },
         "groupNames": [

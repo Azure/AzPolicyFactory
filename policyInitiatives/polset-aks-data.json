@@ -937,10 +937,10 @@
           "additionalProperties": false
         }
       },
-      "AKSD-10_Effect": {
+      "AKSD-010_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-10 Effect: Container Allowed Images",
+          "displayName": "AKSD-010 Effect: Container Allowed Images",
           "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
           "portalReview": true
         },
@@ -954,10 +954,10 @@
         ],
         "defaultValue": "Deny"
       },
-      "AKSD-10_ExcludedNamespaces": {
+      "AKSD-010_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-10: Container Allowed Images Namespace exclusions",
+          "displayName": "AKSD-010: Container Allowed Images Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
         },
         "defaultValue": [
@@ -966,18 +966,18 @@
           "azure-arc"
         ]
       },
-      "AKSD-10_Namespaces": {
+      "AKSD-010_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-10: Container Allowed Images Namespace inclusions",
+          "displayName": "AKSD-010: Container Allowed Images Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-10_LabelSelector": {
+      "AKSD-010_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-10: Container Allowed Images Kubernetes label selector",
+          "displayName": "AKSD-010: Container Allowed Images Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1033,26 +1033,26 @@
           "additionalProperties": false
         }
       },
-      "AKSD-10_AllowedContainerImagesRegex": {
+      "AKSD-010_AllowedContainerImagesRegex": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-10: Container Allowed Images Allowed registry or registries regex",
+          "displayName": "AKSD-010: Container Allowed Images Allowed registry or registries regex",
           "description": "The RegEx rule used to match allowed container image field in a Kubernetes cluster. For example, to allow any Azure Container Registry image by matching partial path: ^[^\\/]+\\.azurecr\\.io\\/.+$ and for multiple registries: ^([^\\/]+\\.azurecr\\.io|registry\\.io)\\/.+$",
           "portalReview": true
         }
       },
-      "AKSD-10_ExcludedContainers": {
+      "AKSD-010_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-10: Container Allowed Images exclusions",
+          "displayName": "AKSD-010: Container Allowed Images exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-11_Effect": {
+      "AKSD-011_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-11 Effect: Block Host Namespace",
+          "displayName": "AKSD-011 Effect: Block Host Namespace",
           "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
           "portalReview": true
         },
@@ -1066,10 +1066,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-11_ExcludedNamespaces": {
+      "AKSD-011_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-11: Block Host Namespace Namespace exclusions",
+          "displayName": "AKSD-011: Block Host Namespace Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
         },
         "defaultValue": [
@@ -1078,18 +1078,18 @@
           "azure-arc"
         ]
       },
-      "AKSD-11_Namespaces": {
+      "AKSD-011_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-11: Block Hos Namespace Namespace inclusions",
+          "displayName": "AKSD-011: Block Hos Namespace Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-11_LabelSelector": {
+      "AKSD-011_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-11: Block Host Namespace Kubernetes label selector",
+          "displayName": "AKSD-011: Block Host Namespace Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1145,19 +1145,19 @@
           "additionalProperties": false
         }
       },
-      "AKSD-11_ExcludedImages": {
+      "AKSD-011_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-11: Block Host Namespace Image exclusions",
+          "displayName": "AKSD-011: Block Host Namespace Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-12_Effect": {
+      "AKSD-012_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-12 Effect: Container Resource Limits",
+          "displayName": "AKSD-012 Effect: Container Resource Limits",
           "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
           "portalReview": true
         },
@@ -1171,10 +1171,10 @@
         ],
         "defaultValue": "Deny"
       },
-      "AKSD-12_ExcludedNamespaces": {
+      "AKSD-012_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Namespace exclusions",
+          "displayName": "AKSD-012: Container Resource Limits Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
         },
         "defaultValue": [
@@ -1183,18 +1183,18 @@
           "azure-arc"
         ]
       },
-      "AKSD-12_Namespaces": {
+      "AKSD-012_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Namespace inclusions",
+          "displayName": "AKSD-012: Container Resource Limits Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-12_LabelSelector": {
+      "AKSD-012_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Kubernetes label selector",
+          "displayName": "AKSD-012: Container Resource Limits Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1250,43 +1250,43 @@
           "additionalProperties": false
         }
       },
-      "AKSD-12_CpuLimit": {
+      "AKSD-012_CpuLimit": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Max allowed CPU units",
+          "displayName": "AKSD-012: Container Resource Limits Max allowed CPU units",
           "description": "The maximum CPU units allowed for a container. E.g. 200m. For more information, please refer https://aka.ms/k8s-policy-pod-limits",
           "portalReview": true
         }
       },
-      "AKSD-12_MemoryLimit": {
+      "AKSD-012_MemoryLimit": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Max allowed memory bytes",
+          "displayName": "AKSD-012: Container Resource Limits Max allowed memory bytes",
           "description": "The maximum memory bytes allowed for a container. E.g. 1Gi. For more information, please refer https://aka.ms/k8s-policy-pod-limits",
           "portalReview": true
         }
       },
-      "AKSD-12_ExcludedContainers": {
+      "AKSD-012_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Containers exclusions",
+          "displayName": "AKSD-012: Container Resource Limits Containers exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-12_ExcludedImages": {
+      "AKSD-012_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-12: Container Resource Limits Image exclusions",
+          "displayName": "AKSD-012: Container Resource Limits Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-13_Effect": {
+      "AKSD-013_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-13 Effect: Disallow CAP_SYS_ADMIN security capabilities",
+          "displayName": "AKSD-013 Effect: Disallow CAP_SYS_ADMIN security capabilities",
           "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
           "portalReview": true
         },
@@ -1300,10 +1300,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-13_ExcludedNamespaces": {
+      "AKSD-013_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-13: Disallow CAP_SYS_ADMIN security capabilities namespace exclusions",
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1313,18 +1313,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-13_Namespaces": {
+      "AKSD-013_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-13: Disallow CAP_SYS_ADMIN security capabilities namespace inclusions",
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-13_LabelSelector": {
+      "AKSD-013_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-13: Disallow CAP_SYS_ADMIN security capabilities Kubernetes label selector",
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1380,27 +1380,27 @@
           "additionalProperties": false
         }
       },
-      "AKSD-13_ExcludedContainers": {
+      "AKSD-013_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-13: Disallow CAP_SYS_ADMIN security capabilities containers exclusions",
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities containers exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-13_ExcludedImages": {
+      "AKSD-013_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-13: Disallow CAP_SYS_ADMIN security capabilities image exclusions",
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-14_Effect": {
+      "AKSD-014_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-14 Effect: Use Internal Load Balancer",
+          "displayName": "AKSD-014 Effect: Use Internal Load Balancer",
           "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
           "portalReview": true
         },
@@ -1414,10 +1414,10 @@
         ],
         "defaultValue": "Deny"
       },
-      "AKSD-14_ExcludedNamespaces": {
+      "AKSD-014_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-14: Use Internal Load Balancer Namespace exclusions",
+          "displayName": "AKSD-014: Use Internal Load Balancer Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1427,18 +1427,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-14_Namespaces": {
+      "AKSD-014_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-14: Use Internal Load Balancer Namespace inclusions",
+          "displayName": "AKSD-014: Use Internal Load Balancer Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-14_LabelSelector": {
+      "AKSD-014_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-14: Use Internal Load Balancer Kubernetes label selector",
+          "displayName": "AKSD-014: Use Internal Load Balancer Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1494,10 +1494,10 @@
           "additionalProperties": false
         }
       },
-      "AKSD-15_Effect": {
+      "AKSD-015_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-15 Effect: Windows Containers Allowed User Names",
+          "displayName": "AKSD-015 Effect: Windows Containers Allowed User Names",
           "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
           "portalReview": true
         },
@@ -1508,10 +1508,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-15_ExcludedNamespaces": {
+      "AKSD-015_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-15: Windows Containers Allowed User Names Namespace exclusions",
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1521,18 +1521,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-15_Namespaces": {
+      "AKSD-015_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-15: Windows Containers Allowed User Names Namespace inclusions",
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-15_LabelSelector": {
+      "AKSD-015_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-15: Windows Containers Allowed Usernames Kubernetes label selector",
+          "displayName": "AKSD-015: Windows Containers Allowed Usernames Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1588,27 +1588,27 @@
           "additionalProperties": false
         }
       },
-      "AKSD-15_AllowedUserNames": {
+      "AKSD-015_AllowedUserNames": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-15: Windows Containers Allowed User Names",
+          "displayName": "AKSD-015: Windows Containers Allowed User Names",
           "description": "The list of Windows users and domain user groups to be allowed. To allow domain user group, use `DOMAIN\\*`. Windows container by default run as ContainerUser. If the array is empty, the policy will block all Windows container.",
           "portalReview": true
         }
       },
-      "AKSD-15_ExcludedImages": {
+      "AKSD-015_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-15: Windows Containers Allowed User Names Image exclusions",
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-16_Effect": {
+      "AKSD-016_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-16 Effect: No Privileged Containers",
+          "displayName": "AKSD-016 Effect: No Privileged Containers",
           "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
           "portalReview": true
         },
@@ -1622,10 +1622,10 @@
         ],
         "defaultValue": "Deny"
       },
-      "AKSD-16_ExcludedNamespaces": {
+      "AKSD-016_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-16: No Privileged Containers Namespace exclusions",
+          "displayName": "AKSD-016: No Privileged Containers Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1635,18 +1635,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-16_Namespaces": {
+      "AKSD-016_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-16: No Privileged Containers Namespace inclusions",
+          "displayName": "AKSD-016: No Privileged Containers Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-16_LabelSelector": {
+      "AKSD-016_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-16: No Privileged Containers Kubernetes label selector",
+          "displayName": "AKSD-016: No Privileged Containers Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1702,27 +1702,27 @@
           "additionalProperties": false
         }
       },
-      "AKSD-16_ExcludedContainers": {
+      "AKSD-016_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-16: No Privileged Containers Containers exclusions",
+          "displayName": "AKSD-016: No Privileged Containers Containers exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-16_ExcludedImages": {
+      "AKSD-016_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-16: No Privileged Containers Image exclusions",
+          "displayName": "AKSD-016: No Privileged Containers Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-17_Effect": {
+      "AKSD-017_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-17 Effect: Containers Allowed Capabilities",
+          "displayName": "AKSD-017 Effect: Containers Allowed Capabilities",
           "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
           "portalReview": true
         },
@@ -1736,10 +1736,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-17_ExcludedNamespaces": {
+      "AKSD-017_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Namespace exclusions",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1749,18 +1749,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-17_Namespaces": {
+      "AKSD-017_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Namespace inclusions",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-17_LabelSelector": {
+      "AKSD-017_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Kubernetes label selector",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1816,45 +1816,45 @@
           "additionalProperties": false
         }
       },
-      "AKSD-17_AllowedCapabilities": {
+      "AKSD-017_AllowedCapabilities": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities",
+          "displayName": "AKSD-017: Containers Allowed Capabilities",
           "description": "The list of capabilities that are allowed to be added to a container. Provide empty list as input to block everything.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-17_RequiredDropCapabilities": {
+      "AKSD-017_RequiredDropCapabilities": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Required drop capabilities",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Required drop capabilities",
           "description": "The list of capabilities that must be dropped by a container.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-17_ExcludedContainers": {
+      "AKSD-017_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Containers exclusions",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Containers exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-17_ExcludedImages": {
+      "AKSD-017_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-17: Containers Allowed Capabilities Image exclusions",
+          "displayName": "AKSD-017: Containers Allowed Capabilities Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-18_Effect": {
+      "AKSD-018_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-18 Effect: No container escalation",
+          "displayName": "AKSD-018 Effect: No container escalation",
           "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
           "portalReview": true
         },
@@ -1868,10 +1868,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-18_ExcludedNamespaces": {
+      "AKSD-018_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-18: Namespace exclusions",
+          "displayName": "AKSD-018: Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1881,18 +1881,18 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-18_Namespaces": {
+      "AKSD-018_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-18: Namespace inclusions",
+          "displayName": "AKSD-018: Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-18_LabelSelector": {
+      "AKSD-018_LabelSelector": {
         "type": "object",
         "metadata": {
-          "displayName": "AKSD-18: Kubernetes label selector",
+          "displayName": "AKSD-018: Kubernetes label selector",
           "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
         },
         "defaultValue": {},
@@ -1948,27 +1948,27 @@
           "additionalProperties": false
         }
       },
-      "AKSD-18_ExcludedContainers": {
+      "AKSD-018_ExcludedContainers": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-18: Containers exclusions",
+          "displayName": "AKSD-018: Containers exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-18_ExcludedImages": {
+      "AKSD-018_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-18: Image exclusions",
+          "displayName": "AKSD-018: Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-19_Effect": {
+      "AKSD-019_Effect": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-19 Effect: Approved Host Network and Ports",
+          "displayName": "AKSD-019 Effect: Approved Host Network and Ports",
           "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
           "portalReview": true
         },
@@ -1982,10 +1982,10 @@
         ],
         "defaultValue": "Audit"
       },
-      "AKSD-19_ExcludedNamespaces": {
+      "AKSD-019_ExcludedNamespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-19: Namespace exclusions",
+          "displayName": "AKSD-019: Namespace exclusions",
           "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
         },
         "defaultValue": [
@@ -1995,15 +1995,15 @@
           "azure-extensions-usage-system"
         ]
       },
-      "AKSD-19_Namespaces": {
+      "AKSD-019_Namespaces": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-19: Namespace inclusions",
+          "displayName": "AKSD-019: Namespace inclusions",
           "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
         },
         "defaultValue": []
       },
-      "AKSD-19_LabelSelector": {
+      "AKSD-019_LabelSelector": {
         "type": "object",
         "metadata": {
           "displayName": "Kubernetes label selector",
@@ -2062,28 +2062,28 @@
           "additionalProperties": false
         }
       },
-      "AKSD-19_AllowHostNetwork": {
+      "AKSD-019_AllowHostNetwork": {
         "type": "Boolean",
         "metadata": {
-          "displayName": "AKSD-19: Allow host network usage",
+          "displayName": "AKSD-019: Allow host network usage",
           "description": "Set this value to true if pod is allowed to use host network otherwise false.",
           "portalReview": true
         },
         "defaultValue": false
       },
-      "AKSD-19_AllowedHostPorts": {
+      "AKSD-019_AllowedHostPorts": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-19: Allowed host ports list",
+          "displayName": "AKSD-019: Allowed host ports list",
           "description": "The list of specific host ports that pods are allowed to use in the host network namespace. Can include individual ports (e.g., '80') or port ranges (e.g., '3000-5000'). Empty list means no host ports are allowed. Note that port 0 is not allowed according to Pod Security Standards.",
           "portalReview": true
         },
         "defaultValue": []
       },
-      "AKSD-19_Source": {
+      "AKSD-019_Source": {
         "type": "String",
         "metadata": {
-          "displayName": "AKSD-19: Source",
+          "displayName": "AKSD-019: Source",
           "description": "The source k8s object for constraint evaluation. 'Original' means only evaluate against the specific GroupVersionKind specified in the policy definition. 'Generated' means only evaluate against k8s objects generated by Gatekeeper ExpansionTemplates. 'All' means evaluate against both the original object and any generated ones."
         },
         "defaultValue": "Original",
@@ -2093,18 +2093,18 @@
           "Original"
         ]
       },
-      "AKSD-19_Warn": {
+      "AKSD-019_Warn": {
         "type": "Boolean",
         "metadata": {
-          "displayName": "AKSD-19: Warn",
+          "displayName": "AKSD-019: Warn",
           "description": "Whether or not to return warnings back to the user in the kubectl cli"
         },
         "defaultValue": false
       },
-      "AKSD-19_ExcludedImages": {
+      "AKSD-019_ExcludedImages": {
         "type": "Array",
         "metadata": {
-          "displayName": "AKSD-19: Image exclusions",
+          "displayName": "AKSD-019: Image exclusions",
           "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
           "portalReview": true
         },
@@ -2454,6 +2454,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-001",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d",
+        "definitionVersion": "9.0.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-001_Effect')]"
@@ -2466,6 +2467,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-002",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/df49d893-a74c-421d-bc95-c663042e5b80",
+        "definitionVersion": "6.3.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-002_Effect')]"
@@ -2493,6 +2495,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-003",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/975ce327-682c-4f2e-aa46-b9598289b86c",
+        "definitionVersion": "7.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-003_Effect')]"
@@ -2523,6 +2526,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-004",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f4a8fce0-2dd5-4c21-9a36-8f0ec809d663",
+        "definitionVersion": "5.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-004_Effect')]"
@@ -2547,6 +2551,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-005",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/098fc59e-46c7-4d99-9b16-64990e543d75",
+        "definitionVersion": "6.3.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-005_Effect')]"
@@ -2577,6 +2582,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-006",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/16697877-1118-4fb1-9b65-9898ec2509ec",
+        "definitionVersion": "5.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-006_Effect')]"
@@ -2604,6 +2610,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-007",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/233a2a17-77ca-4fb1-9b6b-69223d272a44",
+        "definitionVersion": "8.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-007_Effect')]"
@@ -2628,6 +2635,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-008",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/5485eac0-7e8f-4964-998b-a44f4f0c1e75",
+        "definitionVersion": "1.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-008_Effect')]"
@@ -2652,6 +2660,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-009",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9f061a12-e40d-4183-a00e-171812443373",
+        "definitionVersion": "4.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-009_Effect')]"
@@ -2671,26 +2680,27 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-10",
+        "policyDefinitionReferenceId": "AKSD-010",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/febd0533-8e55-448f-b837-bd0e06f16469",
+        "definitionVersion": "9.3.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-10_Effect')]"
+            "value": "[parameters('AKSD-010_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-10_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-010_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-10_Namespaces')]"
+            "value": "[parameters('AKSD-010_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-10_LabelSelector')]"
+            "value": "[parameters('AKSD-010_LabelSelector')]"
           },
           "allowedContainerImagesRegex": {
-            "value": "[parameters('AKSD-10_allowedContainerImagesRegex')]"
+            "value": "[parameters('AKSD-010_allowedContainerImagesRegex')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-10_ExcludedContainers')]"
+            "value": "[parameters('AKSD-010_ExcludedContainers')]"
           }
         },
         "groupNames": [
@@ -2698,23 +2708,24 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-11",
+        "policyDefinitionReferenceId": "AKSD-011",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/47a1ee2f-2a2a-4576-bf2a-e0e36709c2b8",
+        "definitionVersion": "6.0.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-11_Effect')]"
+            "value": "[parameters('AKSD-011_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-11_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-011_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-11_Namespaces')]"
+            "value": "[parameters('AKSD-011_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-11_LabelSelector')]"
+            "value": "[parameters('AKSD-011_LabelSelector')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-11_ExcludedImages')]"
+            "value": "[parameters('AKSD-011_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2722,32 +2733,33 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-12",
+        "policyDefinitionReferenceId": "AKSD-012",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e345eecc-fa47-480f-9e88-67dcc122b164",
+        "definitionVersion": "9.3.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-12_Effect')]"
+            "value": "[parameters('AKSD-012_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-12_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-012_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-12_Namespaces')]"
+            "value": "[parameters('AKSD-012_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-12_LabelSelector')]"
+            "value": "[parameters('AKSD-012_LabelSelector')]"
           },
           "cpuLimit": {
-            "value": "[parameters('AKSD-12_CpuLimit')]"
+            "value": "[parameters('AKSD-012_CpuLimit')]"
           },
           "memoryLimit": {
-            "value": "[parameters('AKSD-12_MemoryLimit')]"
+            "value": "[parameters('AKSD-012_MemoryLimit')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-12_ExcludedContainers')]"
+            "value": "[parameters('AKSD-012_ExcludedContainers')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-12_ExcludedImages')]"
+            "value": "[parameters('AKSD-012_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2755,26 +2767,27 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-13",
+        "policyDefinitionReferenceId": "AKSD-013",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/d2e7ea85-6b44-4317-a0be-1b951587f626",
+        "definitionVersion": "5.1.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-13_Effect')]"
+            "value": "[parameters('AKSD-013_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-13_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-013_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-13_Namespaces')]"
+            "value": "[parameters('AKSD-013_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-13_LabelSelector')]"
+            "value": "[parameters('AKSD-013_LabelSelector')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-13_ExcludedContainers')]"
+            "value": "[parameters('AKSD-013_ExcludedContainers')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-13_ExcludedImages')]"
+            "value": "[parameters('AKSD-013_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2782,20 +2795,21 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-14",
+        "policyDefinitionReferenceId": "AKSD-014",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3fc4dc25-5baf-40d8-9b05-7fe74c1bc64e",
+        "definitionVersion": "8.2.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-14_Effect')]"
+            "value": "[parameters('AKSD-014_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-14_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-014_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-14_Namespaces')]"
+            "value": "[parameters('AKSD-014_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-14_LabelSelector')]"
+            "value": "[parameters('AKSD-014_LabelSelector')]"
           }
         },
         "groupNames": [
@@ -2803,26 +2817,27 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-15",
+        "policyDefinitionReferenceId": "AKSD-015",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/57dde185-5c62-4063-b965-afbb201e9c1c",
+        "definitionVersion": "2.2.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-15_Effect')]"
+            "value": "[parameters('AKSD-015_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-15_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-015_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-15_Namespaces')]"
+            "value": "[parameters('AKSD-015_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-15_LabelSelector')]"
+            "value": "[parameters('AKSD-015_LabelSelector')]"
           },
           "allowedUserNames": {
-            "value": "[parameters('AKSD-15_AllowedUserNames')]"
+            "value": "[parameters('AKSD-015_AllowedUserNames')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-15_ExcludedImages')]"
+            "value": "[parameters('AKSD-015_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2830,26 +2845,27 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-16",
+        "policyDefinitionReferenceId": "AKSD-016",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4",
+        "definitionVersion": "9.2.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-16_Effect')]"
+            "value": "[parameters('AKSD-016_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-16_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-016_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-16_Namespaces')]"
+            "value": "[parameters('AKSD-016_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-16_LabelSelector')]"
+            "value": "[parameters('AKSD-016_LabelSelector')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-16_ExcludedContainers')]"
+            "value": "[parameters('AKSD-016_ExcludedContainers')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-16_ExcludedImages')]"
+            "value": "[parameters('AKSD-016_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2857,32 +2873,33 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-17",
+        "policyDefinitionReferenceId": "AKSD-017",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c26596ff-4d70-4e6a-9a30-c2506bd2f80c",
+        "definitionVersion": "6.2.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-17_Effect')]"
+            "value": "[parameters('AKSD-017_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-17_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-017_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-17_Namespaces')]"
+            "value": "[parameters('AKSD-017_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-17_LabelSelector')]"
+            "value": "[parameters('AKSD-017_LabelSelector')]"
           },
           "allowedCapabilities": {
-            "value": "[parameters('AKSD-17_AllowedCapabilities')]"
+            "value": "[parameters('AKSD-017_AllowedCapabilities')]"
           },
           "requiredDropCapabilities": {
-            "value": "[parameters('AKSD-17_RequiredDropCapabilities')]"
+            "value": "[parameters('AKSD-017_RequiredDropCapabilities')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-17_ExcludedContainers')]"
+            "value": "[parameters('AKSD-017_ExcludedContainers')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-17_ExcludedImages')]"
+            "value": "[parameters('AKSD-017_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2890,26 +2907,27 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-18",
+        "policyDefinitionReferenceId": "AKSD-018",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99",
+        "definitionVersion": "8.0.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-18_Effect')]"
+            "value": "[parameters('AKSD-018_Effect')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-18_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-018_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-18_Namespaces')]"
+            "value": "[parameters('AKSD-018_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-18_LabelSelector')]"
+            "value": "[parameters('AKSD-018_LabelSelector')]"
           },
           "excludedContainers": {
-            "value": "[parameters('AKSD-18_ExcludedContainers')]"
+            "value": "[parameters('AKSD-018_ExcludedContainers')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-18_ExcludedImages')]"
+            "value": "[parameters('AKSD-018_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2917,35 +2935,36 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "AKSD-19",
+        "policyDefinitionReferenceId": "AKSD-019",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/82985f06-dc18-4a48-bc1c-b9f4f0098cfe",
+        "definitionVersion": "7.0.*",
         "parameters": {
           "effect": {
-            "value": "[parameters('AKSD-19_Effect')]"
+            "value": "[parameters('AKSD-019_Effect')]"
           },
           "source": {
-            "value": "[parameters('AKSD-19_Source')]"
+            "value": "[parameters('AKSD-019_Source')]"
           },
           "excludedNamespaces": {
-            "value": "[parameters('AKSD-19_ExcludedNamespaces')]"
+            "value": "[parameters('AKSD-019_ExcludedNamespaces')]"
           },
           "namespaces": {
-            "value": "[parameters('AKSD-19_Namespaces')]"
+            "value": "[parameters('AKSD-019_Namespaces')]"
           },
           "labelSelector": {
-            "value": "[parameters('AKSD-19_LabelSelector')]"
+            "value": "[parameters('AKSD-019_LabelSelector')]"
           },
           "allowHostNetwork": {
-            "value": "[parameters('AKSD-19_AllowHostNetwork')]"
+            "value": "[parameters('AKSD-019_AllowHostNetwork')]"
           },
           "allowedHostPorts": {
-            "value": "[parameters('AKSD-19_AllowedHostPorts')]"
+            "value": "[parameters('AKSD-019_AllowedHostPorts')]"
           },
           "warn": {
-            "value": "[parameters('AKSD-19_Warn')]"
+            "value": "[parameters('AKSD-019_Warn')]"
           },
           "excludedImages": {
-            "value": "[parameters('AKSD-19_ExcludedImages')]"
+            "value": "[parameters('AKSD-019_ExcludedImages')]"
           }
         },
         "groupNames": [
@@ -2955,6 +2974,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-20",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/53a4a537-990c-495a-92e0-7c21a465442c",
+        "definitionVersion": "1.3.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-20_Effect')]"
@@ -2982,6 +3002,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-21",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/56d0a13f-712f-466b-8416-56fb354fb823",
+        "definitionVersion": "7.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-21_Effect')]"
@@ -3006,6 +3027,7 @@
       {
         "policyDefinitionReferenceId": "AKSD-22",
         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1ddac26b-ed48-4c30-8cc5-3a68c79b8001",
+        "definitionVersion": "3.2.*",
         "parameters": {
           "effect": {
             "value": "[parameters('AKSD-22_Effect')]"

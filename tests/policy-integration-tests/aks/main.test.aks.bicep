@@ -62,7 +62,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
         enableAutoScaling: true
         minCount: 2
         maxCount: 5
-        vmSize: 'Standard_B2s'
+        vmSize: 'standard_b2s_v2'
         osType: 'Linux'
         osSKU: 'Ubuntu'
         type: 'VirtualMachineScaleSets'

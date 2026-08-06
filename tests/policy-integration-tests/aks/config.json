@@ -1,0 +1,14 @@
+{
+  "policyAssignmentIds": [
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-aks-control",
+    "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV/providers/Microsoft.Authorization/policyAssignments/pa-d-diag-settings"
+  ],
+  "testName": "AKS",
+  "testSubscription": "sub-d-lz-corp-01",
+  "testResourceGroup": "rg-ae-d-policy-test-aks-001",
+  "diagSettingsAssignmentName": "pa-d-diag-settings",
+  "aksControlAssignmentName": "pa-d-aks-control",
+  "location": "australiaeast",
+  "tagsForResourceGroup": false,
+  "removeTestResourceGroup": true
+}

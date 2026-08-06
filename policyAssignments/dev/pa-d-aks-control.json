@@ -1,0 +1,72 @@
+{
+  "$schema": "../policyAssignment.schema.json",
+  "policyAssignment": {
+    "name": "pa-d-aks-control",
+    "displayName": "Azure Kubernetes Service Control Plane Policies Dev",
+    "description": "Policy Assignment for Azure Kubernetes Service Control Plane - Dev",
+    "metadata": {
+      "category": "Kubernetes"
+    },
+    "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policySetDefinitions/polset-aks-control",
+    "identity": "SystemAssigned",
+        "parameters": {
+      "AKSC-001_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-002_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-003_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-004_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-005_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-006_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-007_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-008_Effect": {
+        "value": "Audit"
+      },
+      "AKSC-008_enableDiskCSI": {
+        "value": "true"
+      },
+      "AKSC-008_enableFileCSI": {
+        "value": "true"
+      },
+      "AKSC-008_enableSnapshotCSI": {
+        "value": "true"
+      },
+      "AKSC-009_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-010_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-011_Effect": {
+        "value": "Deny"
+      },
+      "AKSC-012_Effect": {
+        "value": "Deny"
+      }
+    },
+    "roleDefinitionIds": [],
+    "nonComplianceMessages": [
+            {
+        "policyDefinitionReferenceId": "AKSC-012",
+        "message": "Azure Kubernetes Service Clusters must not be created using a preview ARM API version."
+      }
+    ],
+    "notScopes": [
+      "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV-Sandbox"
+    ]
+  },
+  "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
+  "managementGroupId": "CONTOSO-DEV"
+}

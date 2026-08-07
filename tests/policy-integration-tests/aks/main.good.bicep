@@ -58,7 +58,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-05-01' = {
   properties: {
     aadProfile: {
       managed: true
-      enableAzureRBAC: false
+      enableAzureRBAC: true
       adminGroupObjectIDs: [
         'af9b6889-c2d1-4871-8f77-73c4b3ad265d' // Azure Dev Admins group
       ]

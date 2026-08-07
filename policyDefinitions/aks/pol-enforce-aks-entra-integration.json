@@ -1,0 +1,57 @@
+{
+  "name": "pol-enforce-aks-entra-integration",
+  "properties": {
+    "displayName": "Azure Kubernetes Service Clusters should enable Entra ID integration",
+    "description": "AKS-managed Entra ID integration can manage the access to the clusters by configuring Kubernetes role-based access control (Kubernetes RBAC) based on a user's identity or directory group membership. Learn more at: https://aka.ms/aks-managed-aad.",
+    "metadata": {
+      "category": "Azure Kubernetes Service",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "mode": "Indexed",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "defaultValue": "Audit",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy.",
+          "portalReview": true
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.ContainerService/managedClusters"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.ContainerService/managedClusters/aadProfile",
+                "exists": "false"
+              },
+              {
+                "not":{
+                  "field": "Microsoft.ContainerService/managedClusters/aadProfile.enableAzureRBAC",
+                  "equals": "true"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

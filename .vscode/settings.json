@@ -21,6 +21,9 @@
   "[bicep]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-bicep"
   },
+  "[json]": {
+    "editor.formatOnSave": true
+  },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },

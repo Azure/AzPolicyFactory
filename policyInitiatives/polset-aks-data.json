@@ -1,0 +1,3051 @@
+{
+  "name": "polset-aks-data",
+  "properties": {
+    "displayName": "Azure Kubernetes Service Data Plane Policy Initiative",
+    "description": "This policy initiative defines the CONTOSO security requirements for Azure Kubernetes Services Data Plane",
+    "metadata": {
+      "category": "Kubernetes",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "AKSD-001_Effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "AKSD-001 Effect: Access Only via HTTPS",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-002_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-002 Effect: Read-Only Root File System",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-002_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-002: Read-Only Root File System Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-002_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-002: Read-Only Root File System Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-002_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-002: Read-Only Root File System Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-002_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-002: Read-Only Root File System Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-002_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-002: Read-Only Root File System Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-003_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-003 Effect: Allowed Seccomp Profile",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-003_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed Seccomp Profile Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-003_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed Seccomp Profile Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-003_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed Seccomp Profile Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-003_AllowedProfiles": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed seccomp profiles",
+          "description": "The list of seccomp profiles that containers are allowed to use. E.g. '`runtime/default`, `docker/default`, `unconfined` and/or `localhost/*`'. Provide empty list as input to block everything. Putting a `*` in this array allows all Profiles to be used.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-003_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed Seccomp Profile Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-003_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-003: Allowed Seccomp Profile Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-004_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-004: Effect: FlexVolume Driver",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-004_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-004: FlexVolume Drivers Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-004_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-004: FlexVolume Drivers Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-004_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-004: FlexVolume Drivers Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-004_AllowedFlexVolumeDrivers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-004: Allowed FlexVolume drivers",
+          "description": "The list of drivers that FlexVolume volumes are allowed to use. Provide empty list as input to block everything.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-005_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-005 Effect: Allowed Host Paths",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-005_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed Host Paths Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-005_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed Host Paths Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-005_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed Host Paths Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-005_AllowedHostPaths": {
+        "type": "Object",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed host paths",
+          "description": "The host paths allowed for pod hostPath volumes to use. Provide an empty paths list to block all host paths.",
+          "portalReview": true
+        },
+        "defaultValue": {
+          "paths": []
+        },
+        "schema": {
+          "type": "object",
+          "properties": {
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "pathPrefix": {
+                    "type": "string"
+                  },
+                  "readOnly": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "pathPrefix",
+                  "readOnly"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "paths"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "AKSD-005_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed Host Paths Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from readonly evaluation. It will not exclude the disallowed host path. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-005_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-005: Allowed Host Paths Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-006_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-006 Effect: Allowed Volume Types",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-006_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-006: Allowed Volume Types Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-006_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-006: Allowed Volume Types Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-006_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-006: Allowed Volume Types Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-006_AllowedVolumeTypes": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-006: Allowed volume types",
+          "description": "The list of volume types that can be used by a pod. Provide empty list as input to block everything.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-006_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-006: Allowed Volume Types Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-007_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-007 Effect: Allowed Service Ports",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-007_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-007: Allowed Service Ports Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-007_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-007: Allowed Service Ports Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-007_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-007: Allowed Service Ports Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-007_AllowedServicePortsList": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-007: Allowed service ports list",
+          "description": "The list of service ports allowed in a Kubernetes cluster. Array only accepts strings. Example: [\"443\", \"80\"]",
+          "portalReview": true
+        }
+      },
+      "AKSD-008_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-008 Effect: Windows Block ContainerAdministrator",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-008_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-008: Windows Block ContainerAdministrator Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-008_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-008: Windows Block ContainerAdministrator Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-008_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-008: Windows Block ContainerAdministrator Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-008_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-008: Windows Block ContainerAdministrator Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-009_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-009 Effect: Block Default Namespace",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-009_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-009: Block Default Namespace Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-009_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-009: Block Default Namespace Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": [
+          "default"
+        ]
+      },
+      "AKSD-009_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-009: Block Default Namespace Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-010_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-010 Effect: Container Allowed Images",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-010_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-010: Container Allowed Images Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-010_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-010: Container Allowed Images Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-010_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-010: Container Allowed Images Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-010_AllowedContainerImagesRegex": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-010: Container Allowed Images Allowed registry or registries regex",
+          "description": "The RegEx rule used to match allowed container image field in a Kubernetes cluster. For example, to allow any Azure Container Registry image by matching partial path: ^[^\\/]+\\.azurecr\\.io\\/.+$ and for multiple registries: ^([^\\/]+\\.azurecr\\.io|registry\\.io)\\/.+$",
+          "portalReview": true
+        }
+      },
+      "AKSD-010_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-010: Container Allowed Images exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-011_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-011 Effect: Block Host Namespace",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-011_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-011: Block Host Namespace Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-011_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-011: Block Hos Namespace Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-011_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-011: Block Host Namespace Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-011_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-011: Block Host Namespace Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-012_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-012 Effect: Container Resource Limits",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-012_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-012_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-012_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-012_CpuLimit": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Max allowed CPU units",
+          "description": "The maximum CPU units allowed for a container. E.g. 200m. For more information, please refer https://aka.ms/k8s-policy-pod-limits",
+          "portalReview": true
+        }
+      },
+      "AKSD-012_MemoryLimit": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Max allowed memory bytes",
+          "description": "The maximum memory bytes allowed for a container. E.g. 1Gi. For more information, please refer https://aka.ms/k8s-policy-pod-limits",
+          "portalReview": true
+        }
+      },
+      "AKSD-012_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-012_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-012: Container Resource Limits Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-013_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-013 Effect: Disallow CAP_SYS_ADMIN security capabilities",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-013_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-013_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-013_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-013_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-013_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-013: Disallow CAP_SYS_ADMIN security capabilities image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-014_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-014 Effect: Use Internal Load Balancer",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-014_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-014: Use Internal Load Balancer Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-014_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-014: Use Internal Load Balancer Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-014_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-014: Use Internal Load Balancer Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-015_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-015 Effect: Windows Containers Allowed User Names",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-015_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-015_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-015_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-015: Windows Containers Allowed Usernames Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-015_AllowedUserNames": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-015: Windows Containers Allowed User Names",
+          "description": "The list of Windows users and domain user groups to be allowed. To allow domain user group, use `DOMAIN\\*`. Windows container by default run as ContainerUser. If the array is empty, the policy will block all Windows container.",
+          "portalReview": true
+        }
+      },
+      "AKSD-015_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-015: Windows Containers Allowed User Names Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-016_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-016 Effect: No Privileged Containers",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "AKSD-016_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-016: No Privileged Containers Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-016_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-016: No Privileged Containers Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-016_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-016: No Privileged Containers Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-016_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-016: No Privileged Containers Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-016_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-016: No Privileged Containers Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-017_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-017 Effect: Containers Allowed Capabilities",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-017_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-017_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-017_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-017_AllowedCapabilities": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities",
+          "description": "The list of capabilities that are allowed to be added to a container. Provide empty list as input to block everything.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-017_RequiredDropCapabilities": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Required drop capabilities",
+          "description": "The list of capabilities that must be dropped by a container.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-017_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-017_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-017: Containers Allowed Capabilities Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-018_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-018 Effect: No container escalation",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-018_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-018: Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-018_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-018: Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-018_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-018: Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-018_ExcludedContainers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-018: Containers exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identify is the name of container. Use an empty list to apply this policy to all containers in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-018_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-018: Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-019_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-019 Effect: Approved Host Network and Ports",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-019_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-019: Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-019_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-019: Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-019_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-019_AllowHostNetwork": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "AKSD-019: Allow host network usage",
+          "description": "Set this value to true if pod is allowed to use host network otherwise false.",
+          "portalReview": true
+        },
+        "defaultValue": false
+      },
+      "AKSD-019_AllowedHostPorts": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-019: Allowed host ports list",
+          "description": "The list of specific host ports that pods are allowed to use in the host network namespace. Can include individual ports (e.g., '80') or port ranges (e.g., '3000-5000'). Empty list means no host ports are allowed. Note that port 0 is not allowed according to Pod Security Standards.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-019_Source": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-019: Source",
+          "description": "The source k8s object for constraint evaluation. 'Original' means only evaluate against the specific GroupVersionKind specified in the policy definition. 'Generated' means only evaluate against k8s objects generated by Gatekeeper ExpansionTemplates. 'All' means evaluate against both the original object and any generated ones."
+        },
+        "defaultValue": "Original",
+        "allowedValues": [
+          "All",
+          "Generated",
+          "Original"
+        ]
+      },
+      "AKSD-019_Warn": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "AKSD-019: Warn",
+          "description": "Whether or not to return warnings back to the user in the kubectl cli"
+        },
+        "defaultValue": false
+      },
+      "AKSD-019_ExcludedImages": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-019: Image exclusions",
+          "description": "The list of InitContainers and Containers to exclude from policy evaluation. The identifier is the image of container. Prefix-matching can be signified with `*`. For example: `myregistry.azurecr.io/istio:*`. It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name) in order to avoid unexpectedly exempting images from an untrusted repository.",
+          "portalReview": true
+        },
+        "defaultValue": []
+      },
+      "AKSD-20_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-20 Effect: Cannot Edit Individual Nodes",
+          "description": "'audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'deny' blocks the non-compliant resource creation or update. 'disabled' turns off the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-20_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-20: Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc"
+        ]
+      },
+      "AKSD-20_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-20: Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-20_LabelSelector": {
+        "type": "Object",
+        "metadata": {
+          "displayName": "AKSD-20: Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-20_AllowedUsers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-20: Allowed Users",
+          "description": "Users that are allowed by AKS Guardrails to modify node labels on individual nodes."
+        }
+      },
+      "AKSD-20_AllowedGroups": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-20: Allowed Groups",
+          "description": "Groups that are allowed by AKS Guardrails to modify node labels on individual nodes."
+        }
+      },
+      "AKSD-21_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-21 Effect: Forbidden sysctl interfaces",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "audit",
+          "Audit",
+          "deny",
+          "Deny",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-21_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-21: Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-21_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-21: Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-21_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-21: Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "AKSD-21_ForbiddenSysctls": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-21: Forbidden sysctls",
+          "description": "The list of plain sysctl names or sysctl patterns which end with *. The string * matches all sysctls. For more information, visit https://aka.ms/k8s-policy-sysctl-interfaces.",
+          "portalReview": true
+        }
+      },
+      "AKSD-22_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "AKSD-22 Effect: Block Endpoint Edit Default Role",
+          "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Disabled' turns off the policy.",
+          "portalReview": true
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "AKSD-22_ExcludedNamespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-22: Namespace exclusions",
+          "description": "List of Kubernetes namespaces to exclude from policy evaluation. System namespaces \"kube-system\", \"gatekeeper-system\" and \"azure-arc\" are always excluded by design. \"azure-extensions-usage-system\" is optional to remove."
+        },
+        "defaultValue": [
+          "kube-system",
+          "gatekeeper-system",
+          "azure-arc",
+          "azure-extensions-usage-system"
+        ]
+      },
+      "AKSD-22_Namespaces": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "AKSD-22: Namespace inclusions",
+          "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+        },
+        "defaultValue": []
+      },
+      "AKSD-22_LabelSelector": {
+        "type": "object",
+        "metadata": {
+          "displayName": "AKSD-22: Kubernetes label selector",
+          "description": "Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources."
+        },
+        "defaultValue": {},
+        "schema": {
+          "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+          "type": "object",
+          "properties": {
+            "matchLabels": {
+              "description": "matchLabels is a map of {key,value} pairs.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "minProperties": 1
+            },
+            "matchExpressions": {
+              "description": "matchExpressions is a list of values, a key, and an operator.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "description": "key is the label key that the selector applies to.",
+                    "type": "string"
+                  },
+                  "operator": {
+                    "description": "operator represents a key's relationship to a set of values.",
+                    "type": "string",
+                    "enum": [
+                      "In",
+                      "NotIn",
+                      "Exists",
+                      "DoesNotExist"
+                    ]
+                  },
+                  "values": {
+                    "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "key",
+                  "operator"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "policyDefinitionGroups": [
+      {
+        "name": "ISO27001-2013_A.9.2.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.9.2.3"
+      },
+      {
+        "name": "ISO27001-2013_A.10.1.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.10.1.1"
+      },
+      {
+        "name": "ISO27001-2013_A.12.2.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.2.1"
+      },
+      {
+        "name": "ISO27001-2013_A.12.6.1",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.6.1"
+      },
+      {
+        "name": "ISO27001-2013_A.13.1.3",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.13.1.3"
+      },
+      {
+        "name": "ISO27001-2013_A.14.1.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.1.2"
+      },
+      {
+        "name": "ISO27001-2013_A.14.2.5",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.14.2.5"
+      },
+      {
+        "name": "ISO27001-2013_A.18.2.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.18.2.2"
+      }
+    ],
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "AKSD-001",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d",
+        "definitionVersion": "9.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-001_Effect')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.2.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-002",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/df49d893-a74c-421d-bc95-c663042e5b80",
+        "definitionVersion": "6.3.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-002_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-002_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-002_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-002_LabelSelector')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-002_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-002_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-003",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/975ce327-682c-4f2e-aa46-b9598289b86c",
+        "definitionVersion": "7.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-003_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-003_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-003_Namespaces')]"
+          },
+          "allowedProfiles": {
+            "value": "[parameters('AKSD-003_AllowedProfiles')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-003_LabelSelector')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-003_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-003_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-004",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f4a8fce0-2dd5-4c21-9a36-8f0ec809d663",
+        "definitionVersion": "5.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-004_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-004_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-004_Namespaces')]"
+          },
+          "allowedFlexVolumeDrivers": {
+            "value": "[parameters('AKSD-004_AllowedFlexVolumeDrivers')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-004_LabelSelector')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-005",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/098fc59e-46c7-4d99-9b16-64990e543d75",
+        "definitionVersion": "6.3.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-005_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-005_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-005_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-005_LabelSelector')]"
+          },
+          "allowedHostPaths": {
+            "value": "[parameters('AKSD-005_AllowedHostPaths')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-005_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-005_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-006",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/16697877-1118-4fb1-9b65-9898ec2509ec",
+        "definitionVersion": "5.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-006_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-006_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-006_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-006_LabelSelector')]"
+          },
+          "allowedVolumeTypes": {
+            "value": "[parameters('AKSD-006_AllowedVolumeTypes')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-006_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-007",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/233a2a17-77ca-4fb1-9b6b-69223d272a44",
+        "definitionVersion": "8.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-007_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-007_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-007_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-007_LabelSelector')]"
+          },
+          "allowedServicePortsList": {
+            "value": "[parameters('AKSD-007_AllowedServicePortsList')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.1.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-008",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/5485eac0-7e8f-4964-998b-a44f4f0c1e75",
+        "definitionVersion": "1.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-008_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-008_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-008_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-008_LabelSelector')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-008_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-009",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9f061a12-e40d-4183-a00e-171812443373",
+        "definitionVersion": "4.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-009_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-009_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-009_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-009_LabelSelector')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.6.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-010",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/febd0533-8e55-448f-b837-bd0e06f16469",
+        "definitionVersion": "9.3.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-010_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-010_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-010_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-010_LabelSelector')]"
+          },
+          "allowedContainerImagesRegex": {
+            "value": "[parameters('AKSD-010_allowedContainerImagesRegex')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-010_ExcludedContainers')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-011",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/47a1ee2f-2a2a-4576-bf2a-e0e36709c2b8",
+        "definitionVersion": "6.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-011_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-011_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-011_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-011_LabelSelector')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-011_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-012",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e345eecc-fa47-480f-9e88-67dcc122b164",
+        "definitionVersion": "9.3.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-012_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-012_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-012_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-012_LabelSelector')]"
+          },
+          "cpuLimit": {
+            "value": "[parameters('AKSD-012_CpuLimit')]"
+          },
+          "memoryLimit": {
+            "value": "[parameters('AKSD-012_MemoryLimit')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-012_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-012_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-013",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/d2e7ea85-6b44-4317-a0be-1b951587f626",
+        "definitionVersion": "5.1.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-013_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-013_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-013_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-013_LabelSelector')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-013_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-013_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-014",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3fc4dc25-5baf-40d8-9b05-7fe74c1bc64e",
+        "definitionVersion": "8.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-014_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-014_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-014_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-014_LabelSelector')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-015",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/57dde185-5c62-4063-b965-afbb201e9c1c",
+        "definitionVersion": "2.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-015_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-015_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-015_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-015_LabelSelector')]"
+          },
+          "allowedUserNames": {
+            "value": "[parameters('AKSD-015_AllowedUserNames')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-015_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-016",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/95edb821-ddaf-4404-9732-666045e056b4",
+        "definitionVersion": "9.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-016_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-016_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-016_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-016_LabelSelector')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-016_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-016_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-017",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c26596ff-4d70-4e6a-9a30-c2506bd2f80c",
+        "definitionVersion": "6.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-017_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-017_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-017_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-017_LabelSelector')]"
+          },
+          "allowedCapabilities": {
+            "value": "[parameters('AKSD-017_AllowedCapabilities')]"
+          },
+          "requiredDropCapabilities": {
+            "value": "[parameters('AKSD-017_RequiredDropCapabilities')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-017_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-017_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.18.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-018",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99",
+        "definitionVersion": "8.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-018_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-018_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-018_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-018_LabelSelector')]"
+          },
+          "excludedContainers": {
+            "value": "[parameters('AKSD-018_ExcludedContainers')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-018_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.9.2.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-019",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/82985f06-dc18-4a48-bc1c-b9f4f0098cfe",
+        "definitionVersion": "7.0.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-019_Effect')]"
+          },
+          "source": {
+            "value": "[parameters('AKSD-019_Source')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-019_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-019_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-019_LabelSelector')]"
+          },
+          "allowHostNetwork": {
+            "value": "[parameters('AKSD-019_AllowHostNetwork')]"
+          },
+          "allowedHostPorts": {
+            "value": "[parameters('AKSD-019_AllowedHostPorts')]"
+          },
+          "warn": {
+            "value": "[parameters('AKSD-019_Warn')]"
+          },
+          "excludedImages": {
+            "value": "[parameters('AKSD-019_ExcludedImages')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.3"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-20",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/53a4a537-990c-495a-92e0-7c21a465442c",
+        "definitionVersion": "1.3.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-20_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-20_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-20_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-20_LabelSelector')]"
+          },
+          "allowedUsers": {
+            "value": "[parameters('AKSD-20_AllowedUsers')]"
+          },
+          "allowedGroups": {
+            "value": "[parameters('AKSD-20_AllowedGroups')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.18.2.2"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-21",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/56d0a13f-712f-466b-8416-56fb354fb823",
+        "definitionVersion": "7.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-21_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-21_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-21_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-21_LabelSelector')]"
+          },
+          "forbiddenSysctls": {
+            "value": "[parameters('AKSD-21_ForbiddenSysctls')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "AKSD-22",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1ddac26b-ed48-4c30-8cc5-3a68c79b8001",
+        "definitionVersion": "3.2.*",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('AKSD-22_Effect')]"
+          },
+          "excludedNamespaces": {
+            "value": "[parameters('AKSD-22_ExcludedNamespaces')]"
+          },
+          "namespaces": {
+            "value": "[parameters('AKSD-22_Namespaces')]"
+          },
+          "labelSelector": {
+            "value": "[parameters('AKSD-22_LabelSelector')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.14.2.5"
+        ]
+      }
+    ]
+  }
+}

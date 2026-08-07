@@ -7,8 +7,7 @@
       "category": "Storage Account",
       "version": "1.1.1",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "8c6a50c6-9ffd-4ae7-986f-5fa6111f9a54"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {

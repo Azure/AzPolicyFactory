@@ -7,8 +7,7 @@
       "category": "Compute",
       "version": "3.0.0",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "47a6b606-51aa-4496-8bb7-64b11cf66adc"
+      "deprecated": false
     },
     "mode": "All",
     "parameters": {

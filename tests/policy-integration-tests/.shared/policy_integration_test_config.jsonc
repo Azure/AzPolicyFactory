@@ -60,7 +60,8 @@
       "networkResourceGroup": "rg-ae-d-net-spoke",
       "vNet": "vnet-ae-d-lz-corp-01",
       "peSubnet": "sn-private-endpoint",
-      "resourceSubnet": "sn-vm"
+      "resourceSubnet": "sn-vm",
+      "aksSubnet": "sn-aks"
     },
     "sub-d-lz-online-01": {
       "id": "f793e6e7-9219-4d57-8582-89bb7be49bba",

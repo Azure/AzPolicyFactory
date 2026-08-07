@@ -1,0 +1,62 @@
+{
+  "name": "pol-deny-aks-disks-cache-encrypted-at-host",
+  "properties": {
+    "displayName": "Temp disks and cache for agent node pools in Azure Kubernetes Service clusters should be encrypted at host",
+    "description": "To enhance data security, the data stored on the virtual machine (VM) host of your Azure Kubernetes Service nodes VMs should be encrypted at rest. This is a common requirement in many regulatory and industry compliance standards.",
+    "metadata": {
+      "category": "Azure Kubernetes Service",
+      "version": "1.0.0",
+      "preview": false,
+      "deprecated": false,
+      "source_builtIn_name": "41425d9f-d1a5-499a-9932-f8ed8453932c"
+    },
+    "mode": "Indexed",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "defaultValue": "Audit",
+        "allowedValues": [
+          "Audit",
+          "Disabled"
+        ],
+        "metadata": {
+          "displayName": "Effect",
+          "description": "'Enable or disable the execution of the policy."
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.ContainerService/managedClusters"
+          },
+          {
+            "count": {
+              "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*]",
+              "where": {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
+                    "exists": "false"
+                  },
+                  {
+                    "not":{
+                      "field": "Microsoft.ContainerService/managedClusters/agentPoolProfiles[*].enableEncryptionAtHost",
+                      "equals": "true"
+                    }
+                  }
+                ]
+              }
+            },
+            "greater": 0
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

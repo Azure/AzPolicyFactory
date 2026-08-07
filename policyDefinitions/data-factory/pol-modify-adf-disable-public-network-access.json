@@ -7,8 +7,7 @@
       "category": "Data Factory",
       "version": "1.0.0",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "08b1442b-7789-4130-8506-4f99a97226a7"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {

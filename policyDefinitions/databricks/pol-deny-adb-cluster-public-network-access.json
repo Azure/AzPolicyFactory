@@ -7,8 +7,7 @@
       "category": "Databricks",
       "version": "1.0.1",
       "preview": false,
-      "deprecated": false,
-      "source_builtIn_name": "51c1490f-3319-459c-bbbc-7f391bbed753"
+      "deprecated": false
     },
     "mode": "Indexed",
     "parameters": {

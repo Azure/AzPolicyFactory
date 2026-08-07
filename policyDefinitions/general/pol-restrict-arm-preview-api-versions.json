@@ -43,6 +43,10 @@
           {
             "value": "[requestContext().apiVersion]",
             "like": "*-preview"
+          },
+          {
+            "value": "[tryGet(requestContext().identity, 'idtyp')]",
+            "in": ["user", "app"]
           }
           ]
         },

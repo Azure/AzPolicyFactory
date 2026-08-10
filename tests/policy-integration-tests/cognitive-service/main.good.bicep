@@ -68,7 +68,7 @@ resource grok 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
       format: 'xAI'
       version: '1'
     }
-    raiPolicyName: 'Contoso.DefaultV1' //this should comply with the policy COG-010 since Contoso.DefaultV1 is in the allowed list of RAI policies defined in the policy
+    raiPolicyName: 'Microsoft.DefaultV2' //this should comply with the policy COG-010 since Contoso.DefaultV1 is in the allowed list of RAI policies defined in the policy
   }
 }
 

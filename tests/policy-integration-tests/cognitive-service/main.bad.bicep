@@ -45,6 +45,21 @@ resource gpt51 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
       name: 'gpt-5.1' //this should violate the policy COG-006 since gpt-5.1 is not in the allowed list of models defined in the policy
       format: 'OpenAI'
     }
+    raiPolicyName: 'rai-policy-1' //this should violate the policy COG-010 since rai-policy-1 is not in the allowed list of RAI policies defined in the policy
+  }
+}
+resource gpt54 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
+  name: 'gpt54'
+  parent: cognitiveService
+  sku: {
+    name: 'GlobalStandard' //this should violate the policy COG-011 since GlobalStandard is not allowed for this model
+    capacity: 150
+  }
+  properties: {
+    model: {
+      name: 'gpt-5.4'
+      format: 'OpenAI'
+    }
   }
 }
 

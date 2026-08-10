@@ -52,6 +52,14 @@ $violatingPolicies = @(
     policyAssignmentId          = $cogServicePolicyAssignmentId
     policyDefinitionReferenceId = 'COG-007'
   }
+  @{
+    policyAssignmentId          = $cogServicePolicyAssignmentId
+    policyDefinitionReferenceId = 'COG-010'
+  }
+  @{
+    policyAssignmentId          = $cogServicePolicyAssignmentId
+    policyDefinitionReferenceId = 'COG-011'
+  }
 )
 #define tests
 $tests = @()

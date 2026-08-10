@@ -39,11 +39,11 @@ resource cognitiveService 'Microsoft.CognitiveServices/accounts@2025-12-01' = {
     ] //user owned storage defined, this should comply with the policy COG-004
   }
 }
-resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
-  name: 'gpt41'
+resource gpt54 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
+  name: 'gpt54'
   parent: cognitiveService
   sku: {
-    name: 'GlobalStandard'
+    name: 'DataZoneStandard' //this should comply with the policy COG-011 since this model must use DataZoneStandard as the deployment type
     capacity: 150
   }
   properties: {
@@ -51,6 +51,7 @@ resource gpt41 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
       name: 'gpt-5.4'
       format: 'OpenAI'
     }
+    raiPolicyName: 'Microsoft.DefaultV2' //this should comply with the policy COG-010 since Microsoft.DefaultV2 is in the allowed list of RAI policies defined in the policy
   }
 }
 
@@ -67,6 +68,7 @@ resource grok 'Microsoft.CognitiveServices/accounts/deployments@2025-12-01' = {
       format: 'xAI'
       version: '1'
     }
+    raiPolicyName: 'Microsoft.DefaultV2' //this should comply with the policy COG-010 since Contoso.DefaultV1 is in the allowed list of RAI policies defined in the policy
   }
 }
 

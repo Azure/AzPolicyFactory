@@ -23,5 +23,7 @@ The following policies are in scope for testing:
 | `pa-d-cog-service` | `COG-005` | Cognitive Services Deployments allowed model formats | Deny |
 | `pa-d-cog-service` | `COG-006` | Cognitive Services Deployments should only use approved Models from OpenAI | Deny |
 | `pa-d-cog-service` | `COG-007` | Cognitive Services Deployments should only use approved Models from xAI | Deny |
+| `pa-d-cog-service` | `COG-010` | Cognitive Services Deployments should use an allowed Responsible AI (RAI) policy | Deny |
+| `pa-d-cog-service` | `COG-011` | List of Foundry Model deployments must use DataZoneStandard deployment type | Deny |
 | `pa-d-diag-settings` | `DS-013` | Configure Diagnostic Setting for Azure Cognitive Services | DeployIfNotExists |
 | `pa-d-pedns` | `PEDNS-016` | Private DNS Record for Azure Cognitive Services PE must exist | DeployIfNotExists |

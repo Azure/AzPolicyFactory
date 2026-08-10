@@ -1,0 +1,66 @@
+{
+  "name": "pol-enforce-foundry-deployment-rai-policy",
+  "properties": {
+    "displayName": "Foundry deployments must have an approved Responsible AI policy assigned",
+    "description": "Ensure Foundry model deployments have an associated approved Responsible AI policy.",
+    "mode": "All",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Cognitive Services",
+      "preview": false,
+      "deprecated": false
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "approvedRaiPolicies": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Approved RAI policy names",
+          "description": "Responsible AI policy names that satisfy the organisation content safety baseline."
+        },
+        "defaultValue": [
+          "Microsoft.DefaultV2"
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts/deployments"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.CognitiveServices/accounts/deployments/raiPolicyName",
+                "exists": "false"
+              },
+              {
+                "not": {
+                  "field": "Microsoft.CognitiveServices/accounts/deployments/raiPolicyName",
+                  "in": "[parameters('approvedRaiPolicies')]"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

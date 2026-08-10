@@ -1,0 +1,63 @@
+{
+  "name": "pol-enforce-foundry-model-deployment-type",
+  "properties": {
+    "displayName": "List of Foundry Model deployments must use approved deployment type",
+    "mode": "All",
+    "description": "Enforce Foundry models to be deployed using approved deployment types.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Cognitive Services"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      },
+      "modelNames": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "In-scope model names",
+          "description": "Model names this restriction applies to. Matched against model.name. Comparison is case-insensitive."
+        }
+      },
+      "allowedDeploymentType": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Approved deployment type",
+          "description": "Permitted value of sku.name for the in-scope models."
+        },
+        "defaultValue": "DataZoneStandard"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts/deployments"
+          },
+          {
+            "field": "Microsoft.CognitiveServices/accounts/deployments/model.name",
+            "in": "[parameters('modelNames')]"
+          },
+          {
+            "field": "Microsoft.CognitiveServices/accounts/deployments/sku.name",
+            "notEquals": "[parameters('allowedDeploymentType')]"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

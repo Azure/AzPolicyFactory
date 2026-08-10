@@ -70,6 +70,31 @@
         "value": [
           "FW-Kimi-K3"
         ]
+      },
+      "COG-010_Effect": {
+        "value": "Deny"
+      },
+      "COG-010_approvedRaiPolicies": {
+        "value": [
+          "Microsoft.DefaultV2",
+          "Contoso.DefaultV1"
+        ]
+      },
+      "COG-011_Effect": {
+        "value": "Deny"
+      },
+      "COG-011_modelNames": {
+        "value": [
+          "gpt-5-mini",
+          "gpt-5-nano",
+          "gpt-5.2",
+          "gpt-5.4-mini",
+          "gpt-5.4-nano",
+          "gpt-5.4",
+          "gpt-5.5",
+          "FW-Kimi-K3",
+          "FW-Kimi-K2.7-Code"
+        ]
       }
     },
     "nonComplianceMessages": [
@@ -80,6 +105,10 @@
       {
         "policyDefinitionReferenceId": "COG-007",
         "message": "PolicyID: COG-007 Violation in polset-cognitive-service Initiative - 'Only approved xAI models are allowed to be deployed in Cognitive Services'"
+      },
+      {
+        "policyDefinitionReferenceId": "COG-011",
+        "message": "PolicyID: COG-011 Violation in polset-cognitive-service Initiative - 'List of Foundry model deployments must use DataZoneStandard deployment type in AI Foundry accounts.'"
       }
     ],
     "roleDefinitionIds": [

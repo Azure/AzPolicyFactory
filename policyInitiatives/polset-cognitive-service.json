@@ -409,21 +409,6 @@
         ]
       },
       {
-        "policyDefinitionReferenceId": "COG-010",
-        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-enforce-foundry-deployment-rai-policy",
-        "parameters": {
-          "effect": {
-            "value": "[parameters('COG-010_Effect')]"
-          },
-          "approvedRaiPolicies": {
-            "value": "[parameters('COG-010_approvedRaiPolicies')]"
-          }
-        },
-        "groupNames": [
-          "ISO27001-2013_A.14.2.5"
-        ]
-      },
-      {
         "policyDefinitionReferenceId": "COG-011",
         "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-enforce-foundry-model-deployment-type",
         "parameters": {

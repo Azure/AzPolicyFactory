@@ -207,7 +207,11 @@
         "metadata": {
           "displayName": "COG-011 In-scope model names",
           "description": "Model names this restriction applies to. Matched against model.name. Comparison is case-insensitive."
-        }
+        },
+        "defaultValue": [
+          "gpt-5-mini",
+          "gpt-5-nano"
+        ]
       }
     },
     "policyDefinitionGroups": [

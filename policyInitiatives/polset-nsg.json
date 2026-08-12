@@ -81,6 +81,19 @@
           "displayName": "NSG-004: Allowed Outbound Service Tags",
           "description": "List of allowed service tags for outbound rules"
         }
+      },
+      "NSG-005_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "NSG-005 Effect: Restrict Manual NSG changes by Users",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
       }
     },
     "policyDefinitionGroups": [
@@ -151,6 +164,21 @@
           },
           "allowedServiceTags": {
             "value": "[parameters('NSG-004_AllowedServiceTags')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.13.1.1"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "NSG-005",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-restrict-user-arm-api-requests",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('NSG-005_Effect')]"
+          },
+          "resourceTypePrefix": {
+            "value": "Microsoft.Network/networkSecurityGroups"
           }
         },
         "groupNames": [

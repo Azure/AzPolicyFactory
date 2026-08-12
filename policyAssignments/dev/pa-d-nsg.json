@@ -49,6 +49,9 @@
           "AzureActiveDirectory",
           "*"
         ]
+      },
+      "NSG-005_Effect": {
+        "value": "Deny"
       }
     },
     "nonComplianceMessages": []

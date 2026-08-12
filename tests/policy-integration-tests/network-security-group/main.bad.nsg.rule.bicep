@@ -8,7 +8,7 @@ metadata summary = 'Deploys test network security group rule resource that shoul
 // Load the configuration file
 var globalConfig = loadJsonContent('../.shared/policy_integration_test_config.jsonc')
 var namePrefix = globalConfig.namePrefix
-
+//Unable to perform negative test for the deny policy NSG-005: Manual changes to Network Security Groups are not allowed because it requires a user account, which is not possible to simulate in the pipeline.
 // define template specific variables
 var existingServiceShort = 'nsg1'
 var existingNsgName = 'nsg-${namePrefix}-${existingServiceShort}-01'

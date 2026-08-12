@@ -15,7 +15,7 @@ var namePrefix = globalConfig.namePrefix
 // define template specific variables
 var serviceShort = 'nsg2'
 var newNsgName = 'nsg-${namePrefix}-${serviceShort}-01'
-
+//This template should be compliant with policy NSG-005: Manual changes to Network Security Groups are not allowed because the pipeline that deploys this template is using a service principal instead of an user account.
 resource nsg 'Microsoft.Network/networkSecurityGroups@2025-05-01' = {
   name: newNsgName
   location: location

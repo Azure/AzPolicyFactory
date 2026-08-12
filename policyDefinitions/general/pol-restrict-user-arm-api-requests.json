@@ -1,0 +1,53 @@
+{
+    "name": "pol-restrict-user-arm-api-requests",
+    "properties": {
+      "displayName": "Restrict Manual ARM API Requests by User Identity",
+      "description": "This policy enforces Control Plane ARM API requests for resources must come from a non-user identity, which prevents click-ops and enforces resource management are carried out by Infrastructure as Code.",
+      "mode": "All",
+      "metadata": {
+        "category": "General",
+        "version": "1.0.0",
+        "preview": false,
+        "deprecated": false
+      },
+      "parameters": {
+        "resourceTypePrefix": {
+          "type": "string",
+          "metadata": {
+            "description": "The resource type prefix that should be restricted from using manual ARM API requests.",
+            "displayName": "Resource type prefix"
+          }
+        },
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Policy Effect",
+            "description": "The desired effect of the policy."
+          },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+          {
+            "field": "type",
+            "like": "[concat(parameters('resourceTypePrefix'),'*')]"
+          },
+          {
+            "value": "[tryGet(requestContext().identity, 'idtyp')]",
+            "equals": "user"
+          }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+        }
+      }
+    }
+  }

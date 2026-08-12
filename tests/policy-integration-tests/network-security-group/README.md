@@ -19,3 +19,9 @@ The following policies are in scope for testing:
 | `pa-d-nsg` | `NSG-003` | Allowed list of Service Tags in Network Security Group Inbound Security Rules | `Deny` |
 | `pa-d-nsg` | `NSG-004` | Allowed list of Service Tags in Network Security Group Outbound Security Rules | `Deny` |
 | `pa-d-diag-settings` | `DS-038` | Diagnostic Settings for Network Security Group Must Be Configured | `DeployIfNotExists` |
+
+The following policies are not in scope for testing:
+
+| Policy Assignment | Policy Reference ID | Policy Name | Policy Effect | Comments |
+| :---------------- | :---------------- | :------------ | :------------ | :------- |
+| `pa-d-nsg` | `NSG-005` | Manual changes to Network Security Groups are not allowed | `Deny` | Unable to perform negative test because it requires a user account |

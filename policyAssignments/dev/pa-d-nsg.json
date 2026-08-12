@@ -49,9 +49,17 @@
           "AzureActiveDirectory",
           "*"
         ]
+      },
+      "NSG-005_Effect": {
+        "value": "Deny"
       }
     },
-    "nonComplianceMessages": []
+    "nonComplianceMessages": [
+      {
+        "policyDefinitionReferenceId": "NSG-005",
+        "message": "PolicyID: NSG-005 Violation in polset-nsg Initiative - Manual changes to Network Security Groups are not allowed."
+      }
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO-DEV",
   "managementGroupId": "CONTOSO-DEV"

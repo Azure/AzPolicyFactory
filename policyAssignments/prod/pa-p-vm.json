@@ -127,12 +127,20 @@
       },
       "VM-010_NotificationWebhookUrl": {
         "value": ""
+      },
+      "VM-011_Effect": {
+        "value": "Deny"
       }
     },
     "roleDefinitionIds": [
       "/providers/microsoft.authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c"
     ],
-    "nonComplianceMessages": []
+    "nonComplianceMessages": [
+      {
+        "policyDefinitionReferenceId": "VM-011",
+        "message": "PolicyID: VM-011 Violation in polset-vm Initiative - Manual changes to Virtual Machines are not allowed."
+      }
+    ]
   },
   "definitionSourceManagementGroupId": "/providers/Microsoft.Management/managementGroups/CONTOSO",
   "managementGroupId": "CONTOSO"

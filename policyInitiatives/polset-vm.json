@@ -330,9 +330,26 @@
           "displayName": "VM-010: Webhook URL for VM Shutdown schedule notification",
           "description": "A notification will be posted to the specified webhook endpoint when the auto-shutdown is about to happen."
         }
+      },
+      "VM-011_Effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "VM-011 Effect: Restrict Manual VM changes by Users",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
       }
     },
     "policyDefinitionGroups": [
+      {
+        "name": "ISO27001-2013_A.12.1.2",
+        "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.1.2"
+      },
       {
         "name": "ISO27001-2013_A.12.2.1",
         "additionalMetadataId": "/providers/Microsoft.PolicyInsights/policyMetadata/ISO27001-2013_A.12.2.1"
@@ -537,6 +554,21 @@
         },
         "groupNames": [
           "ISO27001-2013_A.12.6.1"
+        ]
+      },
+            {
+        "policyDefinitionReferenceId": "VM-011",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-restrict-user-arm-api-requests",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('VM-011_Effect')]"
+          },
+          "resourceTypePrefix": {
+            "value": "Microsoft.Compute/virtualMachines"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.1.2"
         ]
       }
     ]

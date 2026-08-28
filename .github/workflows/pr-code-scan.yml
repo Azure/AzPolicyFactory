@@ -27,13 +27,13 @@ jobs:
 
     steps:
       - name: Checkout repository (full history)
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0 # Super-Linter needs full history for diff
           persist-credentials: false
 
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v8.6.0
+        uses: super-linter/super-linter@9e863354e3ff62e0727d37183162c4a88873df41 # v8.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main

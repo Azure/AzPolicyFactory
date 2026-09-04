@@ -34,7 +34,7 @@ jobs:
       == 'workflow_dispatch' }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -49,7 +49,7 @@ jobs:
     needs: job_call_initiation
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -72,7 +72,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_DEV_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -93,7 +93,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_PROD_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -114,7 +114,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_DEV_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -163,7 +163,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_PROD_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -213,7 +213,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_DEV_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -260,7 +260,7 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.POLICY_PROD_MG_OWNER }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false

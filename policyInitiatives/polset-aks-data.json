@@ -2315,7 +2315,6 @@
         },
         "allowedValues": [
           "Audit",
-          "Deny",
           "Disabled"
         ],
         "defaultValue": "Audit"

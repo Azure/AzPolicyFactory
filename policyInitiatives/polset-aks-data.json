@@ -18,11 +18,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Deny"
@@ -1057,11 +1054,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Audit"
@@ -1859,11 +1853,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Audit"
@@ -1973,11 +1964,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Audit"
@@ -2224,11 +2212,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Audit"
@@ -2330,7 +2315,6 @@
         },
         "allowedValues": [
           "Audit",
-          "Deny",
           "Disabled"
         ],
         "defaultValue": "Audit"

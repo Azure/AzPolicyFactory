@@ -114,6 +114,18 @@
           "false"
         ],
         "defaultValue": "true"
+      },
+      "isServerlessContainersEnabled": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Serverless Containers Enabled",
+          "description": "Enable or disable the Serverless Containers add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
       }
     },
     "policyRule": {
@@ -246,11 +258,23 @@
                             "equals": "[parameters('isAgentlessServerlessPostureEnabled')]"
                           }
                         ]
+                      },
+                                            {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "ServerlessContainers"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isServerlessContainersEnabled')]"
+                          }
+                        ]
                       }
                     ]
                   }
                 },
-                "equals": 3
+                "equals": 4
               }
             ]
           },
@@ -279,6 +303,9 @@
                 },
                 "isAgentlessServerlessPostureEnabled": {
                   "value": "[parameters('isAgentlessServerlessPostureEnabled')]"
+                },
+                "isServerlessContainersEnabled": {
+                  "value": "[parameters('isServerlessContainersEnabled')]"
                 }
               },
               "template": {
@@ -304,6 +331,9 @@
                     "type": "string"
                   },
                   "isAgentlessServerlessPostureEnabled": {
+                    "type": "string"
+                  },
+                  "isServerlessContainersEnabled": {
                     "type": "string"
                   }
                 },
@@ -343,6 +373,10 @@
                         {
                           "name": "AgentlessServerlessPosture",
                           "isEnabled": "[parameters('isAgentlessServerlessPostureEnabled')]"
+                        },
+                        {
+                          "name": "ServerlessContainers",
+                          "isEnabled": "[parameters('isServerlessContainersEnabled')]"
                         }
                       ]
                     }

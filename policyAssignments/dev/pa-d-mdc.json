@@ -85,6 +85,9 @@
       "isAgentlessServerlessPostureEnabled": {
         "value": "true"
       },
+      "isServerlessContainersEnabled":{
+        "value": "true"
+      },
       "isMdeDesignatedSubscriptionEnabled": {
         "value": "false"
       },

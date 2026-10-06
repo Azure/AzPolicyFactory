@@ -309,7 +309,18 @@
         ],
         "defaultValue": "true"
       },
-
+      "isServerlessContainersEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Serverless Containers Enabled",
+          "description": "Enable or disable the Serverless Containers add-on feature"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "true"
+      },
       "isMdeDesignatedSubscriptionEnabled": {
         "type": "String",
         "metadata": {
@@ -572,6 +583,9 @@
           },
           "isAgentlessServerlessPostureEnabled": {
             "value": "[parameters('isAgentlessServerlessPostureEnabled')]"
+          },
+          "isServerlessContainersEnabled": {
+            "value": "[parameters('isServerlessContainersEnabled')]"
           }
         },
         "groupNames": [

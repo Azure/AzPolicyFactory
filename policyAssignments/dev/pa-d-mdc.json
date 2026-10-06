@@ -142,7 +142,7 @@
         "value": "true"
       },
       "isAIModelScannerEnabled": {
-        "value": "false"
+        "value": "true"
       },
       "isOnUploadMalwareScanningEnabled": {
         "value": "true"

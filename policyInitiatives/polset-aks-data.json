@@ -1054,11 +1054,8 @@
           "portalReview": true
         },
         "allowedValues": [
-          "audit",
           "Audit",
-          "deny",
           "Deny",
-          "disabled",
           "Disabled"
         ],
         "defaultValue": "Audit"

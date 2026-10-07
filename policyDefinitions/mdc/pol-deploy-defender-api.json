@@ -3,9 +3,9 @@
   "properties": {
     "displayName": "Configure Microsoft Defender for APIs Plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for APIs plan.",
+    "description": "Configure Microsoft Defender for APIs plan. Set the pricing tier to Free to disable the plan.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "Defender for Cloud",
       "preview": false,
       "deprecated": false
@@ -30,6 +30,18 @@
           "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
         },
         "defaultValue": "AfterProvisioning"
+      },
+      "pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Pricing Tier",
+          "description": "Pricing tier of the Defender for APIs plan. Standard enables the plan, Free disables it. Sub plan parameter is ignored when set to Free."
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "subPlan": {
         "type": "string",
@@ -69,13 +81,16 @@
           ],
           "existenceCondition": {
             "field": "Microsoft.Security/pricings/pricingTier",
-            "equals": "Standard"
+            "equals": "[parameters('pricingTier')]"
           },
           "deployment": {
             "location": "australiaeast",
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "pricingTier": {
+                  "value": "[parameters('pricingTier')]"
+                },
                 "subPlan": {
                   "value": "[parameters('subPlan')]"
                 }
@@ -84,20 +99,28 @@
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
+                  "pricingTier": {
+                    "type": "string"
+                  },
                   "subPlan": {
                     "type": "string"
                   }
                 },
-                "variables": {},
+                "variables": {
+                  "standardProperties": {
+                    "pricingTier": "Standard",
+                    "subPlan": "[parameters('subPlan')]"
+                  },
+                  "freeProperties": {
+                    "pricingTier": "Free"
+                  }
+                },
                 "resources": [
                   {
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
                     "name": "Api",
-                    "properties": {
-                      "pricingTier": "Standard",
-                      "subPlan": "[parameters('subPlan')]"
-                    }
+                    "properties": "[if(equals(parameters('pricingTier'), 'Free'), variables('freeProperties'), variables('standardProperties'))]"
                   }
                 ],
                 "outputs": {}

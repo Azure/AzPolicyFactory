@@ -3,9 +3,9 @@
   "properties": {
     "displayName": "Configure Microsoft Defender for Azure Resource Manager plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Azure Resource Manager plan.",
+    "description": "Configure Microsoft Defender for Azure Resource Manager plan. Set the pricing tier to Free to disable the plan.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "Defender for Cloud",
       "preview": false,
       "deprecated": false
@@ -31,17 +31,29 @@
         },
         "defaultValue": "AfterProvisioning"
       },
+      "pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Pricing Tier",
+          "description": "Pricing tier of the Defender for Azure Resource Manager plan. Standard enables the plan, Free disables it. Sub plan parameter is ignored when set to Free."
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "subPlan": {
         "type": "string",
         "metadata": {
           "displayName": "Defender for Azure Resource Manager plans",
-          "description": "Select a Defender for Azure Resource Manager plan"
+          "description": "Select a Defender for Azure Resource Manager plan. PerApiCall plan is deprecated, use PerSubscription instead."
         },
         "allowedValues": [
           "PerApiCall",
           "PerSubscription"
         ],
-        "defaultValue": "PerApiCall"
+        "defaultValue": "PerSubscription"
       }
     },
     "policyRule": {
@@ -61,14 +73,34 @@
             "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
           ],
           "existenceCondition": {
-            "allOf": [
+            "anyOf": [
               {
-                "field": "Microsoft.Security/pricings/pricingTier",
-                "equals": "Standard"
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Free"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Free"
+                  }
+                ]
               },
               {
-                "field": "Microsoft.Security/pricings/subPlan",
-                "equals": "[parameters('subPlan')]"
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/subPlan",
+                    "equals": "[parameters('subPlan')]"
+                  }
+                ]
               }
             ]
           },
@@ -77,6 +109,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "pricingTier": {
+                  "value": "[parameters('pricingTier')]"
+                },
                 "subPlan": {
                   "value": "[parameters('subPlan')]"
                 }
@@ -85,20 +120,28 @@
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
+                  "pricingTier": {
+                    "type": "string"
+                  },
                   "subPlan": {
                     "type": "string"
                   }
                 },
-                "variables": {},
+                "variables": {
+                  "standardProperties": {
+                    "pricingTier": "Standard",
+                    "subPlan": "[parameters('subPlan')]"
+                  },
+                  "freeProperties": {
+                    "pricingTier": "Free"
+                  }
+                },
                 "resources": [
                   {
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
                     "name": "Arm",
-                    "properties": {
-                      "pricingTier": "Standard",
-                      "subPlan": "[parameters('subPlan')]"
-                    }
+                    "properties": "[if(equals(parameters('pricingTier'), 'Free'), variables('freeProperties'), variables('standardProperties'))]"
                   }
                 ],
                 "outputs": {}

@@ -3,9 +3,9 @@
   "properties": {
     "displayName": "Configure Microsoft Defender for Storage plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Storage plan with required add-on features.",
+    "description": "Configure Microsoft Defender for Storage plan with required add-on features. Set the pricing tier to Free to disable the plan.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "Defender for Cloud",
       "preview": false,
       "deprecated": false
@@ -30,6 +30,18 @@
           "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
         },
         "defaultValue": "AfterProvisioning"
+      },
+      "pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Pricing Tier",
+          "description": "Pricing tier of the Defender for Storage plan. Standard enables the plan, Free disables it. Add-on feature parameters are ignored when set to Free."
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "isOnUploadMalwareScanningEnabled": {
         "type": "string",
@@ -105,50 +117,70 @@
             "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
           ],
           "existenceCondition": {
-            "allOf": [
+            "anyOf": [
               {
-                "field": "Microsoft.Security/pricings/pricingTier",
-                "equals": "Standard"
-              },
-              {
-                "field": "Microsoft.Security/pricings/subPlan",
-                "equals": "DefenderForStorageV2"
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "OnUploadMalwareScanning"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isOnUploadMalwareScanningEnabled')]"
-                      }
-                    ]
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Free"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Free"
                   }
-                },
-                "equals": 1
+                ]
               },
               {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "SensitiveDataDiscovery"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/subPlan",
+                    "equals": "DefenderForStorageV2"
+                  },
+                  {
+                    "count": {
+                      "field": "Microsoft.Security/pricings/extensions[*]",
+                      "where": {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "OnUploadMalwareScanning"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isOnUploadMalwareScanningEnabled')]"
+                          }
+                        ]
                       }
-                    ]
+                    },
+                    "equals": 1
+                  },
+                  {
+                    "count": {
+                      "field": "Microsoft.Security/pricings/extensions[*]",
+                      "where": {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "SensitiveDataDiscovery"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                          }
+                        ]
+                      }
+                    },
+                    "equals": 1
                   }
-                },
-                "equals": 1
+                ]
               }
             ]
           },
@@ -157,6 +189,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "pricingTier": {
+                  "value": "[parameters('pricingTier')]"
+                },
                 "isOnUploadMalwareScanningEnabled": {
                   "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
                 },
@@ -177,6 +212,9 @@
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
+                  "pricingTier": {
+                    "type": "string"
+                  },
                   "isOnUploadMalwareScanningEnabled": {
                     "type": "string"
                   },
@@ -207,24 +245,28 @@
                     "name": "OnUploadMalwareScanning",
                     "isEnabled": "false"
                   },
-                  "malwareScanningExtension": "[if(equals(parameters('isOnUploadMalwareScanningEnabled'),'true'), variables('enabledMalwareScanningExtension'), variables('disabledMalwareScanningExtension'))]"
+                  "malwareScanningExtension": "[if(equals(parameters('isOnUploadMalwareScanningEnabled'),'true'), variables('enabledMalwareScanningExtension'), variables('disabledMalwareScanningExtension'))]",
+                  "standardProperties": {
+                    "subPlan": "DefenderForStorageV2",
+                    "pricingTier": "Standard",
+                    "extensions": [
+                      "[variables('malwareScanningExtension')]",
+                      {
+                        "name": "SensitiveDataDiscovery",
+                        "isEnabled": "[parameters('isSensitiveDataDiscoveryEnabled')]"
+                      }
+                    ]
+                  },
+                  "freeProperties": {
+                    "pricingTier": "Free"
+                  }
                 },
                 "resources": [
                   {
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
                     "name": "StorageAccounts",
-                    "properties": {
-                      "subPlan": "DefenderForStorageV2",
-                      "pricingTier": "Standard",
-                      "extensions": [
-                        "[variables('malwareScanningExtension')]",
-                        {
-                          "name": "SensitiveDataDiscovery",
-                          "isEnabled": "[parameters('isSensitiveDataDiscoveryEnabled')]"
-                        }
-                      ]
-                    }
+                    "properties": "[if(equals(parameters('pricingTier'), 'Free'), variables('freeProperties'), variables('standardProperties'))]"
                   }
                 ],
                 "outputs": {}

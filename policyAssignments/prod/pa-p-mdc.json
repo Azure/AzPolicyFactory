@@ -13,53 +13,92 @@
       "MDC-001_Effect": {
         "value": "DeployIfNotExists"
       },
+      "MDC-001_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-002_Effect": {
         "value": "DeployIfNotExists"
       },
       "MDC-002_subPlan": {
         "value": "P2"
       },
+      "MDC-002_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-003_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "MDC-003_pricingTier": {
+        "value": "Standard"
       },
       "MDC-004_Effect": {
         "value": "DeployIfNotExists"
       },
       "MDC-004_subPlan": {
-        "value": "PerTransaction"
+        "value": "PerKeyVault"
+      },
+      "MDC-004_pricingTier": {
+        "value": "Standard"
       },
       "MDC-005_Effect": {
         "value": "DeployIfNotExists"
       },
       "MDC-005_subPlan": {
-        "value": "PerApiCall"
+        "value": "PerSubscription"
+      },
+      "MDC-005_pricingTier": {
+        "value": "Standard"
       },
       "MDC-006_Effect": {
         "value": "DeployIfNotExists"
       },
+      "MDC-006_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-007_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "MDC-007_pricingTier": {
+        "value": "Standard"
       },
       "MDC-008_Effect": {
         "value": "DeployIfNotExists"
       },
+      "MDC-008_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-009_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "MDC-009_pricingTier": {
+        "value": "Standard"
       },
       "MDC-010_Effect": {
         "value": "DeployIfNotExists"
       },
+      "MDC-010_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-011_Effect": {
         "value": "DeployIfNotExists"
+      },
+      "MDC-011_pricingTier": {
+        "value": "Standard"
       },
       "MDC-012_Effect": {
         "value": "DeployIfNotExists"
       },
+      "MDC-012_pricingTier": {
+        "value": "Standard"
+      },
       "MDC-013_Effect": {
-        "value": "Disabled"
+        "value": "DeployIfNotExists"
       },
       "MDC-013_subPlan": {
         "value": "P1"
+      },
+      "MDC-013_pricingTier": {
+        "value": "Free"
       },
       "evaluationDelay": {
         "value": "AfterProvisioning"

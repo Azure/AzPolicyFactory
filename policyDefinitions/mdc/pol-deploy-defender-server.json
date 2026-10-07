@@ -3,9 +3,9 @@
   "properties": {
     "displayName": "Configure Microsoft Defender for Server plan",
     "mode": "All",
-    "description": "Configure Microsoft Defender for Server plan with required add-on features.",
+    "description": "Configure Microsoft Defender for Server plan with required add-on features. Set the pricing tier to Free to disable the plan.",
     "metadata": {
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "Defender for Cloud",
       "preview": false,
       "deprecated": false
@@ -30,6 +30,18 @@
           "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
         },
         "defaultValue": "AfterProvisioning"
+      },
+      "pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Pricing Tier",
+          "description": "Pricing tier of the Defender for Server plan. Standard enables the plan, Free disables it. Sub plan and add-on feature parameters are ignored when set to Free."
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "subPlan": {
         "type": "string",
@@ -151,68 +163,88 @@
             "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
           ],
           "existenceCondition": {
-            "allOf": [
+            "anyOf": [
               {
-                "field": "Microsoft.Security/pricings/pricingTier",
-                "equals": "Standard"
-              },
-              {
-                "field": "Microsoft.Security/pricings/subPlan",
-                "equals": "[parameters('subPlan')]"
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "AgentlessVmScanning"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isAgentlessVmScanningEnabled'), 'false')]"
-                      }
-                    ]
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Free"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Free"
                   }
-                },
-                "equals": 1
+                ]
               },
               {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "MdeDesignatedSubscription"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                "allOf": [
+                  {
+                    "value": "[parameters('pricingTier')]",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/pricingTier",
+                    "equals": "Standard"
+                  },
+                  {
+                    "field": "Microsoft.Security/pricings/subPlan",
+                    "equals": "[parameters('subPlan')]"
+                  },
+                  {
+                    "count": {
+                      "field": "Microsoft.Security/pricings/extensions[*]",
+                      "where": {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "AgentlessVmScanning"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isAgentlessVmScanningEnabled'), 'false')]"
+                          }
+                        ]
                       }
-                    ]
-                  }
-                },
-                "equals": 1
-              },
-              {
-                "count": {
-                  "field": "Microsoft.Security/pricings/extensions[*]",
-                  "where": {
-                    "allOf": [
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].name",
-                        "equals": "FileIntegrityMonitoring"
-                      },
-                      {
-                        "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
-                        "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isFileIntegrityMonitoringEnabled'), 'false')]"
+                    },
+                    "equals": 1
+                  },
+                  {
+                    "count": {
+                      "field": "Microsoft.Security/pricings/extensions[*]",
+                      "where": {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "MdeDesignatedSubscription"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                          }
+                        ]
                       }
-                    ]
+                    },
+                    "equals": 1
+                  },
+                  {
+                    "count": {
+                      "field": "Microsoft.Security/pricings/extensions[*]",
+                      "where": {
+                        "allOf": [
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].name",
+                            "equals": "FileIntegrityMonitoring"
+                          },
+                          {
+                            "field": "Microsoft.Security/pricings/extensions[*].isEnabled",
+                            "equals": "[if(equals(parameters('subPlan'), 'P2'), parameters('isFileIntegrityMonitoringEnabled'), 'false')]"
+                          }
+                        ]
+                      }
+                    },
+                    "equals": 1
                   }
-                },
-                "equals": 1
+                ]
               }
             ]
           },
@@ -221,6 +253,9 @@
             "properties": {
               "mode": "incremental",
               "parameters": {
+                "pricingTier": {
+                  "value": "[parameters('pricingTier')]"
+                },
                 "subPlan": {
                   "value": "[parameters('subPlan')]"
                 },
@@ -244,6 +279,9 @@
                 "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
                 "parameters": {
+                  "pricingTier": {
+                    "type": "string"
+                  },
                   "subPlan": {
                     "type": "string"
                   },
@@ -313,6 +351,28 @@
                     "FIMDetectionType": "Both",
                     "DefinedWorkspaceId": "[parameters('fileIntegrityMonitoringDefaultWorkspaceId')]",
                     "Rules": "[variables('FIMRulesString')]"
+                  },
+                  "standardProperties": {
+                    "pricingTier": "Standard",
+                    "subPlan": "[parameters('subPlan')]",
+                    "extensions": [
+                      {
+                        "name": "AgentlessVmScanning",
+                        "isEnabled": "[variables('isAgentlessVmScanningEnabled')]"
+                      },
+                      {
+                        "name": "MdeDesignatedSubscription",
+                        "isEnabled": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
+                      },
+                      {
+                        "name": "FileIntegrityMonitoring",
+                        "isEnabled": "[variables('isFileIntegrityMonitoringEnabled')]",
+                        "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), variables('FIMAdditionalExtensionProperties'))]"
+                      }
+                    ]
+                  },
+                  "freeProperties": {
+                    "pricingTier": "Free"
                   }
                 },
                 "resources": [
@@ -320,26 +380,7 @@
                     "type": "Microsoft.Security/pricings",
                     "apiVersion": "2025-10-01-preview",
                     "name": "VirtualMachines",
-                    "properties": {
-                      "pricingTier": "Standard",
-                      "subPlan": "[parameters('subPlan')]",
-                      "extensions": [
-                        {
-                          "name": "AgentlessVmScanning",
-                          "isEnabled": "[variables('isAgentlessVmScanningEnabled')]"
-                        },
-                        {
-                          "name": "MdeDesignatedSubscription",
-                          "isEnabled": "[parameters('isMdeDesignatedSubscriptionEnabled')]"
-                        },
-                        {
-                          "name": "FileIntegrityMonitoring",
-                          "isEnabled": "[variables('isFileIntegrityMonitoringEnabled')]",
-                          "additionalExtensionProperties": "[if(equals(variables('isFileIntegrityMonitoringEnabled'), 'false'), json('null'), variables('FIMAdditionalExtensionProperties'))]"
-
-                        }
-                      ]
-                    }
+                    "properties": "[if(equals(parameters('pricingTier'), 'Free'), variables('freeProperties'), variables('standardProperties'))]"
                   }
                 ],
                 "outputs": {}

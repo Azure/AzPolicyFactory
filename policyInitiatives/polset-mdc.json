@@ -5,7 +5,7 @@
     "description": "This initiative includes policies that address the security controls for Microsoft Defender for Cloud.",
     "metadata": {
       "category": "Defender for Cloud",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "preview": false,
       "deprecated": false
     },
@@ -21,6 +21,18 @@
           "Disabled"
         ],
         "defaultValue": "DeployIfNotExists"
+      },
+      "MDC-001_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-001: Defender CSPM pricing tier",
+          "description": "MDC-001: Standard enables Defender CSPM, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-002_effect": {
         "type": "string",
@@ -46,6 +58,18 @@
         ],
         "defaultValue": "P2"
       },
+      "MDC-002_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-002: Defender for Servers pricing tier",
+          "description": "MDC-002: Standard enables Defender for Servers, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "MDC-003_effect": {
         "type": "string",
         "metadata": {
@@ -57,6 +81,18 @@
           "Disabled"
         ],
         "defaultValue": "DeployIfNotExists"
+      },
+      "MDC-003_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-003: Defender for Containers pricing tier",
+          "description": "MDC-003: Standard enables Defender for Containers, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-004_effect": {
         "type": "string",
@@ -74,13 +110,25 @@
         "type": "String",
         "metadata": {
           "displayName": "MDC-004: Defender for Key Vault plan",
-          "description": "MDC-004: Select a Defender for Key Vault plan"
+          "description": "MDC-004: Select a Defender for Key Vault plan. PerTransaction plan is deprecated, use PerKeyVault instead."
         },
         "allowedValues": [
           "PerTransaction",
           "PerKeyVault"
         ],
-        "defaultValue": "PerTransaction"
+        "defaultValue": "PerKeyVault"
+      },
+      "MDC-004_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-004: Defender for Key Vault pricing tier",
+          "description": "MDC-004: Standard enables Defender for Key Vault, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-005_effect": {
         "type": "string",
@@ -98,13 +146,25 @@
         "type": "String",
         "metadata": {
           "displayName": "MDC-005: Defender for Azure Resource Manager plan",
-          "description": "MDC-005: Select a Defender for Azure Resource Manager plan"
+          "description": "MDC-005: Select a Defender for Azure Resource Manager plan.  PerApiCall plan is deprecated, use PerSubscription instead."
         },
         "allowedValues": [
           "PerApiCall",
           "PerSubscription"
         ],
-        "defaultValue": "PerApiCall"
+        "defaultValue": "PerSubscription"
+      },
+      "MDC-005_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-005: Defender for Azure Resource Manager pricing tier",
+          "description": "MDC-005: Standard enables Defender for Azure Resource Manager, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-006_effect": {
         "type": "string",
@@ -118,6 +178,18 @@
           "Disabled"
         ]
       },
+      "MDC-006_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-006: Defender for Storage pricing tier",
+          "description": "MDC-006: Standard enables Defender for Storage, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "MDC-007_effect": {
         "type": "string",
         "defaultValue": "DeployIfNotExists",
@@ -129,6 +201,18 @@
           "DeployIfNotExists",
           "Disabled"
         ]
+      },
+      "MDC-007_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-007: Defender for Azure SQL Database pricing tier",
+          "description": "MDC-007: Standard enables Defender for Azure SQL Database, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-008_effect": {
         "type": "string",
@@ -142,6 +226,18 @@
           "Disabled"
         ]
       },
+      "MDC-008_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-008: Defender for SQL servers on machines pricing tier",
+          "description": "MDC-008: Standard enables Defender for SQL servers on machines, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "MDC-009_effect": {
         "type": "string",
         "defaultValue": "DeployIfNotExists",
@@ -153,6 +249,18 @@
           "DeployIfNotExists",
           "Disabled"
         ]
+      },
+      "MDC-009_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-009: Defender for Open Source relational database pricing tier",
+          "description": "MDC-009: Standard enables Defender for Open Source relational database, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-010_effect": {
         "type": "string",
@@ -166,6 +274,18 @@
           "Disabled"
         ]
       },
+      "MDC-010_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-010: Defender for Azure Cosmos DB pricing tier",
+          "description": "MDC-010: Standard enables Defender for Azure Cosmos DB, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "MDC-011_effect": {
         "type": "string",
         "defaultValue": "DeployIfNotExists",
@@ -178,6 +298,18 @@
           "Disabled"
         ]
       },
+      "MDC-011_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-011: Defender for Azure App Service pricing tier",
+          "description": "MDC-011: Standard enables Defender for Azure App Service, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
+      },
       "MDC-012_effect": {
         "type": "string",
         "defaultValue": "DeployIfNotExists",
@@ -189,6 +321,18 @@
           "DeployIfNotExists",
           "Disabled"
         ]
+      },
+      "MDC-012_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-012: Defender for Azure AI Service pricing tier",
+          "description": "MDC-012: Standard enables Defender for Azure AI Service, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "MDC-013_effect": {
         "type": "string",
@@ -216,6 +360,18 @@
           "P5"
         ],
         "defaultValue": "P1"
+      },
+      "MDC-013_pricingTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "MDC-013: Defender for APIs pricing tier",
+          "description": "MDC-013: Standard enables Defender for APIs, Free disables it"
+        },
+        "allowedValues": [
+          "Standard",
+          "Free"
+        ],
+        "defaultValue": "Standard"
       },
       "evaluationDelay": {
         "type": "string",
@@ -563,6 +719,9 @@
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
           },
+          "pricingTier": {
+            "value": "[parameters('MDC-001_pricingTier')]"
+          },
           "isSensitiveDataDiscoveryEnabled": {
             "value": "[parameters('isSensitiveDataDiscoveryEnabled')]"
           },
@@ -602,6 +761,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-002_pricingTier')]"
           },
           "subPlan": {
             "value": "[parameters('MDC-002_subPlan')]"
@@ -643,6 +805,9 @@
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
           },
+          "pricingTier": {
+            "value": "[parameters('MDC-003_pricingTier')]"
+          },
           "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
             "value": "[parameters('isContainerRegistriesVulnerabilityAssessmentsEnabled')]"
           },
@@ -680,6 +845,9 @@
           "effect": {
             "value": "[parameters('MDC-004_effect')]"
           },
+          "pricingTier": {
+            "value": "[parameters('MDC-004_pricingTier')]"
+          },
           "subPlan": {
             "value": "[parameters('MDC-004_subPlan')]"
           }
@@ -703,6 +871,9 @@
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
           },
+          "pricingTier": {
+            "value": "[parameters('MDC-005_pricingTier')]"
+          },
           "subPlan": {
             "value": "[parameters('MDC-005_subPlan')]"
           }
@@ -725,6 +896,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-006_pricingTier')]"
           },
           "isOnUploadMalwareScanningEnabled": {
             "value": "[parameters('isOnUploadMalwareScanningEnabled')]"
@@ -759,6 +933,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-007_pricingTier')]"
           }
         },
         "groupNames": [
@@ -778,6 +955,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-008_pricingTier')]"
           }
         },
         "groupNames": [
@@ -797,6 +977,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-009_pricingTier')]"
           }
         },
         "groupNames": [
@@ -816,6 +999,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-010_pricingTier')]"
           }
         },
         "groupNames": [
@@ -835,6 +1021,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-011_pricingTier')]"
           }
         },
         "groupNames": [
@@ -854,6 +1043,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-012_pricingTier')]"
           },
           "isAIPromptEvidenceEnabled": {
             "value": "[parameters('isAIPromptEvidenceEnabled')]"
@@ -882,6 +1074,9 @@
           },
           "evaluationDelay": {
             "value": "[parameters('evaluationDelay')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('MDC-013_pricingTier')]"
           },
           "subPlan": {
             "value": "[parameters('MDC-013_subPlan')]"

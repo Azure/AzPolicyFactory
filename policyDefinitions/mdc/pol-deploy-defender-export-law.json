@@ -133,7 +133,7 @@
           "deploymentScope": "subscription",
           "evaluationDelay": "[parameters('evaluationDelay')]",
           "roleDefinitionIds": [
-            "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
+            "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24"
           ],
           "existenceCondition": {
             "allOf": [
@@ -376,9 +376,9 @@
                   }
                 ],
                 "outputs": {
-                  "automation": {
-                    "type": "object",
-                    "value": "[reference(resourceId(subscription().subscriptionId, parameters('resourceGroupName'), 'Microsoft.Security/automations', parameters('automationName')), '2023-12-01-preview', 'Full')]"
+                  "automationResourceId": {
+                    "type": "string",
+                    "value": "[resourceId(subscription().subscriptionId, parameters('resourceGroupName'), 'Microsoft.Security/automations', parameters('automationName'))]"
                   }
                 }
               },

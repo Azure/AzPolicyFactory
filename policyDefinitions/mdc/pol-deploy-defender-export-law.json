@@ -1,0 +1,420 @@
+{
+  "name": "pol-deploy-defender-export-law",
+  "properties": {
+    "displayName": "Configure Continuous Export to Log Analytics for Microsoft Defender for Cloud",
+    "mode": "All",
+    "description": "Configure streaming export setting of Defender for Cloud data to Log Analytics.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Defender for Cloud"
+    },
+    "parameters": {
+      "effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "evaluationDelay": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Evaluation Delay",
+          "description": "Specifies when the existence of the related resources should be evaluated. The delay is only used for evaluations that are a result of a create or update resource request. Allowed values are AfterProvisioning, AfterProvisioningSuccess, AfterProvisioningFailure, or an ISO 8601 duration between 0 and 360 minutes."
+        },
+        "defaultValue": "AfterProvisioning"
+      },
+      "automationName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Automation name",
+          "description": "The name of the Defender for Cloud continuous export configuration."
+        },
+        "defaultValue": "ExportToWorkspace"
+      },
+      "resourceGroupName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Resource group name",
+          "description": "The resource group name where the export configuration will reside."
+        }
+      },
+      "location": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Location",
+          "description": "The location where the resource group and the export configuration are created.",
+          "strongType": "location"
+        },
+        "defaultValue": "australiaeast"
+      },
+      "logAnalyticsWorkspaceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Log Analytics workspace",
+          "description": "The Log Analytics workspace where Defender for Cloud data will be exported.",
+          "strongType": "Microsoft.OperationalInsights/workspaces"
+        }
+      },
+      "exportSecurityRecommendations": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export security recommendations",
+          "description": "Export individual security recommendations with all categories and all severity levels."
+        },
+        "defaultValue": true
+      },
+      "exportSecureScore": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export secure score",
+          "description": "Export overall secure score and all secure score controls."
+        },
+        "defaultValue": true
+      },
+      "exportSecurityAlerts": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export security alerts",
+          "description": "Export all security alerts. Alerts are only exported as streaming updates."
+        },
+        "defaultValue": true
+      },
+      "exportRegulatoryCompliance": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export regulatory compliance",
+          "description": "Export all regulatory compliance assessments."
+        },
+        "defaultValue": true
+      },
+      "exportSecurityAttackPaths": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export security attack paths",
+          "description": "Export all security attack paths."
+        },
+        "defaultValue": true
+      },
+      "exportStreamingUpdates": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export frequency: streaming updates",
+          "description": "Export updates in real-time."
+        },
+        "defaultValue": true
+      },
+      "exportSnapshots": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "Export frequency: snapshots",
+          "description": "Export a weekly snapshot of the selected data types. Not supported for security alerts."
+        },
+        "defaultValue": true
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/automations",
+          "name": "[parameters('automationName')]",
+          "existenceScope": "resourcegroup",
+          "ResourceGroupName": "[parameters('resourceGroupName')]",
+          "deploymentScope": "subscription",
+          "evaluationDelay": "[parameters('evaluationDelay')]",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Security/automations/isEnabled",
+                "equals": true
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/automations/actions[*]",
+                  "where": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Security/automations/actions[*].actionType",
+                        "equals": "Workspace"
+                      },
+                      {
+                        "field": "Microsoft.Security/automations/actions[*].Workspace.workspaceResourceId",
+                        "equals": "[parameters('logAnalyticsWorkspaceId')]"
+                      }
+                    ]
+                  }
+                },
+                "greaterOrEquals": 1
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/automations/sources[*]"
+                },
+                "equals": "[length(concat(if(and(parameters('exportSecurityRecommendations'), parameters('exportStreamingUpdates')), createArray('Assessments'), createArray()), if(and(parameters('exportSecurityRecommendations'), parameters('exportSnapshots')), createArray('AssessmentsSnapshot'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportStreamingUpdates')), createArray('SecureScores', 'SecureScoreControls'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportSnapshots')), createArray('SecureScoresSnapshot', 'SecureScoreControlsSnapshot'), createArray()), if(and(parameters('exportSecurityAlerts'), parameters('exportStreamingUpdates')), createArray('Alerts'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportStreamingUpdates')), createArray('RegulatoryComplianceAssessment'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportSnapshots')), createArray('RegulatoryComplianceAssessmentSnapshot'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportStreamingUpdates')), createArray('AttackPaths'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportSnapshots')), createArray('AttackPathsSnapshot'), createArray())))]"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.Security/automations/sources[*]",
+                  "where": {
+                    "field": "Microsoft.Security/automations/sources[*].eventSource",
+                    "in": "[concat(if(and(parameters('exportSecurityRecommendations'), parameters('exportStreamingUpdates')), createArray('Assessments'), createArray()), if(and(parameters('exportSecurityRecommendations'), parameters('exportSnapshots')), createArray('AssessmentsSnapshot'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportStreamingUpdates')), createArray('SecureScores', 'SecureScoreControls'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportSnapshots')), createArray('SecureScoresSnapshot', 'SecureScoreControlsSnapshot'), createArray()), if(and(parameters('exportSecurityAlerts'), parameters('exportStreamingUpdates')), createArray('Alerts'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportStreamingUpdates')), createArray('RegulatoryComplianceAssessment'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportSnapshots')), createArray('RegulatoryComplianceAssessmentSnapshot'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportStreamingUpdates')), createArray('AttackPaths'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportSnapshots')), createArray('AttackPathsSnapshot'), createArray()))]"
+                  }
+                },
+                "equals": "[length(concat(if(and(parameters('exportSecurityRecommendations'), parameters('exportStreamingUpdates')), createArray('Assessments'), createArray()), if(and(parameters('exportSecurityRecommendations'), parameters('exportSnapshots')), createArray('AssessmentsSnapshot'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportStreamingUpdates')), createArray('SecureScores', 'SecureScoreControls'), createArray()), if(and(parameters('exportSecureScore'), parameters('exportSnapshots')), createArray('SecureScoresSnapshot', 'SecureScoreControlsSnapshot'), createArray()), if(and(parameters('exportSecurityAlerts'), parameters('exportStreamingUpdates')), createArray('Alerts'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportStreamingUpdates')), createArray('RegulatoryComplianceAssessment'), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportSnapshots')), createArray('RegulatoryComplianceAssessmentSnapshot'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportStreamingUpdates')), createArray('AttackPaths'), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportSnapshots')), createArray('AttackPathsSnapshot'), createArray())))]"
+              }
+            ]
+          },
+          "deployment": {
+            "location": "[parameters('location')]",
+            "properties": {
+              "mode": "incremental",
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "automationName": {
+                    "type": "string"
+                  },
+                  "resourceGroupName": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "logAnalyticsWorkspaceId": {
+                    "type": "string"
+                  },
+                  "exportSecurityRecommendations": {
+                    "type": "bool"
+                  },
+                  "exportSecureScore": {
+                    "type": "bool"
+                  },
+                  "exportSecurityAlerts": {
+                    "type": "bool"
+                  },
+                  "exportRegulatoryCompliance": {
+                    "type": "bool"
+                  },
+                  "exportSecurityAttackPaths": {
+                    "type": "bool"
+                  },
+                  "exportStreamingUpdates": {
+                    "type": "bool"
+                  },
+                  "exportSnapshots": {
+                    "type": "bool"
+                  },
+                  "guidValue": {
+                    "type": "string",
+                    "defaultValue": "[newGuid()]"
+                  }
+                },
+                "variables": {
+                  "scopeDescription": "scope for subscription {0}",
+                  "assessmentRuleSets": [
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        }
+                      ]
+                    }
+                  ],
+                  "alertRuleSets": [
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "Severity",
+                          "propertyType": "String",
+                          "expectedValue": "low",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "Severity",
+                          "propertyType": "String",
+                          "expectedValue": "medium",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "Severity",
+                          "propertyType": "String",
+                          "expectedValue": "high",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "Severity",
+                          "propertyType": "String",
+                          "expectedValue": "informational",
+                          "operator": "Equals"
+                        }
+                      ]
+                    }
+                  ],
+                  "attackPathRuleSets": [
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "attackPath.riskLevel",
+                          "propertyType": "String",
+                          "expectedValue": "Low",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "attackPath.riskLevel",
+                          "propertyType": "String",
+                          "expectedValue": "Medium",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "attackPath.riskLevel",
+                          "propertyType": "String",
+                          "expectedValue": "High",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "attackPath.riskLevel",
+                          "propertyType": "String",
+                          "expectedValue": "Critical",
+                          "operator": "Equals"
+                        }
+                      ]
+                    }
+                  ],
+                  "enabledSources": "[concat(if(and(parameters('exportSecurityRecommendations'), parameters('exportStreamingUpdates')), createArray(createObject('eventSource', 'Assessments', 'ruleSets', variables('assessmentRuleSets'))), createArray()), if(and(parameters('exportSecurityRecommendations'), parameters('exportSnapshots')), createArray(createObject('eventSource', 'AssessmentsSnapshot', 'ruleSets', variables('assessmentRuleSets'))), createArray()), if(and(parameters('exportSecureScore'), parameters('exportStreamingUpdates')), createArray(createObject('eventSource', 'SecureScores'), createObject('eventSource', 'SecureScoreControls')), createArray()), if(and(parameters('exportSecureScore'), parameters('exportSnapshots')), createArray(createObject('eventSource', 'SecureScoresSnapshot'), createObject('eventSource', 'SecureScoreControlsSnapshot')), createArray()), if(and(parameters('exportSecurityAlerts'), parameters('exportStreamingUpdates')), createArray(createObject('eventSource', 'Alerts', 'ruleSets', variables('alertRuleSets'))), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportStreamingUpdates')), createArray(createObject('eventSource', 'RegulatoryComplianceAssessment')), createArray()), if(and(parameters('exportRegulatoryCompliance'), parameters('exportSnapshots')), createArray(createObject('eventSource', 'RegulatoryComplianceAssessmentSnapshot')), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportStreamingUpdates')), createArray(createObject('eventSource', 'AttackPaths', 'ruleSets', variables('attackPathRuleSets'))), createArray()), if(and(parameters('exportSecurityAttackPaths'), parameters('exportSnapshots')), createArray(createObject('eventSource', 'AttackPathsSnapshot', 'ruleSets', variables('attackPathRuleSets'))), createArray()))]"
+                },
+                "resources": [
+                  {
+                    "name": "[parameters('resourceGroupName')]",
+                    "type": "Microsoft.Resources/resourceGroups",
+                    "apiVersion": "2019-10-01",
+                    "location": "[parameters('location')]"
+                  },
+                  {
+                    "type": "Microsoft.Resources/deployments",
+                    "apiVersion": "2019-10-01",
+                    "name": "[concat('nestedAutomationDeployment', '_', parameters('guidValue'))]",
+                    "resourceGroup": "[parameters('resourceGroupName')]",
+                    "dependsOn": [
+                      "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]"
+                    ],
+                    "properties": {
+                      "mode": "Incremental",
+                      "template": {
+                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                        "contentVersion": "1.0.0.0",
+                        "parameters": {},
+                        "variables": {},
+                        "resources": [
+                          {
+                            "apiVersion": "2023-12-01-preview",
+                            "location": "[parameters('location')]",
+                            "name": "[parameters('automationName')]",
+                            "type": "Microsoft.Security/automations",
+                            "tags": {},
+                            "properties": {
+                              "description": "Continuous export of Microsoft Defender for Cloud data to Log Analytics workspace",
+                              "isEnabled": true,
+                              "scopes": [
+                                {
+                                  "description": "[replace(variables('scopeDescription'), '{0}', subscription().subscriptionId)]",
+                                  "scopePath": "[subscription().id]"
+                                }
+                              ],
+                              "sources": "[variables('enabledSources')]",
+                              "actions": [
+                                {
+                                  "actionType": "Workspace",
+                                  "workspaceResourceId": "[parameters('logAnalyticsWorkspaceId')]"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "parameters": {
+                "automationName": {
+                  "value": "[parameters('automationName')]"
+                },
+                "resourceGroupName": {
+                  "value": "[parameters('resourceGroupName')]"
+                },
+                "location": {
+                  "value": "[parameters('location')]"
+                },
+                "logAnalyticsWorkspaceId": {
+                  "value": "[parameters('logAnalyticsWorkspaceId')]"
+                },
+                "exportSecurityRecommendations": {
+                  "value": "[parameters('exportSecurityRecommendations')]"
+                },
+                "exportSecureScore": {
+                  "value": "[parameters('exportSecureScore')]"
+                },
+                "exportSecurityAlerts": {
+                  "value": "[parameters('exportSecurityAlerts')]"
+                },
+                "exportRegulatoryCompliance": {
+                  "value": "[parameters('exportRegulatoryCompliance')]"
+                },
+                "exportSecurityAttackPaths": {
+                  "value": "[parameters('exportSecurityAttackPaths')]"
+                },
+                "exportStreamingUpdates": {
+                  "value": "[parameters('exportStreamingUpdates')]"
+                },
+                "exportSnapshots": {
+                  "value": "[parameters('exportSnapshots')]"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -184,6 +184,14 @@
       "production": [
         "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs02"
       ]
+    },
+    "defenderForCloudExportResourceGroupName": {
+      "development": [
+        "rg-ae-d-mdc-export-01"
+      ],
+      "production": [
+        "rg-ae-p-mdc-export-01"
+      ]
     }
   },
   /*

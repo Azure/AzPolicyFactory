@@ -373,6 +373,106 @@
         ],
         "defaultValue": "Standard"
       },
+      "MDC-014_effect": {
+        "type": "string",
+        "defaultValue": "DeployIfNotExists",
+        "metadata": {
+          "displayName": "MDC-014 Effect: Configure Continuous Export to Log Analytics for Microsoft Defender for Cloud",
+          "description": "MDC-014 Effect: Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ]
+      },
+      "MDC-014_automationName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-014: Automation name",
+          "description": "MDC-014: The name of the Defender for Cloud continuous export configuration."
+        },
+        "defaultValue": "ExportToWorkspace"
+      },
+      "MDC-014_resourceGroupName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-014: Resource group name",
+          "description": "MDC-014: The resource group name where the export configuration will reside."
+        }
+      },
+      "MDC-014_location": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-014: Location",
+          "description": "MDC-014: The location where the resource group and the export configuration are created.",
+          "strongType": "location"
+        },
+        "defaultValue": "australiaeast"
+      },
+      "MDC-014_logAnalyticsWorkspaceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MDC-014: Log Analytics workspace",
+          "description": "MDC-014: The Log Analytics workspace where Defender for Cloud data will be exported.",
+          "strongType": "Microsoft.OperationalInsights/workspaces"
+        }
+      },
+      "MDC-014_exportSecurityRecommendations": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export security recommendations",
+          "description": "MDC-014: Export individual security recommendations with all categories and all severity levels."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportSecureScore": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export secure score",
+          "description": "MDC-014: Export overall secure score and all secure score controls."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportSecurityAlerts": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export security alerts",
+          "description": "MDC-014: Export all security alerts. Alerts are only exported as streaming updates."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportRegulatoryCompliance": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export regulatory compliance",
+          "description": "MDC-014: Export all regulatory compliance assessments."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportSecurityAttackPaths": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export security attack paths",
+          "description": "MDC-014: Export all security attack paths."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportStreamingUpdates": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export frequency: streaming updates",
+          "description": "MDC-014: Export updates in real-time."
+        },
+        "defaultValue": true
+      },
+      "MDC-014_exportSnapshots": {
+        "type": "Boolean",
+        "metadata": {
+          "displayName": "MDC-014: Export frequency: snapshots",
+          "description": "MDC-014: Export a weekly snapshot of the selected data types. Not supported for security alerts."
+        },
+        "defaultValue": true
+      },
       "evaluationDelay": {
         "type": "string",
         "metadata": {
@@ -381,7 +481,7 @@
         },
         "defaultValue": "AfterProvisioning"
       },
-      "isSensitiveDataDiscoveryEnabled":{
+      "isSensitiveDataDiscoveryEnabled": {
         "type": "String",
         "metadata": {
           "displayName": "Sensitive Data Discovery Enabled",
@@ -393,7 +493,7 @@
         ],
         "defaultValue": "true"
       },
-      "isContainerRegistriesVulnerabilityAssessmentsEnabled":{
+      "isContainerRegistriesVulnerabilityAssessmentsEnabled": {
         "type": "String",
         "metadata": {
           "displayName": "Container Registries Vulnerability Assessments Enabled",
@@ -1088,6 +1188,57 @@
           "ISO27001-2013_A.16.1.2",
           "ISO27001-2013_A.16.1.4",
           "ISO27001-2013_A.16.1.7"
+        ]
+      },
+      {
+        "policyDefinitionReferenceId": "MDC-014",
+        "policyDefinitionId": "{policyLocationResourceId}/providers/Microsoft.Authorization/policyDefinitions/pol-deploy-defender-export-law",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('MDC-014_effect')]"
+          },
+          "evaluationDelay": {
+            "value": "[parameters('evaluationDelay')]"
+          },
+          "automationName": {
+            "value": "[parameters('MDC-014_automationName')]"
+          },
+          "resourceGroupName": {
+            "value": "[parameters('MDC-014_resourceGroupName')]"
+          },
+          "location": {
+            "value": "[parameters('MDC-014_location')]"
+          },
+          "logAnalyticsWorkspaceId": {
+            "value": "[parameters('MDC-014_logAnalyticsWorkspaceId')]"
+          },
+          "exportSecurityRecommendations": {
+            "value": "[parameters('MDC-014_exportSecurityRecommendations')]"
+          },
+          "exportSecureScore": {
+            "value": "[parameters('MDC-014_exportSecureScore')]"
+          },
+          "exportSecurityAlerts": {
+            "value": "[parameters('MDC-014_exportSecurityAlerts')]"
+          },
+          "exportRegulatoryCompliance": {
+            "value": "[parameters('MDC-014_exportRegulatoryCompliance')]"
+          },
+          "exportSecurityAttackPaths": {
+            "value": "[parameters('MDC-014_exportSecurityAttackPaths')]"
+          },
+          "exportStreamingUpdates": {
+            "value": "[parameters('MDC-014_exportStreamingUpdates')]"
+          },
+          "exportSnapshots": {
+            "value": "[parameters('MDC-014_exportSnapshots')]"
+          }
+        },
+        "groupNames": [
+          "ISO27001-2013_A.12.4.1",
+          "ISO27001-2013_A.16.1.2",
+          "ISO27001-2013_A.16.1.7",
+          "ISO27001-2013_A.18.2.3"
         ]
       }
     ]

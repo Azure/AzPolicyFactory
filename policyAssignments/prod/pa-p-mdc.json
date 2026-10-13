@@ -100,6 +100,42 @@
       "MDC-013_pricingTier": {
         "value": "Free"
       },
+      "MDC-014_effect": {
+        "value": "DeployIfNotExists"
+      },
+      "MDC-014_automationName": {
+        "value": "ExportToWorkspace"
+      },
+      "MDC-014_resourceGroupName": {
+        "value": "rg-ae-p-mdc-export-01"
+      },
+      "MDC-014_location": {
+        "value": "australiaeast"
+      },
+      "MDC-014_logAnalyticsWorkspaceId": {
+        "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourcegroups/rg-ae-p-monitor/providers/microsoft.operationalinsights/workspaces/law-ae-p-mgmt-01"
+      },
+      "MDC-014_exportSecurityRecommendations": {
+        "value": true
+      },
+      "MDC-014_exportSecureScore": {
+        "value": true
+      },
+      "MDC-014_exportSecurityAlerts": {
+        "value": true
+      },
+      "MDC-014_exportRegulatoryCompliance": {
+        "value": true
+      },
+      "MDC-014_exportSecurityAttackPaths": {
+        "value": true
+      },
+      "MDC-014_exportStreamingUpdates": {
+        "value": true
+      },
+      "MDC-014_exportSnapshots": {
+        "value": true
+      },
       "evaluationDelay": {
         "value": "AfterProvisioning"
       },
@@ -124,7 +160,7 @@
       "isAgentlessServerlessPostureEnabled": {
         "value": "true"
       },
-      "isServerlessContainersEnabled":{
+      "isServerlessContainersEnabled": {
         "value": "true"
       },
       "isMdeDesignatedSubscriptionEnabled": {

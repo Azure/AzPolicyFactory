@@ -149,6 +149,14 @@
       "sourceParameterValue": "Production",
       "correspondingParameterValue": "Development",
       "deviationReason": "tag value for the environment is different."
+    },
+    {
+      "sourceAssignmentName": "pa-p-mdc",
+      "sourceAssignmentScopeName": "CONTOSO",
+      "parameterName": "MDC-014_resourceGroupName",
+      "sourceParameterValue": "rg-ae-p-mdc-export-01",
+      "correspondingParameterValue": "rg-ae-d-mdc-export-01",
+      "deviationReason": "Resource group name for the environment is different."
     }
   ],
   //Define environment specific values for the parameters used in the assignments (i.e. Azure resource IDs specific to each environment)
@@ -183,14 +191,6 @@
       ],
       "production": [
         "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs02"
-      ]
-    },
-    "defenderForCloudExportResourceGroupName": {
-      "development": [
-        "rg-ae-d-mdc-export-01"
-      ],
-      "production": [
-        "rg-ae-p-mdc-export-01"
       ]
     }
   },

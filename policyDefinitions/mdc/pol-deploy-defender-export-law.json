@@ -233,6 +233,12 @@
                           "propertyType": "String",
                           "expectedValue": "Microsoft.Security/assessments",
                           "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "Unknown",
+                          "operator": "Equals"
                         }
                       ]
                     }

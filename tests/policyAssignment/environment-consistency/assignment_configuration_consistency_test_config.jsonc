@@ -149,6 +149,14 @@
       "sourceParameterValue": "Production",
       "correspondingParameterValue": "Development",
       "deviationReason": "tag value for the environment is different."
+    },
+    {
+      "sourceAssignmentName": "pa-p-mdc",
+      "sourceAssignmentScopeName": "CONTOSO",
+      "parameterName": "MDC-014_resourceGroupName",
+      "sourceParameterValue": "rg-ae-p-mdc-export-01",
+      "correspondingParameterValue": "rg-ae-d-mdc-export-01",
+      "deviationReason": "Resource group name for the environment is different."
     }
   ],
   //Define environment specific values for the parameters used in the assignments (i.e. Azure resource IDs specific to each environment)

@@ -178,7 +178,7 @@
             ]
           },
           "deployment": {
-            "location": "[parameters('location')]",
+            "location": "australiaeast",
             "properties": {
               "mode": "incremental",
               "template": {

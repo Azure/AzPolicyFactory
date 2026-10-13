@@ -374,7 +374,13 @@
                       }
                     }
                   }
-                ]
+                ],
+                "outputs": {
+                  "automation": {
+                    "type": "object",
+                    "value": "[reference(resourceId(subscription().subscriptionId, parameters('resourceGroupName'), 'Microsoft.Security/automations', parameters('automationName')), '2023-12-01-preview', 'Full')]"
+                  }
+                }
               },
               "parameters": {
                 "automationName": {

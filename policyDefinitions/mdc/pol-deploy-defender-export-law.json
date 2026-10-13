@@ -241,6 +241,166 @@
                           "operator": "Equals"
                         }
                       ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "SoftwareUpdate",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "SystemVulnerabilities",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "CodeVulnerabilities",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "ApiVulnerabilities",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "IacVulnerabilities",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "ExposedSecrets",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "SystemUpdate",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "HostMisconfigurations",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "ServiceUpgrade",
+                          "operator": "Equals"
+                        }
+                      ]
+                    },
+                    {
+                      "rules": [
+                        {
+                          "propertyJPath": "type",
+                          "propertyType": "String",
+                          "expectedValue": "Microsoft.Security/assessments",
+                          "operator": "Contains"
+                        },
+                        {
+                          "propertyJPath": "properties.metadata.recommendationCategory",
+                          "propertyType": "String",
+                          "expectedValue": "AiModelVulnerabilities",
+                          "operator": "Equals"
+                        }
+                      ]
                     }
                   ],
                   "alertRuleSets": [

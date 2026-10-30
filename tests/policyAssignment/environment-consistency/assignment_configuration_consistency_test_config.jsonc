@@ -185,6 +185,14 @@
         "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs01"
       ]
     },
+    "flowLogManagedIdentityAE": {
+      "development": [
+        "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ae-d-flow-log-01"
+      ],
+      "production": [
+        "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ae-p-flow-log-01"
+      ]
+    },
     "flowLogStorageAccountASE": {
       "development": [
         "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.Storage/storageAccounts/satydevflowlogs02"
@@ -192,7 +200,15 @@
       "production": [
         "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs02"
       ]
-    }
+    },
+    "flowLogManagedIdentityASE": {
+      "development": [
+        "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ase-d-flow-log-01"
+      ],
+      "production": [
+        "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ase-p-flow-log-01"
+      ]
+    },
   },
   /*
   Define the exclusion list for the assignment's NotScopes property.

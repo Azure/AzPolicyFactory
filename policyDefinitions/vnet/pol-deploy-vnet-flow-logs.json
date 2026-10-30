@@ -2,7 +2,7 @@
   "name": "pol-deploy-vnet-flow-logs",
   "properties": {
     "displayName": "Configure virtual networks to enable Virtual Network flow log and traffic analytics",
-    "description": "Virtual Network flow log and Traffic analytics can be enabled for all virtual networks hosted in a particular region with the settings provided during policy creation. If it already has Traffic analytics enabled, then policy does not overwrite its settings. Traffic analytics is a cloud-based solution that provides visibility into user and application activity in cloud networks.",
+    "description": "Virtual Network flow log and Traffic analytics can be enabled for all virtual networks hosted in a particular region with the settings provided during policy creation. Enabled flow logs must have Traffic analytics enabled and match the configured workspace, storage account, and managed identity when provided. Disabled flow logs are left unchanged. Traffic analytics is a cloud-based solution that provides visibility into user and application activity in cloud networks.",
     "metadata": {
       "category": "Logging and monitoring",
       "version": "1.0.0",
@@ -138,6 +138,26 @@
                   {
                     "field": "Microsoft.Network/networkWatchers/flowLogs/flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration.enabled",
                     "equals": "true"
+                  },
+                  {
+                    "field": "Microsoft.Network/networkWatchers/flowLogs/flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration.workspaceResourceId",
+                    "equals": "[parameters('workspaceResourceId')]"
+                  },
+                  {
+                    "field": "Microsoft.Network/networkWatchers/flowLogs/storageId",
+                    "equals": "[parameters('storageId')]"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "value": "[empty(coalesce(parameters('userAssignedManagedIdentityResourceId'), ''))]",
+                        "equals": true
+                      },
+                      {
+                        "field": "identity.userAssignedIdentities",
+                        "containsKey": "[parameters('userAssignedManagedIdentityResourceId')]"
+                      }
+                    ]
                   },
                   {
                     "field": "Microsoft.Network/networkWatchers/flowLogs/flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration.trafficAnalyticsInterval",

@@ -31,7 +31,7 @@
         "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs01"
       },
       "VNET-003_userAssignedManagedIdentityResourceId": {
-        "value": "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ae-d-flow-log-01"
+        "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ae-p-flow-log-01"
       },
       "VNET-004_Effect": {
         "value": "DeployIfNotExists"
@@ -40,7 +40,7 @@
         "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourcegroups/rg-ae-p-monitor/providers/Microsoft.Storage/storageAccounts/satyprodflowlogs02"
       },
       "VNET-004_userAssignedManagedIdentityResourceId": {
-        "value": "/subscriptions/f27ab1cb-9c1a-4bdb-9e18-bb11ec9205db/resourceGroups/rg-ae-d-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ase-d-flow-log-01"
+        "value": "/subscriptions/fca82a86-9abc-4ef3-8628-cd6e3e426325/resourceGroups/rg-ae-p-monitor/providers/Microsoft.ManagedIdentity/userAssignedIdentities/umi-ase-p-flow-log-01"
       },
       "evaluationDelay": {
         "value": "AfterProvisioning"

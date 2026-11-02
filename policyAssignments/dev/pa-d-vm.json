@@ -129,7 +129,7 @@
         "value": ""
       },
       "VM-011_Effect": {
-        "value": "Disabled"
+        "value": "Deny"
       }
     },
     "roleDefinitionIds": [

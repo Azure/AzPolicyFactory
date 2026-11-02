@@ -66,8 +66,19 @@
         "metadata": {
           "displayName": "VNET-003: Storage Resource ID (Australia East)",
           "description": "Resource ID of the storage account where the flow logs are written. Make sure this storage account is located in the same region as the virtual network. The format must be: '/subscriptions/{subscription id}/resourceGroups/{resourceGroup name}/providers/Microsoft.Storage/storageAccounts/{storage account name}",
+          "strongType": "Microsoft.Storage/storageAccounts",
           "assignPermissions": true
         }
+      },
+      "VNET-003_userAssignedManagedIdentityResourceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "VNET-003: User Assigned Managed Identity Resource ID (Australia East)",
+          "description": "Optional user assigned managed identity resource ID for flow logs. Leave empty to deploy without an identity.",
+          "strongType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+          "assignPermissions": false
+        },
+        "defaultValue": ""
       },
       "VNET-004_Effect": {
         "type": "string",
@@ -86,8 +97,19 @@
         "metadata": {
           "displayName": "VNET-004: Storage Resource ID (Australia Southeast)",
           "description": "Resource ID of the storage account where the flow logs are written. Make sure this storage account is located in the same region as the virtual network. The format must be: '/subscriptions/{subscription id}/resourceGroups/{resourceGroup name}/providers/Microsoft.Storage/storageAccounts/{storage account name}",
+          "strongType": "Microsoft.Storage/storageAccounts",
           "assignPermissions": true
         }
+      },
+      "VNET-004_userAssignedManagedIdentityResourceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "VNET-004: User Assigned Managed Identity Resource ID (Australia Southeast)",
+          "description": "Optional user assigned managed identity resource ID for flow logs. Leave empty to deploy without an identity.",
+          "strongType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+          "assignPermissions": false
+        },
+        "defaultValue": ""
       },
       "evaluationDelay": {
         "type": "string",
@@ -199,6 +221,9 @@
           },
           "workspaceResourceId": {
             "value": "[parameters('vnetFlowLogWorkspaceResourceId')]"
+          },
+          "userAssignedManagedIdentityResourceId": {
+            "value": "[parameters('VNET-003_userAssignedManagedIdentityResourceId')]"
           }
         },
         "groupNames": [
@@ -236,6 +261,9 @@
           },
           "workspaceResourceId": {
             "value": "[parameters('vnetFlowLogWorkspaceResourceId')]"
+          },
+          "userAssignedManagedIdentityResourceId": {
+            "value": "[parameters('VNET-004_userAssignedManagedIdentityResourceId')]"
           }
         },
         "groupNames": [

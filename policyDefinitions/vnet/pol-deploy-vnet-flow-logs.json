@@ -2,7 +2,7 @@
   "name": "pol-deploy-vnet-flow-logs",
   "properties": {
     "displayName": "Configure virtual networks to enable Virtual Network flow log and traffic analytics",
-    "description": "Virtual Network flow log and Traffic analytics can be enabled for all virtual networks hosted in a particular region with the settings provided during policy creation. If it already has Traffic analytics enabled, then policy does not overwrite its settings. Traffic analytics is a cloud-based solution that provides visibility into user and application activity in cloud networks.",
+    "description": "Virtual Network flow log and Traffic analytics can be enabled for all virtual networks hosted in a particular region with the settings provided during policy creation. Enabled flow logs must have Traffic analytics enabled and match the configured workspace, storage account, and managed identity when provided. Disabled flow logs are left unchanged. Traffic analytics is a cloud-based solution that provides visibility into user and application activity in cloud networks.",
     "metadata": {
       "category": "Logging and monitoring",
       "version": "1.0.0",
@@ -44,6 +44,7 @@
         "metadata": {
           "displayName": "Storage Resource ID",
           "description": "Resource ID of the storage account where the flow logs are written. Make sure this storage account is located in the same region as the virtual network. The format must be: '/subscriptions/{subscription id}/resourceGroups/{resourceGroup name}/providers/Microsoft.Storage/storageAccounts/{storage account name}",
+          "strongType": "Microsoft.Storage/storageAccounts",
           "assignPermissions": true
         }
       },
@@ -75,6 +76,16 @@
           "strongType": "omsWorkspace",
           "assignPermissions": true
         }
+      },
+      "userAssignedManagedIdentityResourceId": {
+        "type": "String",
+        "metadata": {
+          "displayName": "User Assigned Managed Identity Resource ID",
+          "description": "Optional user assigned managed identity resource ID for flow logs. Leave empty to deploy without an identity.",
+          "strongType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+          "assignPermissions": false
+        },
+        "defaultValue": ""
       },
       "networkWatcherRG": {
         "type": "String",
@@ -129,6 +140,26 @@
                     "equals": "true"
                   },
                   {
+                    "field": "Microsoft.Network/networkWatchers/flowLogs/flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration.workspaceResourceId",
+                    "equals": "[parameters('workspaceResourceId')]"
+                  },
+                  {
+                    "field": "Microsoft.Network/networkWatchers/flowLogs/storageId",
+                    "equals": "[parameters('storageId')]"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "value": "[empty(coalesce(parameters('userAssignedManagedIdentityResourceId'), ''))]",
+                        "equals": true
+                      },
+                      {
+                        "field": "identity.userAssignedIdentities",
+                        "containsKey": "[parameters('userAssignedManagedIdentityResourceId')]"
+                      }
+                    ]
+                  },
+                  {
                     "field": "Microsoft.Network/networkWatchers/flowLogs/flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration.trafficAnalyticsInterval",
                     "in": [
                       "10",
@@ -158,6 +189,9 @@
                   "workspaceResourceId": {
                     "type": "String"
                   },
+                  "userAssignedManagedIdentityResourceId": {
+                    "type": "String"
+                  },
                   "networkWatcherRG": {
                     "type": "String"
                   },
@@ -182,7 +216,7 @@
                   {
                     "type": "Microsoft.Resources/deployments",
                     "name": "[concat('flowlogDeployment-', uniqueString(parameters('flowlogName')))]",
-                    "apiVersion": "2024-11-01",
+                    "apiVersion": "2026-06-01",
                     "resourceGroup": "[parameters('networkWatcherRG')]",
                     "properties": {
                       "mode": "incremental",
@@ -195,8 +229,9 @@
                           {
                             "type": "Microsoft.Network/networkWatchers/flowLogs",
                             "name": "[concat(parameters('networkWatcherName'), '/', parameters('flowlogName'))]",
-                            "apiVersion": "2024-05-01",
+                            "apiVersion": "2026-03-01",
                             "location": "[parameters('location')]",
+                            "identity": "[if(empty(coalesce(parameters('userAssignedManagedIdentityResourceId'), '')), json('null'), createObject('type', 'UserAssigned', 'userAssignedIdentities', createObject(parameters('userAssignedManagedIdentityResourceId'), createObject())))]",
                             "properties": {
                               "targetResourceId": "[parameters('targetResource')]",
                               "storageId": "[parameters('storageId')]",
@@ -236,6 +271,9 @@
                 },
                 "workspaceResourceId": {
                   "value": "[parameters('workspaceResourceId')]"
+                },
+                "userAssignedManagedIdentityResourceId": {
+                  "value": "[parameters('userAssignedManagedIdentityResourceId')]"
                 },
                 "retentionInDays": {
                   "value": "[parameters('retentionInDays')]"

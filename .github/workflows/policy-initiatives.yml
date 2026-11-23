@@ -53,15 +53,15 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Policy Definition Tests"
+      - name: "Policy Initiative Tests"
         uses: ./.github/actions/templates/test-policy-def
         with:
           policy-files-directory: "policyInitiatives"
           run-policy-json-pester-tests: true
           run-policy-definition-pester-tests: false
           run-policy-initiative-pester-tests: true
-          definition-test-exclude-tags: "CategoryExists"
-          check-name: "Policy Definition Syntax Tests"
+          #definition-test-exclude-tags: "CategoryExists"
+          check-name: "Policy Initiative Syntax Tests"
           skip-passed-tests-report: true
 
   job_build_dev:

@@ -4,6 +4,7 @@
     "displayName": "Azure Key Vaults Policy Initiative",
     "description": "This policy initiative defines the security requirements for Key Vaults",
     "metadata": {
+      "category": "Key Vault",
       "version": "1.0.0",
       "preview": false,
       "deprecated": false
